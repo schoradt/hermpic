@@ -36,14 +36,18 @@ install: Makefile.config herm-pic.sty doc_clean
 	@echo "Installing documentation ..."
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
+test: hermtest.ps 
+
 doc_clean:
 	@rm -f *.aux *.log *.toc *.bbl *.blg *~
 
 clean:	doc_clean
 	@rm -f *.dvi *.ps *.pdf
 
+FORCE: ;
+
 # Rule pattern
-%.ps:	%.dvi
+%.ps:	%.dvi FORCE
 	${DVIPS} -o $@ $<
 
 %.dvi:	%.tex
