@@ -1,3 +1,10 @@
+hermpic (0.9.4-pre-1-0) unstable; urgency=low
+
+  * Bug durch Namensüberschneidung der Spezialisierungsmacros 
+    beseitigt (hoffentlich)
+
+ -- Sven Schoradt <sven@dex.de>  Fri, 03 Dec 2004 10:57:22 +0100
+
 hermpic (0.9.3-pre-1-0) unstable; urgency=low
 
   * ER diagramme erweitert, es sind jetzt erweiterte 
