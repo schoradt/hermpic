@@ -5,39 +5,21 @@
 \frenchspacing
 \sloppy
 
-%\tracingmacros=2
-%\tracingcommands=1
-%\tracingonline=1
+\tracingmacros=2
+\tracingcommands=1
 
 \setlength{\unitlength}{.3cm}
 
-\usepackage[verbatim,rev-0-6]{herm-pic}
-%\usepackage{herm-pic}
+\usepackage[rev-0-6,verbatim]{herm-pic}
 
 \setlength{\hermunit}{.6cm}
 
 \begin{document}
 
-\setlength{\unitlength}{.6cm}
-\begin{schema}(15,15)
-  \entity(1,4){Person}
-  \attr(2,6)[o]{Name}
-  \attr(4,6)[o]{\key{PNr}}
-  \relation(13,7){Professor}
-  \relation(13,4){WiMi}
-  \relation(13,1){Student}
-  \cluster(7,4){}
-  \connection(7,5)(5,5){}
-  \connection(13,8)(9,5){}
-  \connection(13,5)(9,5){}
-  \connection(13,2)(9,5){}
-\end{schema}
-
+\section{Entity mit Attributen}
 
 \begin{schema}(20,10)
-  \entity(1,8){Person}
-  \entity(13,0){Team}
-  \relation(7,6){arbeitet}
+  \entity(10,4){Person}
   \aattr[ol]{Person}{a1}
   \aattr[om]{Person}{a2}
   \aattr[or]{Person}{a3}
@@ -50,6 +32,12 @@
   \aattr[lu]{Person}{a10}
   \aattr[lm]{Person}{a11}
   \aattr[lo]{Person}{a12}
+\end{schema}
+
+\section{Relation mit Attributen}
+
+\begin{schema}(20,10)
+  \relation(10,4){arbeitet}
   \aattr[ol]{arbeitet}{a1}
   \aattr[om]{arbeitet}{a2}
   \aattr[or]{arbeitet}{a3}
@@ -63,6 +51,8 @@
   \aattr[lm]{arbeitet}{a11}
   \aattr[lo]{arbeitet}{a12}
 \end{schema}
+
+\section{Connection examples}
 
 \begin{schema}(20,14)
   \entity(1,11){E1}
@@ -94,6 +84,39 @@
   \conn(R,E6){}
   \conn(R,E7){}
   \conn(R,E8){}
+\end{schema}
+
+\section{Cluster example}
+
+\begin{schema}(15,15)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
+
+\begin{schema}(20,10)
+  \cluster(10,4){cluster}
+  \aattr[ol]{cluster}{a1}
+  \aattr[om]{cluster}{a2}
+  \aattr[or]{cluster}{a3}
+  \aattr[ro]{cluster}{a4}
+  \aattr[rm]{cluster}{a5}
+  \aattr[ru]{cluster}{a6}
+  \aattr[ur]{cluster}{a7}
+  \aattr[um]{cluster}{a8}
+  \aattr[ul]{cluster}{a9}
+  \aattr[lu]{cluster}{a10}
+  \aattr[lm]{cluster}{a11}
+  \aattr[lo]{cluster}{a12}
 \end{schema}
 
 \end{document}

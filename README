@@ -1,0 +1,15 @@
+Install
+=====
+
+To install the package you have to unpack it via gzip and tar
+and than make install.
+
+Then you should run mktexlsr.
+
+Update from a earlier version
+=======================
+
+If you have used the package in an earlier version, you shoul read the rev-0-6 Interface
+section in the documentation.
+
+
