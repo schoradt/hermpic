@@ -11,8 +11,8 @@
 % external revision display macros
 %
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\herm@revision $Revision: 1.1.2.2 $}
-\def\HERMpicDate{\herm@date $Date: 2004-01-15 13:36:03 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.1.2.3 $}
+\def\HERMpicDate{\herm@date $Date: 2004-03-02 00:22:50 $ }
 %
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic-old}[\HERMpicId]
@@ -39,8 +39,11 @@
   \herm@namesfalse%
   \typeout{  * Option nonames - only the old style coordinates interface}%
 }%
+\DeclareOption{rev-0-6}{%
+% ignore that option its for the outer package
+}%
 \DeclareOption*{%
-  \PackageWarning{herm-pic}{Unnown Option '\CurrentOption'}%
+  \PackageWarning{herm-pic-old}{Unnown Option '\CurrentOption'}%
 }%
 \ProcessOptions\relax%
 % ---  package wide definitions  ---
