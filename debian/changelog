@@ -1,3 +1,10 @@
+hermpic (0.7.1) unstable; urgency=low
+
+  * add the posibility to select cluster name position 
+    (for Thomas)
+
+ -- Sven Schoradt <sven@dex.de>  Mon, 26 Apr 2004 14:26:49 +0200
+
 hermpic (0.7.0) unstable; urgency=low
 
   * release version 0.7.0 after intensive testing
