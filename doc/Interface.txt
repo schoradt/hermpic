@@ -3,15 +3,17 @@ Interface hermpic
 
 1. Versionsinformationen
 
-  * \HERMpicRev -> cvs revision der Datei
-     -> sollte eigentlich 0.7.0 sein mal sehen wie ich das hinkriege
+  * \HPrevision -> Version des Macropacketes
 
-  * \HERMpicDate -> Datum in yyyy/mm/dd
-     -> ist so ok, kann bleiben
+  * \HPdescription -> Kurzbeschreibung
 
+  * \HPlongrevision -> Lange Versionsbeschreibung
+
+  * \HPdate -> Datum der letzten Änderung
+ 
 2. Parameter
 
-  * verbatim -> viel Ausgaben console
+  * verbatim -> viel Ausgaben
      -> besser waehre nur logfile (OK)
 
   * center -> zentrieren der Schemata (OK)
@@ -19,6 +21,7 @@ Interface hermpic
   * box -> umranden der Schemata (OK)
 
   * rel_0_6 -> waehlt Inteface von Version 0_6 (OK)
+     => in 1.0 nicht mehr enthalten
 
 3. Schema
 
@@ -35,9 +38,10 @@ Interface hermpic
   * \key {name} (OK)
 
   * \connection (OK)
+    -> \conn als Abkürzung
 
 4. Integritaetsbedingungen
 
-  * \incude, \exclude, \disjunct (moved to pre-0-8)
+  * \incude, \exclude, \disjunct
 
    
