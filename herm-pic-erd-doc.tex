@@ -130,9 +130,9 @@ and
 \end{schema}
 
 
-\begin{schema}(14,30)
-  \entity[Person](5,23){person}
-  \relation[arbeitet](5,13){works}
+\begin{schema}(14,20)
+  \entity[Person](5,13){person}
+  \relation[arbeitet](5,3){works}
   \attr[ol]{Person}{ol}
   \attr[om]{Person}{om}
   \attr[or]{Person}{or}
@@ -157,25 +157,17 @@ and
   \attr[lu]{arbeitet}{lu}
   \attr[lm]{arbeitet}{lm}
   \attr[lo]{arbeitet}{lo}
-  \cluster(6,3){cluster}
-  \attr[ol]{cluster}{ol}
-  \attr[om]{cluster}{om}
-  \attr[or]{cluster}{or}
-  \attr[ro]{cluster}{ro}
-  \attr[rm]{cluster}{rm}
-  \attr[ru]{cluster}{ru}
-  \attr[ur]{cluster}{ur}
-  \attr[um]{cluster}{um}
-  \attr[ul]{cluster}{ul}
-  \attr[lu]{cluster}{lu}
-  \attr[lm]{cluster}{lm}
-  \attr[lo]{cluster}{lo}
 \end{schema}
 
 \subsection{Special attribute types}
 
 Special attribute types are the multivalued attribute ( \verb|\multivaluedattr|),
 the optional attribute (\verb|\optattr|) and derived attributes (\verb|\derivedattr|).
+
+There are also structured attributes called \verb|\complexattr|. The name of a complex attribute
+should not consist of special letters.
+
+A structured attribute can consit of normal attributes, multivalued attributes and derived attributes.
 
 They was used like simple attributes but there is no star or plus version available.
 
@@ -188,17 +180,29 @@ They was used like simple attributes but there is no star or plus version availa
   \multivaluedattr[lo]{entity}{a12}
   \optattr[ol]{entity}{a1}
   \derivedattr[om]{entity}{a2}
+  \complexattr[um]{entity}{cattr}
+  \attr[ro]{cattr}{a8}
+  \derivedattr[ru]{cattr}{a9}
+  \multivaluedattr[lo]{cattr}{a10}
+  \complexattr[um]{cattr}{cattr2}
+  \attr[um]{cattr2}{attrr}
 \end{schema}
 \end{verbatim}
 
 produces
 
-\begin{schema}(14,10)
-  \entity[entity](5,3){Entity}
+\begin{schema}(14,14)
+  \entity[entity](5,8){Entity}
   \attr[lm]{entity}{a11}
   \multivaluedattr[lo]{entity}{a12}
   \optattr[ol]{entity}{a1}
   \derivedattr[om]{entity}{a2}
+  \complexattr[um]{entity}{cattr}
+  \attr[ro]{cattr}{a8}
+  \derivedattr[ru]{cattr}{a9}
+  \multivaluedattr[lo]{cattr}{a10}
+  \complexattr[um]{cattr}{cattr2}
+  \attr[um]{cattr2}{attrr}
 \end{schema}
 
 \section{Connections between schema elements}
@@ -226,42 +230,6 @@ produces
   \relation[arbeitetin](7,1){arbeitet\_in}
   \connection(arbeitetin,Person){(0,3)}
   \connection(arbeitetin,Team){(2,10)}
-\end{schema}
-
-, 
-
-\begin{verbatim}
-\begin{schema}(15,10)
-  \entity(1,4){Person}
-  \attr[ol]{Person}{Name}
-  \attr[or]{Person}{\key{PNr}}
-  \relation(13,7){Professor}
-  \relation(13,4){WiMi}
-  \relation(13,1){Student}
-  \cluster(7,4){Mitarbeiter}
-  \attr[om]{Mitarbeiter}{\key{mnr}}
-  \connection(Mitarbeiter,Person){}
-  \connection(Professor,Mitarbeiter){}
-  \connection(WiMi,Mitarbeiter){}
-  \connection(Student,Mitarbeiter){}
-\end{schema}
-\end{verbatim}
-
-produces
-
-\begin{schema}(15,10)
-  \entity(1,4){Person}
-  \attr[ol]{Person}{Name}
-  \attr[om]{Person}{\key{PNr}}
-  \relation(13,7){Professor}
-  \relation(13,4){WiMi}
-  \relation(13,1){Student}
-  \cluster(7,4){Mitarbeiter}
-  \attr[om]{Mitarbeiter}{\key{mnr}}
-  \connection(Mitarbeiter,Person){}
-  \connection(Professor,Mitarbeiter){}
-  \connection(WiMi,Mitarbeiter){}
-  \connection(Student,Mitarbeiter){}
 \end{schema}
 
 and 

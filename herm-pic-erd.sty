@@ -61,10 +61,6 @@
 \def\herm@ro{ro} \def\herm@ru{ru} \def\herm@lo{lo} \def\herm@lu{lu}%
 \def\herm@om{om} \def\herm@rm{rm} \def\herm@lm{lm} \def\herm@um{um}%
 %
-% default cluster name position
-%
-\def\herm@cnamepos{ro}%
-%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %
 % Schema elements
@@ -377,230 +373,6 @@
   \global\expandafter\def\csname hermweak@#1 \endcsname{1}%
 }%
 %
-% ---  Cluster  ---
-%
-% \cluster(x,y)
-%
-% defines the cluster representation
-% width = 2
-% height = 2
-%
-% a circle width a plus in it
-\def\cluster{%
-  \futurelet\clusterLockedAt\clusterDecide
-}%
-\def\clusterDecide{%
-  \ifx\clusterLockedAt *%
-    \let\next=\clusterb
-  \else
-    \ifx\clusterLockedAt [%
-      \let\next=\clusterc
-    \else%
-      \let\next=\clustera
-    \fi
-  \fi
-  \next
-}%
-\def\clustera(#1,#2)#3{%
-  \ifherm@verbatim%
-    \PackageInfo{herm-pic}{Process cluster \string#3 ...}%
-  \fi% 
-  \put(#1,#2){%
-    \put(1,1){%
-      \qbezier(-1,0)(-1,.4)(-.7,.7)%
-      \qbezier(-.7,.7)(-.4,1)(0,1)%
-      \qbezier(0,1)(.4,1)(.7,.7)%
-      \qbezier(.7,.7)(1,.4)(1,0)%
-      \qbezier(1,0)(1,-.4)(.7,-.7)%
-      \qbezier(.7,-.7)(.4,-1)(0,-1)%
-      \qbezier(0,-1)(-.4,-1)(-.7,-.7)%
-      \qbezier(-.7,-.7)(-1,-.4)(-1,0)%
-    }%
-    \put(1,.3){\line(0,1){1.4}}%
-    \put(.3,1){\line(1,0){1.4}}%
-    % compute name drawing
-    \ifx\herm@cnamepos\herm@ol \put(0,2){\makebox(0,1)[br]{#3}}%
-    \else
-      \ifx\herm@cnamepos\herm@or \put(2,2){\makebox(1,1)[bl]{#3}}%
-      \else
-        \ifx\herm@cnamepos\herm@ro \put(2,2){\makebox(1,1)[bl]{#3}}%
-        \else
-          \ifx\herm@cnamepos\herm@ru \put(2,0){\makebox(1,0)[tl]{#3}}%
-          \else
-            \ifx\herm@cnamepos\herm@ur \put(2,0){\makebox(1,0)[tl]{#3}}%
-            \else
-              \ifx\herm@cnamepos\herm@ul \put(0,0){\makebox(0,0)[tr]{#3}}%
-              \else
-                \ifx\herm@cnamepos\herm@lu \put(0,0){\makebox(0,0)[tr]{#3}}%
-                \else
-                  \ifx\herm@cnamepos\herm@lo \put(0,2){\makebox(0,1)[br]{#3}}%
-                  \else
-                    \ifx\herm@cnamepos\herm@om \put(1,2){\makebox(0,1)[c]{#3}}%
-                    \else
-                      \ifx\herm@cnamepos\herm@rm \put(2.2,1){\makebox(1,1)[bl]{#3}}%
-                      \else
-                        \ifx\herm@cnamepos\herm@um \put(1,0){\makebox(0,-1)[c]{#3}}%
-                        \else
-                          \ifx\herm@cnamepos\herm@lm \put(-0.2,1){\makebox(0,1)[br]{#3}}%
-                          \else
-                            \PackageWarning{herm-pic}{%
-                              Undefind cluster name positioning parameter \herm@cnamepos
-                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
-                              \MessageBreak Using default [or].
-                            }%
-                            \put(2,2){\makebox(1,1)[bl]{#3}}%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
-  }%
-  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-  \global\expandafter\def\csname hermcluster@#3 \endcsname{1}%
-}%
-\def\clusterb *(#1,#2)#3{%
-  \ifherm@verbatim%
-    \PackageInfo{herm-pic}{Process cluster \string#3 ...}%
-  \fi% 
-  \put(#1,#2){%
-    \put(1,1){
-      \qbezier(-1,0)(-1,.4)(-.7,.7)%
-      \qbezier(-.7,.7)(-.4,1)(0,1)%
-      \qbezier(0,1)(.4,1)(.7,.7)%
-      \qbezier(.7,.7)(1,.4)(1,0)%
-      \qbezier(1,0)(1,-.4)(.7,-.7)%
-      \qbezier(.7,-.7)(.4,-1)(0,-1)%
-      \qbezier(0,-1)(-.4,-1)(-.7,-.7)%
-      \qbezier(-.7,-.7)(-1,-.4)(-1,0)%
-    }%
-    \put(1,.3){\line(0,1){1.4}}%
-    \put(.3,1){\line(1,0){1.4}}%
-    % compute name drawing
-    \ifx\herm@cnamepos\herm@ol \put(0,2){\makebox(0,1)[br]{#3}}%
-    \else
-      \ifx\herm@cnamepos\herm@or \put(2,2){\makebox(1,1)[bl]{#3}}%
-      \else
-        \ifx\herm@cnamepos\herm@ro \put(2,2){\makebox(1,1)[bl]{#3}}%
-        \else
-          \ifx\herm@cnamepos\herm@ru \put(2,0){\makebox(1,0)[tl]{#3}}%
-          \else
-            \ifx\herm@cnamepos\herm@ur \put(2,0){\makebox(1,0)[tl]{#3}}%
-            \else
-              \ifx\herm@cnamepos\herm@ul \put(0,0){\makebox(0,0)[tr]{#3}}%
-              \else
-                \ifx\herm@cnamepos\herm@lu \put(0,0){\makebox(0,0)[tr]{#3}}%
-                \else
-                  \ifx\herm@cnamepos\herm@lo \put(0,2){\makebox(0,1)[br]{#3}}%
-                  \else
-                    \ifx\herm@cnamepos\herm@om \put(1,2){\makebox(0,1)[c]{#3}}%
-                    \else
-                      \ifx\herm@cnamepos\herm@rm \put(2.2,1){\makebox(1,1)[bl]{#3}}%
-                      \else
-                        \ifx\herm@cnamepos\herm@um \put(1,0){\makebox(0,-1)[c]{#3}}%
-                        \else
-                          \ifx\herm@cnamepos\herm@lm \put(-0.2,1){\makebox(0,1)[br]{#3}}%
-                          \else
-                            \PackageWarning{herm-pic}{%
-                              Undefind cluster name positioning parameter \herm@cnamepos
-                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
-                              \MessageBreak Using default [or].
-                            }%
-                            \put(2,2){\makebox(1,1)[bl]{#3}}%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
-  }%
-}%
-\def\clusterc[#1](#2,#3)#4{%
-  \ifherm@verbatim%
-    \PackageInfo{herm-pic}{Process cluster \string#4 ...}%
-  \fi% 
-  \put(#2,#3){%
-    \put(1,1){%
-      \qbezier(-1,0)(-1,.4)(-.7,.7)%
-      \qbezier(-.7,.7)(-.4,1)(0,1)%
-      \qbezier(0,1)(.4,1)(.7,.7)%
-      \qbezier(.7,.7)(1,.4)(1,0)%
-      \qbezier(1,0)(1,-.4)(.7,-.7)%
-      \qbezier(.7,-.7)(.4,-1)(0,-1)%
-      \qbezier(0,-1)(-.4,-1)(-.7,-.7)%
-      \qbezier(-.7,-.7)(-1,-.4)(-1,0)%
-    }%
-    \put(1,.3){\line(0,1){1.4}}%
-    \put(.3,1){\line(1,0){1.4}}%
-    % compute name drawing
-    \ifx\herm@cnamepos\herm@ol \put(0,2){\makebox(0,1)[br]{#4}}%
-    \else
-      \ifx\herm@cnamepos\herm@or \put(2,2){\makebox(1,1)[bl]{#4}}%
-      \else
-        \ifx\herm@cnamepos\herm@ro \put(2,2){\makebox(1,1)[bl]{#4}}%
-        \else
-          \ifx\herm@cnamepos\herm@ru \put(2,0){\makebox(1,0)[tl]{#4}}%
-          \else
-            \ifx\herm@cnamepos\herm@ur \put(2,0){\makebox(1,0)[tl]{#4}}%
-            \else
-              \ifx\herm@cnamepos\herm@ul \put(0,0){\makebox(0,0)[tr]{#4}}%
-              \else
-                \ifx\herm@cnamepos\herm@lu \put(0,0){\makebox(0,0)[tr]{#4}}%
-                \else
-                  \ifx\herm@cnamepos\herm@lo \put(0,2){\makebox(0,1)[br]{#4}}%
-                  \else
-                    \ifx\herm@cnamepos\herm@om \put(1,2){\makebox(0,1)[c]{#4}}%
-                    \else
-                      \ifx\herm@cnamepos\herm@rm \put(2.2,1){\makebox(1,1)[bl]{#4}}%
-                      \else
-                        \ifx\herm@cnamepos\herm@um \put(1,0){\makebox(0,-1)[c]{#4}}%
-                        \else
-                          \ifx\herm@cnamepos\herm@lm \put(-0.2,1){\makebox(0,1)[br]{#4}}%
-                          \else
-                            \PackageWarning{herm-pic}{%
-                              Undefind cluster name positioning parameter \herm@cnamepos
-                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
-                              \MessageBreak Using default [or].
-                            }%
-                            \put(2,2){\makebox(1,1)[bl]{#4}}%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
-  }%
-  \global\expandafter\def\csname hermobjx@#1 \endcsname{#2}%
-  \global\expandafter\def\csname hermobjy@#1 \endcsname{#3}%
-  \global\expandafter\def\csname hermobj@#1 \endcsname{1}%
-  \global\expandafter\def\csname hermcluster@#1 \endcsname{1}%
-}%
-%
-% placement of name configuration
-\def\cnamepos#1{%
-  \def\herm@cnamepos{#1}%
-}%
-%
 % -- is-a for ER models
 %
 % Hoehe 2, Breite 4 Einheiten
@@ -623,7 +395,6 @@
   \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
   \global\expandafter\def\csname hermisa@#3 \endcsname{1}%
 }%
-
 %
 % ---  Attributes ---
 %
@@ -738,50 +509,6 @@
                       \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(4,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
                       \else
                         \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(2,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
-                        \else
-                          \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
-                          \else
-                            \PackageWarning{herm-pic}{%
-                              Undefind attribute positioning parameter #1
-                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
-                              \MessageBreak Using default [or].
-                            }%
-                            \attr[or]{#2}{#3}%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
-  \fi%
-  \expandafter\if\csname hermcluster@#2 \endcsname 1%
-    \ifx\herm@inpos\herm@ol \put(\herm@tsx,\herm@tsy){\put(.3,1.7){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[rb]{$#3$}}}}%
-    \else
-      \ifx\herm@inpos\herm@or \put(\herm@tsx,\herm@tsy){\put(1.7,1.7){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[lb]{$#3$}}}}%
-      \else
-        \ifx\herm@inpos\herm@ro \put(\herm@tsx,\herm@tsy){\put(1.7,1.7){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
-        \else
-          \ifx\herm@inpos\herm@ru \put(\herm@tsx,\herm@tsy){\put(1.7,.3){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
-          \else
-            \ifx\herm@inpos\herm@ur \put(\herm@tsx,\herm@tsy){\put(1.7,.3){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[lt]{$#3$}}}}%
-            \else
-              \ifx\herm@inpos\herm@ul \put(\herm@tsx,\herm@tsy){\put(.3,.3){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[rt]{$#3$}}}}%
-              \else
-                \ifx\herm@inpos\herm@lu \put(\herm@tsx,\herm@tsy){\put(.3,.3){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
-                \else
-                  \ifx\herm@inpos\herm@lo \put(\herm@tsx,\herm@tsy){\put(.3,1.7){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
-                  \else
-                    \ifx\herm@inpos\herm@om \put(\herm@tsx,\herm@tsy){\put(1,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
-                    \else
-                      \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(2,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
-                      \else
-                        \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(1,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
                         \else
                           \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
                           \else
@@ -1106,112 +833,112 @@
       \fi%
     \fi% 
  \fi%
-  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+ \expandafter\if\csname hermcattr@#2 \endcsname 1%
     \ifx\herm@inpos\herm@ol%
       \put(\herm@tsx,\herm@tsy){%
-        \put(.3,1.7){%
-          \qbezier(0,0)(0,0)(-1.5,1.45)%
-          \put(-2.5,1.8){\herm@oval}%
-          \put(-2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+        \put(-1,.35){%
+          \qbezier(0,0)(0,0)(-2,2.35)%
+          \put(-3,2.65){\herm@oval}%
+          \put(-3,2.65){\makebox(0,0)[c]{$#3$}}%
         }%
       }%
     \else
       \ifx\herm@inpos\herm@or% 
         \put(\herm@tsx,\herm@tsy){%
-          \put(1.7,1.7){
-            \qbezier(0,0)(0,0)(1.5,1.45)%
-            \put(2.5,1.8){\herm@oval}%
-            \put(2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+          \put(1,.35){
+            \qbezier(0,0)(0,0)(2,2.35)%
+            \put(3,2.65){\herm@oval}%
+            \put(3,2.65){\makebox(0,0)[c]{$#3$}}%
           }
         }%
       \else
         \ifx\herm@inpos\herm@ro%
           \put(\herm@tsx,\herm@tsy){%
-            \put(1.7,1.7){%
-              \qbezier(0,0)(0,0)(1,.6)%
-              \put(2.5,.6){\herm@oval}%
-              \put(2.5,.6){\makebox(0,0)[c]{$#3$}}%
+            \put(1.5,0){%
+              \qbezier(0,0)(0,0)(2,2)%
+              \put(3.5,2){\herm@oval}%
+              \put(3.5,2){\makebox(0,0)[c]{$#3$}}%
             }%
           }%
         \else
           \ifx\herm@inpos\herm@ru%
             \put(\herm@tsx,\herm@tsy){%
-              \put(1.7,.3){%
-                \qbezier(0,0)(0,0)(1,-.6)%
-                \put(2.5,-.6){\herm@oval}%
-                \put(2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+              \put(1.5,0){%
+                \qbezier(0,0)(0,0)(2,-2)%
+                \put(3.5,-2){\herm@oval}%
+                \put(3.5,-2){\makebox(0,0)[c]{$#3$}}%
               }%
             }%
           \else
             \ifx\herm@inpos\herm@ur%
               \put(\herm@tsx,\herm@tsy){%
-                \put(1.7,.3){%
-                  \qbezier(0,0)(0,0)(1.5,-1.45)%
-                  \put(2.5,-1.8){\herm@oval}%
-                  \put(2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                \put(1,-.35){%
+                  \qbezier(0,0)(0,0)(2,-2.35)%
+                  \put(3,-2.65){\herm@oval}%
+                  \put(3,-2.65){\makebox(0,0)[c]{$#3$}}%
                 }%
               }%
             \else
               \ifx\herm@inpos\herm@ul%
                 \put(\herm@tsx,\herm@tsy){%
-                  \put(.3,.3){%
-                    \qbezier(0,0)(0,0)(-1.5,-1.45)%
-                    \put(-2.5,-1.8){\herm@oval}%
-                    \put(-2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                  \put(-1,-.35){%
+                    \qbezier(0,0)(0,0)(-2,-2.35)%
+                    \put(-3,-2.65){\herm@oval}%
+                    \put(-3,-2.65){\makebox(0,0)[c]{$#3$}}%
                   }%
                 }%
               \else
                 \ifx\herm@inpos\herm@lu%
                   \put(\herm@tsx,\herm@tsy){%
-                    \put(.3,.3){%
-                      \qbezier(0,0)(0,0)(-1,-.6)%
-                      \put(-2.5,-.6){\herm@oval}%
-                      \put(-2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+                    \put(-1.5,0){%
+                      \qbezier(0,0)(0,0)(-2,-2)%
+                      \put(-3.5,-2){\herm@oval}%
+                      \put(-3.5,-2){\makebox(0,0)[c]{$#3$}}%
                     }%
                   }%
                 \else
                   \ifx\herm@inpos\herm@lo%
                     \put(\herm@tsx,\herm@tsy){%
-                      \put(.3,1.7){%
-                        \qbezier(0,0)(0,0)(-1,.6)%
-                        \put(-2.5,.6){\herm@oval}%
-                        \put(-2.5,.6){\makebox(0,0)[c]{$#3$}}%
+                      \put(-1.5,0){%
+                        \qbezier(0,0)(0,0)(-2,2)%
+                        \put(-3.5,2){\herm@oval}%
+                        \put(-3.5,2){\makebox(0,0)[c]{$#3$}}%
                       }%
                     }%
                   \else
                     \ifx\herm@inpos\herm@om%
                       \put(\herm@tsx,\herm@tsy){%
-                        \put(1,2){%
-                          \qbezier(0,0)(0,0)(0,1)%
-                          \put(0,1.5){\herm@oval}%
-                          \put(0,1.5){\makebox(0,0)[c]{$#3$}}%
+                        \put(0,.5){%
+                          \qbezier(0,0)(0,0)(0,2)%
+                          \put(0,2.5){\herm@oval}%
+                          \put(0,2.5){\makebox(0,0)[c]{$#3$}}%
                         }%
                       }%
                     \else
                       \ifx\herm@inpos\herm@rm%
                         \put(\herm@tsx,\herm@tsy){%
-                          \put(2,1){%
-                            \qbezier(0,0)(0,0)(.8,0)%
-                            \put(2.2,0){\herm@oval}%
-                            \put(2.2,0){\makebox(0,0)[c]{$#3$}}%
+                          \put(1.5,0){%
+                            \qbezier(0,0)(0,0)(2,0)%
+                            \put(3.5,0){\herm@oval}%
+                            \put(3.5,0){\makebox(0,0)[c]{$#3$}}%
                           }%
                         }%
                       \else
                         \ifx\herm@inpos\herm@um%
                           \put(\herm@tsx,\herm@tsy){%
-                            \put(1,0){%
-                              \qbezier(0,0)(0,0)(0,-1)%
-                              \put(0,-1.5){\herm@oval}%
-                              \put(0,-1.5){\makebox(0,0)[c]{$#3$}}%
+                            \put(0,-.5){%
+                              \qbezier(0,0)(0,0)(0,-2)%
+                              \put(0,-2.5){\herm@oval}%
+                              \put(0,-2.5){\makebox(0,0)[c]{$#3$}}%
                             }%
                           }%
                         \else
                           \ifx\herm@inpos\herm@lm% 
                             \put(\herm@tsx,\herm@tsy){%
-                              \put(0,1){%
-                                \qbezier(0,0)(0,0)(-.8,0)%
-                                \put(-2.2,0){\herm@oval}%
-                                \put(-2.2,0){\makebox(0,0)[c]{$#3$}}%
+                              \put(-1.5,0){%
+                                \qbezier(0,0)(0,0)(-2,0)%
+                                \put(-3.5,0){\herm@oval}%
+                                \put(-3.5,0){\makebox(0,0)[c]{$#3$}}%
                               }%
                             }%
                           \else
@@ -1233,7 +960,7 @@
         \fi%
       \fi%
     \fi%
- \fi%
+  \fi%
 }%
 %
 \def\herm@oval{%
@@ -1523,113 +1250,113 @@
         \fi%
       \fi%
     \fi% 
- \fi%
-  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+  \fi%
+  \expandafter\if\csname hermcattr@#2 \endcsname 1%
     \ifx\herm@inpos\herm@ol%
       \put(\herm@tsx,\herm@tsy){%
-        \put(.3,1.7){%
-          \qbezier(0,0)(0,0)(-1.5,1.45)%
-          \put(-2.5,1.8){\herm@doval}%
-          \put(-2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+        \put(-1,.35){%
+          \qbezier(0,0)(0,0)(-2,2.35)%
+          \put(-3,2.65){\herm@doval}%
+          \put(-3,2.65){\makebox(0,0)[c]{$#3$}}%
         }%
       }%
     \else
       \ifx\herm@inpos\herm@or% 
         \put(\herm@tsx,\herm@tsy){%
-          \put(1.7,1.7){
-            \qbezier(0,0)(0,0)(1.5,1.45)%
-            \put(2.5,1.8){\herm@doval}%
-            \put(2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+          \put(1,.35){
+            \qbezier(0,0)(0,0)(2,2.35)%
+            \put(3,2.65){\herm@doval}%
+            \put(3,2.65){\makebox(0,0)[c]{$#3$}}%
           }
         }%
       \else
         \ifx\herm@inpos\herm@ro%
           \put(\herm@tsx,\herm@tsy){%
-            \put(1.7,1.7){%
-              \qbezier(0,0)(0,0)(1,.6)%
-              \put(2.5,.6){\herm@doval}%
-              \put(2.5,.6){\makebox(0,0)[c]{$#3$}}%
+            \put(1.5,0){%
+              \qbezier(0,0)(0,0)(2,2)%
+              \put(3.5,2){\herm@doval}%
+              \put(3.5,2){\makebox(0,0)[c]{$#3$}}%
             }%
           }%
         \else
           \ifx\herm@inpos\herm@ru%
             \put(\herm@tsx,\herm@tsy){%
-              \put(1.7,.3){%
-                \qbezier(0,0)(0,0)(1,-.6)%
-                \put(2.5,-.6){\herm@doval}%
-                \put(2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+              \put(1.5,0){%
+                \qbezier(0,0)(0,0)(2,-2)%
+                \put(3.5,-2){\herm@doval}%
+                \put(3.5,-2){\makebox(0,0)[c]{$#3$}}%
               }%
             }%
           \else
             \ifx\herm@inpos\herm@ur%
               \put(\herm@tsx,\herm@tsy){%
-                \put(1.7,.3){%
-                  \qbezier(0,0)(0,0)(1.5,-1.45)%
-                  \put(2.5,-1.8){\herm@doval}%
-                  \put(2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                \put(1,-.35){%
+                  \qbezier(0,0)(0,0)(2,-2.35)%
+                  \put(3,-2.65){\herm@doval}%
+                  \put(3,-2.65){\makebox(0,0)[c]{$#3$}}%
                 }%
               }%
             \else
               \ifx\herm@inpos\herm@ul%
                 \put(\herm@tsx,\herm@tsy){%
-                  \put(.3,.3){%
-                    \qbezier(0,0)(0,0)(-1.5,-1.45)%
-                    \put(-2.5,-1.8){\herm@doval}%
-                    \put(-2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                  \put(-1,-.35){%
+                    \qbezier(0,0)(0,0)(-2,-2.35)%
+                    \put(-3,-2.65){\herm@doval}%
+                    \put(-3,-2.65){\makebox(0,0)[c]{$#3$}}%
                   }%
                 }%
               \else
                 \ifx\herm@inpos\herm@lu%
                   \put(\herm@tsx,\herm@tsy){%
-                    \put(.3,.3){%
-                      \qbezier(0,0)(0,0)(-1,-.6)%
-                      \put(-2.5,-.6){\herm@doval}%
-                      \put(-2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+                    \put(-1.5,0){%
+                      \qbezier(0,0)(0,0)(-2,-2)%
+                      \put(-3.5,-2){\herm@doval}%
+                      \put(-3.5,-2){\makebox(0,0)[c]{$#3$}}%
                     }%
                   }%
                 \else
                   \ifx\herm@inpos\herm@lo%
                     \put(\herm@tsx,\herm@tsy){%
-                      \put(.3,1.7){%
-                        \qbezier(0,0)(0,0)(-1,.6)%
-                        \put(-2.5,.6){\herm@doval}%
-                        \put(-2.5,.6){\makebox(0,0)[c]{$#3$}}%
+                      \put(-1.5,0){%
+                        \qbezier(0,0)(0,0)(-2,2)%
+                        \put(-3.5,2){\herm@doval}%
+                        \put(-3.5,2){\makebox(0,0)[c]{$#3$}}%
                       }%
                     }%
                   \else
                     \ifx\herm@inpos\herm@om%
                       \put(\herm@tsx,\herm@tsy){%
-                        \put(1,2){%
-                          \qbezier(0,0)(0,0)(0,1)%
-                          \put(0,1.5){\herm@doval}%
-                          \put(0,1.5){\makebox(0,0)[c]{$#3$}}%
+                        \put(0,.5){%
+                          \qbezier(0,0)(0,0)(0,2)%
+                          \put(0,2.5){\herm@doval}%
+                          \put(0,2.5){\makebox(0,0)[c]{$#3$}}%
                         }%
                       }%
                     \else
                       \ifx\herm@inpos\herm@rm%
                         \put(\herm@tsx,\herm@tsy){%
-                          \put(2,1){%
-                            \qbezier(0,0)(0,0)(.8,0)%
-                            \put(2.2,0){\herm@doval}%
-                            \put(2.2,0){\makebox(0,0)[c]{$#3$}}%
+                          \put(1.5,0){%
+                            \qbezier(0,0)(0,0)(2,0)%
+                            \put(3.5,0){\herm@doval}%
+                            \put(3.5,0){\makebox(0,0)[c]{$#3$}}%
                           }%
                         }%
                       \else
                         \ifx\herm@inpos\herm@um%
                           \put(\herm@tsx,\herm@tsy){%
-                            \put(1,0){%
-                              \qbezier(0,0)(0,0)(0,-1)%
-                              \put(0,-1.5){\herm@doval}%
-                              \put(0,-1.5){\makebox(0,0)[c]{$#3$}}%
+                            \put(0,-.5){%
+                              \qbezier(0,0)(0,0)(0,-2)%
+                              \put(0,-2.5){\herm@doval}%
+                              \put(0,-2.5){\makebox(0,0)[c]{$#3$}}%
                             }%
                           }%
                         \else
                           \ifx\herm@inpos\herm@lm% 
                             \put(\herm@tsx,\herm@tsy){%
-                              \put(0,1){%
-                                \qbezier(0,0)(0,0)(-.8,0)%
-                                \put(-2.2,0){\herm@doval}%
-                                \put(-2.2,0){\makebox(0,0)[c]{$#3$}}%
+                              \put(-1.5,0){%
+                                \qbezier(0,0)(0,0)(-2,0)%
+                                \put(-3.5,0){\herm@doval}%
+                                \put(-3.5,0){\makebox(0,0)[c]{$#3$}}%
                               }%
                             }%
                           \else
@@ -1638,7 +1365,7 @@
                               \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
                               \MessageBreak Using default [or].
                             }%
-                            \attr[or]{#2}{#3}%
+                            \multivaluedattr[or]{#2}{#3}%
                           \fi%
                         \fi%
                       \fi%
@@ -1651,7 +1378,7 @@
         \fi%
       \fi%
     \fi%
- \fi%
+  \fi%
 }%
 \def\herm@doval{%
   \qbezier(-1.5,0)(-1.5,.25)(-1,.4)%
@@ -1974,146 +1701,6 @@
       \fi%
     \fi% 
  \fi%
-  \expandafter\if\csname hermcluster@#2 \endcsname 1%
-    \ifx\herm@inpos\herm@ol%
-      \put(\herm@tsx,\herm@tsy){%
-        \put(.3,1.7){%
-          \qbezier(0,0)(0,0)(-1.5,1.45)%
-          \put(-.75,.72){\circle{.5}}%
-          \put(-2.5,1.8){\herm@oval}%
-          \put(-2.5,1.8){\makebox(0,0)[c]{$#3$}}%
-        }%
-      }%
-    \else
-      \ifx\herm@inpos\herm@or% 
-        \put(\herm@tsx,\herm@tsy){%
-          \put(1.7,1.7){
-            \qbezier(0,0)(0,0)(1.5,1.45)%
-            \put(.75,.72){\circle{.5}}%
-            \put(2.5,1.8){\herm@oval}%
-            \put(2.5,1.8){\makebox(0,0)[c]{$#3$}}%
-          }
-        }%
-      \else
-        \ifx\herm@inpos\herm@ro%
-          \put(\herm@tsx,\herm@tsy){%
-            \put(1.7,1.7){%
-              \qbezier(0,0)(0,0)(1,.6)%
-              \put(.5,.3){\circle{.5}}%
-              \put(2.5,.6){\herm@oval}%
-              \put(2.5,.6){\makebox(0,0)[c]{$#3$}}%
-            }%
-          }%
-        \else
-          \ifx\herm@inpos\herm@ru%
-            \put(\herm@tsx,\herm@tsy){%
-              \put(1.7,.3){%
-                \qbezier(0,0)(0,0)(1,-.6)%
-                \put(.5,-.3){\circle{.5}}%
-                \put(2.5,-.6){\herm@oval}%
-                \put(2.5,-.6){\makebox(0,0)[c]{$#3$}}%
-              }%
-            }%
-          \else
-            \ifx\herm@inpos\herm@ur%
-              \put(\herm@tsx,\herm@tsy){%
-                \put(1.7,.3){%
-                  \qbezier(0,0)(0,0)(1.5,-1.45)%
-                  \put(.75,-.72){\circle{.5}}%
-                  \put(2.5,-1.8){\herm@oval}%
-                  \put(2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
-                }%
-              }%
-            \else
-              \ifx\herm@inpos\herm@ul%
-                \put(\herm@tsx,\herm@tsy){%
-                  \put(.3,.3){%
-                    \qbezier(0,0)(0,0)(-1.5,-1.45)%
-                    \put(-.75,-.72){\circle{.5}}%
-                    \put(-2.5,-1.8){\herm@oval}%
-                    \put(-2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
-                  }%
-                }%
-              \else
-                \ifx\herm@inpos\herm@lu%
-                  \put(\herm@tsx,\herm@tsy){%
-                    \put(.3,.3){%
-                      \qbezier(0,0)(0,0)(-1,-.6)%
-                      \put(-.5,-.3){\circle{.5}}%
-                      \put(-2.5,-.6){\herm@oval}%
-                      \put(-2.5,-.6){\makebox(0,0)[c]{$#3$}}%
-                    }%
-                  }%
-                \else
-                  \ifx\herm@inpos\herm@lo%
-                    \put(\herm@tsx,\herm@tsy){%
-                      \put(.3,1.7){%
-                        \qbezier(0,0)(0,0)(-1,.6)%
-                        \put(-.5,.3){\circle{.5}}%
-                        \put(-2.5,.6){\herm@oval}%
-                        \put(-2.5,.6){\makebox(0,0)[c]{$#3$}}%
-                      }%
-                    }%
-                  \else
-                    \ifx\herm@inpos\herm@om%
-                      \put(\herm@tsx,\herm@tsy){%
-                        \put(1,2){%
-                          \qbezier(0,0)(0,0)(0,1)%
-                          \put(0,.5){\circle{.5}}%
-                          \put(0,1.5){\herm@oval}%
-                          \put(0,1.5){\makebox(0,0)[c]{$#3$}}%
-                        }%
-                      }%
-                    \else
-                      \ifx\herm@inpos\herm@rm%
-                        \put(\herm@tsx,\herm@tsy){%
-                          \put(2,1){%
-                            \qbezier(0,0)(0,0)(.8,0)%
-                            \put(.4,0){\circle{.5}}%
-                            \put(2.2,0){\herm@oval}%
-                            \put(2.2,0){\makebox(0,0)[c]{$#3$}}%
-                          }%
-                        }%
-                      \else
-                        \ifx\herm@inpos\herm@um%
-                          \put(\herm@tsx,\herm@tsy){%
-                            \put(1,0){%
-                              \qbezier(0,0)(0,0)(0,-1)%
-                              \put(0,-.5){\circle{.5}}%
-                              \put(0,-1.5){\herm@oval}%
-                              \put(0,-1.5){\makebox(0,0)[c]{$#3$}}%
-                            }%
-                          }%
-                        \else
-                          \ifx\herm@inpos\herm@lm% 
-                            \put(\herm@tsx,\herm@tsy){%
-                              \put(0,1){%
-                                \qbezier(0,0)(0,0)(-.8,0)%
-                                \put(-.4,0){\circle{.5}}%
-                                \put(-2.2,0){\herm@oval}%
-                                \put(-2.2,0){\makebox(0,0)[c]{$#3$}}%
-                              }%
-                            }%
-                          \else
-                            \PackageWarning{herm-pic}{%
-                              Undefind attribute positioning parameter #1
-                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
-                              \MessageBreak Using default [or].
-                            }%
-                            \attr[or]{#2}{#3}%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi%
-      \fi%
-    \fi%
- \fi%
 }%
 %
 \def\derivedattr[#1]#2#3{%
@@ -2394,112 +1981,112 @@
       \fi%
     \fi% 
  \fi%
-  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+\expandafter\if\csname hermcattr@#2 \endcsname 1%
     \ifx\herm@inpos\herm@ol%
       \put(\herm@tsx,\herm@tsy){%
-        \put(.3,1.7){%
-          \qbezier(0,0)(0,0)(-1.5,1.45)%
-          \put(-2.5,1.8){\herm@dotedoval}%
-          \put(-2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+        \put(-1,.35){%
+          \qbezier(0,0)(0,0)(-2,2.35)%
+          \put(-3,2.65){\herm@dotedoval}%
+          \put(-3,2.65){\makebox(0,0)[c]{$#3$}}%
         }%
       }%
     \else
       \ifx\herm@inpos\herm@or% 
         \put(\herm@tsx,\herm@tsy){%
-          \put(1.7,1.7){
-            \qbezier(0,0)(0,0)(1.5,1.45)%
-            \put(2.5,1.8){\herm@dotedoval}%
-            \put(2.5,1.8){\makebox(0,0)[c]{$#3$}}%
+          \put(1,.35){
+            \qbezier(0,0)(0,0)(2,2.35)%
+            \put(3,2.65){\herm@dotedoval}%
+            \put(3,2.65){\makebox(0,0)[c]{$#3$}}%
           }
         }%
       \else
         \ifx\herm@inpos\herm@ro%
           \put(\herm@tsx,\herm@tsy){%
-            \put(1.7,1.7){%
-              \qbezier(0,0)(0,0)(1,.6)%
-              \put(2.5,.6){\herm@dotedoval}%
-              \put(2.5,.6){\makebox(0,0)[c]{$#3$}}%
+            \put(1.5,0){%
+              \qbezier(0,0)(0,0)(2,2)%
+              \put(3.5,2){\herm@dotedoval}%
+              \put(3.5,2){\makebox(0,0)[c]{$#3$}}%
             }%
           }%
         \else
           \ifx\herm@inpos\herm@ru%
             \put(\herm@tsx,\herm@tsy){%
-              \put(1.7,.3){%
-                \qbezier(0,0)(0,0)(1,-.6)%
-                \put(2.5,-.6){\herm@dotedoval}%
-                \put(2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+              \put(1.5,0){%
+                \qbezier(0,0)(0,0)(2,-2)%
+                \put(3.5,-2){\herm@dotedoval}%
+                \put(3.5,-2){\makebox(0,0)[c]{$#3$}}%
               }%
             }%
           \else
             \ifx\herm@inpos\herm@ur%
               \put(\herm@tsx,\herm@tsy){%
-                \put(1.7,.3){%
-                  \qbezier(0,0)(0,0)(1.5,-1.45)%
-                  \put(2.5,-1.8){\herm@dotedoval}%
-                  \put(2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                \put(1,-.35){%
+                  \qbezier(0,0)(0,0)(2,-2.35)%
+                  \put(3,-2.65){\herm@dotedoval}%
+                  \put(3,-2.65){\makebox(0,0)[c]{$#3$}}%
                 }%
               }%
             \else
               \ifx\herm@inpos\herm@ul%
                 \put(\herm@tsx,\herm@tsy){%
-                  \put(.3,.3){%
-                    \qbezier(0,0)(0,0)(-1.5,-1.45)%
-                    \put(-2.5,-1.8){\herm@dotedoval}%
-                    \put(-2.5,-1.8){\makebox(0,0)[c]{$#3$}}%
+                  \put(-1,-.35){%
+                    \qbezier(0,0)(0,0)(-2,-2.35)%
+                    \put(-3,-2.65){\herm@dotedoval}%
+                    \put(-3,-2.65){\makebox(0,0)[c]{$#3$}}%
                   }%
                 }%
               \else
                 \ifx\herm@inpos\herm@lu%
                   \put(\herm@tsx,\herm@tsy){%
-                    \put(.3,.3){%
-                      \qbezier(0,0)(0,0)(-1,-.6)%
-                      \put(-2.5,-.6){\herm@dotedoval}%
-                      \put(-2.5,-.6){\makebox(0,0)[c]{$#3$}}%
+                    \put(-1.5,0){%
+                      \qbezier(0,0)(0,0)(-2,-2)%
+                      \put(-3.5,-2){\herm@dotedoval}%
+                      \put(-3.5,-2){\makebox(0,0)[c]{$#3$}}%
                     }%
                   }%
                 \else
                   \ifx\herm@inpos\herm@lo%
                     \put(\herm@tsx,\herm@tsy){%
-                      \put(.3,1.7){%
-                        \qbezier(0,0)(0,0)(-1,.6)%
-                        \put(-2.5,.6){\herm@dotedoval}%
-                        \put(-2.5,.6){\makebox(0,0)[c]{$#3$}}%
+                      \put(-1.5,0){%
+                        \qbezier(0,0)(0,0)(-2,2)%
+                        \put(-3.5,2){\herm@dotedoval}%
+                        \put(-3.5,2){\makebox(0,0)[c]{$#3$}}%
                       }%
                     }%
                   \else
                     \ifx\herm@inpos\herm@om%
                       \put(\herm@tsx,\herm@tsy){%
-                        \put(1,2){%
-                          \qbezier(0,0)(0,0)(0,1)%
-                          \put(0,1.5){\herm@dotedoval}%
-                          \put(0,1.5){\makebox(0,0)[c]{$#3$}}%
+                        \put(0,.5){%
+                          \qbezier(0,0)(0,0)(0,2)%
+                          \put(0,2.5){\herm@dotedoval}%
+                          \put(0,2.5){\makebox(0,0)[c]{$#3$}}%
                         }%
                       }%
                     \else
                       \ifx\herm@inpos\herm@rm%
                         \put(\herm@tsx,\herm@tsy){%
-                          \put(2,1){%
-                            \qbezier(0,0)(0,0)(.8,0)%
-                            \put(2.2,0){\herm@dotedoval}%
-                            \put(2.2,0){\makebox(0,0)[c]{$#3$}}%
+                          \put(1.5,0){%
+                            \qbezier(0,0)(0,0)(2,0)%
+                            \put(3.5,0){\herm@dotedoval}%
+                            \put(3.5,0){\makebox(0,0)[c]{$#3$}}%
                           }%
                         }%
                       \else
                         \ifx\herm@inpos\herm@um%
                           \put(\herm@tsx,\herm@tsy){%
-                            \put(1,0){%
-                              \qbezier(0,0)(0,0)(0,-1)%
-                              \put(0,-1.5){\herm@dotedoval}%
-                              \put(0,-1.5){\makebox(0,0)[c]{$#3$}}%
+                            \put(0,-.5){%
+                              \qbezier(0,0)(0,0)(0,-2)%
+                              \put(0,-2.5){\herm@dotedoval}%
+                              \put(0,-2.5){\makebox(0,0)[c]{$#3$}}%
                             }%
                           }%
                         \else
                           \ifx\herm@inpos\herm@lm% 
                             \put(\herm@tsx,\herm@tsy){%
-                              \put(0,1){%
-                                \qbezier(0,0)(0,0)(-.8,0)%
-                                \put(-2.2,0){\herm@dotedoval}%
-                                \put(-2.2,0){\makebox(0,0)[c]{$#3$}}%
+                              \put(-1.5,0){%
+                                \qbezier(0,0)(0,0)(-2,0)%
+                                \put(-3.5,0){\herm@dotedoval}%
+                                \put(-3.5,0){\makebox(0,0)[c]{$#3$}}%
                               }%
                             }%
                           \else
@@ -2521,7 +2108,7 @@
         \fi%
       \fi%
     \fi%
- \fi%
+  \fi%
 }%
 %
 \def\herm@dotedoval{%
@@ -2534,7 +2121,602 @@
   \qbezier[10](0,-.5)(-.4,-.5)(-1,-.35)%
   \qbezier[10](-1,-.35)(-1.5,-.25)(-1.5,0)%
 }%
-
+\newcount\herm@cattrx
+\newcount\herm@cattry
+\def\complexattr[#1]#2#3{%
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{Process structured ERD attribute \string#3 on \string#2 ...}%
+  \fi%
+  \newif\ifherm@conerr \herm@conerrtrue
+  \expandafter\if\csname hermobj@#2 \endcsname 1%
+    \ifherm@verbatim%
+      \PackageInfo{herm-pic}{   object \string#2 found}%
+    \fi%
+    \herm@conerrfalse%
+    \herm@tsx=\csname hermobjx@#2 \endcsname%
+    \herm@tsy=\csname hermobjy@#2 \endcsname%
+    \ifherm@verbatim%
+      \PackageInfo{herm-pic}{      with \the\herm@tsx, \the\herm@tsy}%
+    \fi%
+  \fi%
+  \ifherm@conerr%
+    \PackageError {herm-pic}{Undefined object #2 in addvanced attribute}{See herm-pic documentation}%
+  \fi%
+  % prepare attribute placement
+  \def\herm@inpos{#1}%
+  \herm@cattrx=\herm@tsx%
+  \herm@cattry=\herm@tsy%
+  \PackageInfo{herm-pic}{      Test1 \the\herm@cattrx, \the\herm@cattry}%
+  % compute attribute drawing
+  \expandafter\if\csname herment@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol%
+      \put(\herm@tsx,\herm@tsy){%
+        \put(.5,2){%
+          \qbezier(0,0)(0,0)(-1.1,1.75)%
+          \put(-2.5,2){\herm@oval}%
+  \PackageInfo{herm-pic}{      Test2 befor \the\herm@cattrx, \the\herm@cattry}%
+          \advance\herm@cattrx by -2%
+          \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+          \put(-2.5,2){\makebox(0,0)[c]{$#3$}}%
+        }%
+      }%
+    \else
+      \ifx\herm@inpos\herm@or% 
+        \put(\herm@tsx,\herm@tsy){%
+          \put(3.5,2){
+            \qbezier(0,0)(0,0)(1.1,1.75)%
+            \put(2.5,2){\herm@oval}%
+            \advance\herm@cattrx by 6%
+            \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+            \put(2.5,2){\makebox(0,0)[c]{$#3$}}%
+          }
+        }%
+      \else
+        \ifx\herm@inpos\herm@ro%
+          \put(\herm@tsx,\herm@tsy){%
+            \put(4,1.7){%
+              \qbezier(0,0)(0,0)(1.6,1.1)%
+              \put(3,1.3){\herm@oval}%
+              \advance\herm@cattrx by 7%
+              \advance\herm@cattry by 3%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+              \put(3,1.3){\makebox(0,0)[c]{$#3$}}%
+            }%
+          }%
+        \else
+          \ifx\herm@inpos\herm@ru%
+            \put(\herm@tsx,\herm@tsy){%
+              \put(4,.3){%
+                \qbezier(0,0)(0,0)(1.6,-1.1)%
+                \put(3,-1.3){\herm@oval}%
+                \advance\herm@cattrx by 7%
+                \advance\herm@cattry by -1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                \put(3,-1.3){\makebox(0,0)[c]{$#3$}}%
+              }%
+            }%
+          \else
+            \ifx\herm@inpos\herm@ur%
+              \put(\herm@tsx,\herm@tsy){%
+                \put(3.5,0){%
+                  \qbezier(0,0)(0,0)(1.1,-1.75)%
+                  \put(2.5,-2){\herm@oval}%
+                  \advance\herm@cattrx by 6%
+                  \advance\herm@cattry by -2%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                  \put(2.5,-2){\makebox(0,0)[c]{$#3$}}%
+                }%
+              }%
+            \else
+              \ifx\herm@inpos\herm@ul%
+                \put(\herm@tsx,\herm@tsy){%
+                  \put(.5,0){%
+                    \qbezier(0,0)(0,0)(-1.1,-1.75)%
+                    \put(-2.5,-2){\herm@oval}%
+                    \advance\herm@cattrx by -2%
+                    \advance\herm@cattry by -2%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                    \put(-2.5,-2){\makebox(0,0)[c]{$#3$}}%
+                  }%
+                }%
+              \else
+                \ifx\herm@inpos\herm@lu%
+                  \put(\herm@tsx,\herm@tsy){%
+                    \put(0,.3){%
+                      \qbezier(0,0)(0,0)(-1.6,-1.1)%
+                      \put(-3,-1.3){\herm@oval}%
+                      \advance\herm@cattrx by -3%
+                      \advance\herm@cattry by -1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                      \put(-3,-1.3){\makebox(0,0)[c]{$#3$}}%
+                    }%
+                  }%
+                \else
+                  \ifx\herm@inpos\herm@lo%
+                    \put(\herm@tsx,\herm@tsy){%
+                      \put(0,1.7){%
+                        \qbezier(0,0)(0,0)(-1.6,1.1)%
+                        \put(-3,1.3){\herm@oval}%
+                        \advance\herm@cattrx by -3%
+                        \advance\herm@cattry by 3%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                        \put(-3,1.3){\makebox(0,0)[c]{$#3$}}%
+                      }%
+                    }%
+                  \else
+                    \ifx\herm@inpos\herm@om%
+                      \put(\herm@tsx,\herm@tsy){%
+                        \put(2,2){%
+                          \qbezier(0,0)(0,0)(0,1.5)%
+                          \put(0,2){\herm@oval}%
+                          \advance\herm@cattrx by 2%
+                          \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                          \put(0,2){\makebox(0,0)[c]{$#3$}}%
+                        }%
+                      }%
+                    \else
+                      \ifx\herm@inpos\herm@rm%
+                        \put(\herm@tsx,\herm@tsy){%
+                          \put(4,1){%
+                            \qbezier(0,0)(0,0)(1.5,0)%
+                            \put(3,0){\herm@oval}%
+                            \advance\herm@cattrx by 7%
+                            \advance\herm@cattry by 1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                            \put(3,0){\makebox(0,0)[c]{$#3$}}%
+                          }%
+                        }%
+                      \else
+                        \ifx\herm@inpos\herm@um%
+                          \put(\herm@tsx,\herm@tsy){%
+                            \put(2,0){%
+                              \qbezier(0,0)(0,0)(0,-1.5)%
+                              \put(0,-2){\herm@oval}%
+                              \advance\herm@cattrx by 2%
+                              \advance\herm@cattry by -2%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                              \put(0,-2){\makebox(0,0)[c]{$#3$}}%
+                            }%
+                          }%
+                        \else
+                          \ifx\herm@inpos\herm@lm% 
+                            \put(\herm@tsx,\herm@tsy){%
+                              \put(0,1){%
+                                \qbezier(0,0)(0,0)(-1.5,0)%
+                                \put(-3,0){\herm@oval}%
+                                \advance\herm@cattrx by -3%
+                                \advance\herm@cattry by 1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                                \put(-3,0){\makebox(0,0)[c]{$#3$}}%
+                              }%
+                            }%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \attr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+  \expandafter\if\csname hermrel@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol%
+      \put(\herm@tsx,\herm@tsy){%
+        \put(1,1.5){%
+          \qbezier(0,0)(0,0)(-1.7,2.2)%
+          \put(-3,2.5){\herm@oval}%
+          \advance\herm@cattrx by -2%
+          \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+          \put(-3,2.5){\makebox(0,0)[c]{$#3$}}%
+        }%
+      }%
+    \else
+      \ifx\herm@inpos\herm@or% 
+        \put(\herm@tsx,\herm@tsy){%
+          \put(3,1.5){
+            \qbezier(0,0)(0,0)(1.7,2.2)%
+            \put(3,2.5){\herm@oval}%
+            \advance\herm@cattrx by 6%
+            \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+            \put(3,2.5){\makebox(0,0)[c]{$#3$}}%
+          }
+        }%
+      \else
+        \ifx\herm@inpos\herm@ro%
+          \put(\herm@tsx,\herm@tsy){%
+            \put(3,1.5){%
+              \qbezier(0,0)(0,0)(2.5,1.4)%
+              \put(4,1.5){\herm@oval}%
+              \advance\herm@cattrx by 7%
+              \advance\herm@cattry by 3%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+              \put(4,1.5){\makebox(0,0)[c]{$#3$}}%
+            }%
+          }%
+        \else
+          \ifx\herm@inpos\herm@ru%
+            \put(\herm@tsx,\herm@tsy){%
+              \put(3,.5){%
+                \qbezier(0,0)(0,0)(2.5,-1.4)%
+                \put(4,-1.5){\herm@oval}%
+                \advance\herm@cattrx by 7%
+                \advance\herm@cattry by -1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                \put(4,-1.5){\makebox(0,0)[c]{$#3$}}%
+              }%
+            }%
+          \else
+            \ifx\herm@inpos\herm@ur%
+              \put(\herm@tsx,\herm@tsy){%
+                \put(3,.5){%
+                  \qbezier(0,0)(0,0)(1.7,-2.2)%
+                  \put(3,-2.5){\herm@oval}%
+                  \advance\herm@cattrx by 6%
+                  \advance\herm@cattry by -2%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                  \put(3,-2.5){\makebox(0,0)[c]{$#3$}}%
+                }%
+              }%
+            \else
+              \ifx\herm@inpos\herm@ul%
+                \put(\herm@tsx,\herm@tsy){%
+                  \put(1,.5){%
+                    \qbezier(0,0)(0,0)(-1.7,-2.2)%
+                    \put(-3,-2.5){\herm@oval}%
+                    \advance\herm@cattrx by -2%
+                    \advance\herm@cattry by -2%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                    \put(-3,-2.5){\makebox(0,0)[c]{$#3$}}%
+                  }%
+                }%
+              \else
+                \ifx\herm@inpos\herm@lu%
+                  \put(\herm@tsx,\herm@tsy){%
+                    \put(1,.5){%
+                      \qbezier(0,0)(0,0)(-2.5,-1.4)%
+                      \put(-4,-1.5){\herm@oval}%
+                      \advance\herm@cattrx by -3%
+                      \advance\herm@cattry by -1%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                      \put(-4,-1.5){\makebox(0,0)[c]{$#3$}}%
+                    }%
+                  }%
+                \else
+                  \ifx\herm@inpos\herm@lo%
+                    \put(\herm@tsx,\herm@tsy){%
+                      \put(1,1.5){%
+                        \qbezier(0,0)(0,0)(-2.5,1.4)%
+                        \put(-4,1.5){\herm@oval}%
+                        \advance\herm@cattrx by -3%
+                        \advance\herm@cattry by 3%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                        \put(-4,1.5){\makebox(0,0)[c]{$#3$}}%
+                      }%
+                    }%
+                  \else
+                    \ifx\herm@inpos\herm@om%
+                      \put(\herm@tsx,\herm@tsy){%
+                        \put(2,2){%
+                          \qbezier(0,0)(0,0)(0,1.5)%
+                          \put(0,2){\herm@oval}%
+                          \advance\herm@cattrx by 2%
+                          \advance\herm@cattry by 4%
+  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                          \put(0,2){\makebox(0,0)[c]{$#3$}}%
+                        }%
+                      }%
+                    \else
+                      \ifx\herm@inpos\herm@rm%
+                        \put(\herm@tsx,\herm@tsy){%
+                          \put(4,1){%
+                            \qbezier(0,0)(0,0)(1.5,0)%
+                            \put(3,0){\herm@oval}%
+                            \advance\herm@cattrx by 7%
+                            \advance\herm@cattry by 1%
+                            \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                            \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                            \PackageInfo{herm-pic}{     Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                            \put(3,0){\makebox(0,0)[c]{$#3$}}%
+                          }%
+                        }%
+                      \else
+                        \ifx\herm@inpos\herm@um%
+                          \put(\herm@tsx,\herm@tsy){%
+                            \put(2,0){%
+                              \qbezier(0,0)(0,0)(0,-1.5)%
+                              \put(0,-2){\herm@oval}%
+                              \advance\herm@cattrx by 2%
+                              \advance\herm@cattry by -2%
+                              \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                              \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                              \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                              \put(0,-2){\makebox(0,0)[c]{$#3$}}%
+                            }%
+                          }%
+                        \else
+                          \ifx\herm@inpos\herm@lm% 
+                            \put(\herm@tsx,\herm@tsy){%
+                              \put(0,1){%
+                                \qbezier(0,0)(0,0)(-1.5,0)%
+                                \put(-3,0){\herm@oval}%
+                                \advance\herm@cattrx by -3%
+                                \advance\herm@cattry by 1%
+                                \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                                \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                                \PackageInfo{herd-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                                \put(-3,0){\makebox(0,0)[c]{$#3$}}%
+                              }%
+                            }%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \attr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi% 
+ \fi%
+  \expandafter\if\csname hermcattr@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol%
+      \put(\herm@tsx,\herm@tsy){%
+        \put(-1,.35){%
+          \qbezier(0,0)(0,0)(-2,2.35)%
+          \put(-3,2.65){\herm@oval}%
+          \advance\herm@cattrx by -4%
+          \advance\herm@cattry by 3%
+          \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+          \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+          \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+          \put(-3,2.65){\makebox(0,0)[c]{$#3$}}%
+        }%
+      }%
+    \else
+      \ifx\herm@inpos\herm@or% 
+        \put(\herm@tsx,\herm@tsy){%
+          \put(1,.35){
+            \qbezier(0,0)(0,0)(2,2.35)%
+            \put(3,2.65){\herm@oval}%
+            \advance\herm@cattrx by 4%
+            \advance\herm@cattry by 3%
+            \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+            \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+            \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+            \put(3,2.65){\makebox(0,0)[c]{$#3$}}%
+          }
+        }%
+      \else
+        \ifx\herm@inpos\herm@ro%
+          \put(\herm@tsx,\herm@tsy){%
+            \put(1.5,0){%
+              \qbezier(0,0)(0,0)(2,2)%
+              \put(3.5,2){\herm@oval}%
+              \advance\herm@cattrx by 5%
+              \advance\herm@cattry by 2%
+              \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+              \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+              \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+              \put(3.5,2){\makebox(0,0)[c]{$#3$}}%
+            }%
+          }%
+        \else
+          \ifx\herm@inpos\herm@ru%
+            \put(\herm@tsx,\herm@tsy){%
+              \put(1.5,0){%
+                \qbezier(0,0)(0,0)(2,-2)%
+                \put(3.5,-2){\herm@oval}%
+                \advance\herm@cattrx by 5%
+                \advance\herm@cattry by -2%
+                \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                \put(3.5,-2){\makebox(0,0)[c]{$#3$}}%
+              }%
+            }%
+          \else
+            \ifx\herm@inpos\herm@ur%
+              \put(\herm@tsx,\herm@tsy){%
+                \put(1,-.35){%
+                  \qbezier(0,0)(0,0)(2,-2.35)%
+                  \put(3,-2.65){\herm@oval}%
+                  \advance\herm@cattrx by 4%
+                  \advance\herm@cattry by -3%
+                  \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                  \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                  \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                  \put(3,-2.65){\makebox(0,0)[c]{$#3$}}%
+                }%
+              }%
+            \else
+              \ifx\herm@inpos\herm@ul%
+                \put(\herm@tsx,\herm@tsy){%
+                  \put(-1,-.35){%
+                    \qbezier(0,0)(0,0)(-2,-2.35)%
+                    \put(-3,-2.65){\herm@oval}%
+                    \advance\herm@cattrx by -4%
+                    \advance\herm@cattry by -3%
+                    \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                    \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                    \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                    \put(-3,-2.65){\makebox(0,0)[c]{$#3$}}%
+                  }%
+                }%
+              \else
+                \ifx\herm@inpos\herm@lu%
+                  \put(\herm@tsx,\herm@tsy){%
+                    \put(-1.5,0){%
+                      \qbezier(0,0)(0,0)(-2,-2)%
+                      \put(-3.5,-2){\herm@oval}%
+                      \advance\herm@cattrx by -5%
+                      \advance\herm@cattry by -2%
+                      \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                      \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                      \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                      \put(-3.5,-2){\makebox(0,0)[c]{$#3$}}%
+                    }%
+                  }%
+                \else
+                  \ifx\herm@inpos\herm@lo%
+                    \put(\herm@tsx,\herm@tsy){%
+                      \put(-1.5,0){%
+                        \qbezier(0,0)(0,0)(-2,2)%
+                        \put(-3.5,2){\herm@oval}%
+                        \advance\herm@cattrx by -5%
+                        \advance\herm@cattry by 2%
+                        \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                        \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                        \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                        \put(-3.5,2){\makebox(0,0)[c]{$#3$}}%
+                      }%
+                    }%
+                  \else
+                    \ifx\herm@inpos\herm@om%
+                      \put(\herm@tsx,\herm@tsy){%
+                        \put(0,.5){%
+                          \qbezier(0,0)(0,0)(0,2)%
+                          \put(0,2.5){\herm@oval}%
+                          \advance\herm@cattrx by 0%
+                          \advance\herm@cattry by 3%
+                          \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                          \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                          \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                          \put(0,2.5){\makebox(0,0)[c]{$#3$}}%
+                        }%
+                      }%
+                    \else
+                      \ifx\herm@inpos\herm@rm%
+                        \put(\herm@tsx,\herm@tsy){%
+                          \put(1.5,0){%
+                            \qbezier(0,0)(0,0)(2,0)%
+                            \put(3.5,0){\herm@oval}%
+                            \advance\herm@cattrx by 5%
+                            \advance\herm@cattry by 0%
+                            \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                            \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                            \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                            \put(3.5,0){\makebox(0,0)[c]{$#3$}}%
+                          }%
+                        }%
+                      \else
+                        \ifx\herm@inpos\herm@um%
+                          \put(\herm@tsx,\herm@tsy){%
+                            \put(0,-.5){%
+                              \qbezier(0,0)(0,0)(0,-2)%
+                              \put(0,-2.5){\herm@oval}%
+                              \advance\herm@cattrx by 0%
+                              \advance\herm@cattry by -3%
+                              \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                              \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                              \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                              \put(0,-2.5){\makebox(0,0)[c]{$#3$}}%
+                            }%
+                          }%
+                        \else
+                          \ifx\herm@inpos\herm@lm% 
+                            \put(\herm@tsx,\herm@tsy){%
+                              \put(-1.5,0){%
+                                \qbezier(0,0)(0,0)(-2,0)%
+                                \put(-3.5,0){\herm@oval}%
+                                \advance\herm@cattrx by -5%
+                                \advance\herm@cattry by 0%
+                                \global\expandafter\edef\csname hermobjx@#3 \endcsname{\the\herm@cattrx}%
+                                \global\expandafter\edef\csname hermobjy@#3 \endcsname{\the\herm@cattry}%
+                                \PackageInfo{herm-pic}{      Test2 after \the\herm@cattrx, \the\herm@cattry}%
+                                \put(-3.5,0){\makebox(0,0)[c]{$#3$}}%
+                              }%
+                            }%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \attr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+  \global\expandafter\def\csname hermcattr@#3 \endcsname{1}%
+}%
+%
 %
 % --- Key marking of attribute values ---
 %

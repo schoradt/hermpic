@@ -3,6 +3,8 @@ hermpic (0.9.3-pre-1-0) unstable; urgency=low
   * ER diagramme erweitert, es sind jetzt erweiterte 
     Attributtypen moeglich (multivalued, optional, derived)
 
+  * strukturierte Attribute wurden hinzugefuegt
+
  -- Sven Schoradt <sven@dex.de>  Wed, 17 Nov 2004 11:51:36 +0100
 
 hermpic (0.9.2-pre-1-0) unstable; urgency=low
