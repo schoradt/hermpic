@@ -1,4 +1,4 @@
-hermpic (0.6.0-2) unstable; urgency=low
+hermpic (0.6.1-1) unstable; urgency=low
 
   * Cluster Interface extended 
     (add names and attributes to clusters)
