@@ -1,3 +1,9 @@
+hermpic (0.6.1-2) unstable; urgency=low
+
+  * Fix bug in connection drawing
+
+ -- Sven Schoradt <sven@dex.de>  Thu, 15 Jan 2004 14:22:18 +0100
+
 hermpic (0.6.1-1) unstable; urgency=low
 
   * Cluster Interface extended 
