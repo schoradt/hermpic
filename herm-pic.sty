@@ -3,12 +3,12 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-07-31 13:37:54 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-08-04 16:17:14 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.2 $> \HERMpicId by \HPAuthor $Author: sven $}
+\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.3 $> \HERMpicId by \HPAuthor $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -129,6 +129,33 @@
       \fi%
     \fi%
   \fi%
+}%
+%
+% \aattr[pos]{object}{name}
+% where pos is from rlou
+%
+% adds an attribute to an object
+\def\aattr[#1]#2#3{%
+  \ifherm@verbatim%
+    \typeout{Attribute \string#3 to \string#2...}%
+  \fi
+  \newif\ifherm@conerr \herm@conerrtrue
+  \expandafter\if\csname hermobj@#2 \endcsname 1%
+    \ifherm@verbatim%
+      \typeout{   object \string#2 found}%
+    \fi%
+    \herm@conerrfalse%
+    \herm@tsx=\csname hermobjx@#1 \endcsname%
+    \herm@tsy=\csname hermobjy@#1 \endcsname%
+    \ifherm@verbatim%
+      \typeout{      with \the\herm@tsx, \the\herm@tsy}%
+    \fi%
+  \fi%
+  \ifherm@conerr%
+    \PackageError {herm-pic}{Undefined object #2 in addvanced attribute}{See herm-pic documentation}%
+  \fi%
+  % prepare attribute placement
+  % process attribute drawing
 }%
 %
 % --- Key marking of attribute values ---
@@ -296,42 +323,42 @@
 \newcount\herm@tsx \newcount\herm@tsy \newcount\herm@tex \newcount\herm@tey%
 \newcount\herm@tdx \newcount\herm@tdy%
 \def\conn(#1,#2)#3{%
-  \ifherm@verbatim
-    \typeout{Connection between \string#1 and \string#2 ...}
-  \fi
-  \newif\ifherm@conerra \herm@conerratrue
-  \newif\ifherm@conerrb \herm@conerrbtrue
+  \ifherm@verbatim%
+    \typeout{Connection between \string#1 and \string#2 ...}%
+  \fi%
+  \newif\ifherm@conerra \herm@conerratrue%
+  \newif\ifherm@conerrb \herm@conerrbtrue%
   \expandafter\if\csname hermobj@#1 \endcsname 1%
-    \ifherm@verbatim
-      \typeout{   \string#1 found}
-    \fi
+    \ifherm@verbatim%
+      \typeout{   \string#1 found}%
+    \fi%
     \herm@conerrafalse%
     \herm@tsx=\csname hermobjx@#1 \endcsname%
     \herm@tsy=\csname hermobjy@#1 \endcsname%
-    \ifherm@verbatim
-      \typeout{      with \the\herm@tsx, \the\herm@tsy}
-    \fi
+    \ifherm@verbatim%
+      \typeout{      with \the\herm@tsx, \the\herm@tsy}%
+    \fi%
   \fi%
   \expandafter\if\csname hermobj@#2 \endcsname 1%
-    \ifherm@verbatim
-      \typeout{   \string#2 found}
-    \fi
-    \herm@conerrbfalse
+    \ifherm@verbatim%
+      \typeout{   \string#2 found}%
+    \fi%
+    \herm@conerrbfalse%
     \herm@tex=\csname hermobjx@#2 \endcsname%
     \herm@tey=\csname hermobjy@#2 \endcsname%
-    \ifherm@verbatim
-      \typeout{      with \the\herm@tex, \the\herm@tey}
-    \fi
+    \ifherm@verbatim%
+      \typeout{      with \the\herm@tex, \the\herm@tey}%
+    \fi%
   \fi%
-  \ifherm@conerra
-    \PackageError {herm-pic}{Undefined object #1 in addvanced connection}{See herm-pic Documentaion.}
-  \fi
-  \ifherm@conerrb
-    \PackageError {herm-pic}{Undefined object #2 in addvanced connection}{See herm-pic Documentaion.}
-  \fi
+  \ifherm@conerra%
+    \PackageError {herm-pic}{Undefined object #1 in addvanced connection}{See herm-pic Documentaion.}%
+  \fi%
+  \ifherm@conerrb%
+    \PackageError {herm-pic}{Undefined object #2 in addvanced connection}{See herm-pic Documentaion.}%
+  \fi%
   % comute middle of objects
-  \advance\herm@tsx by 2 \advance\herm@tex by 2
-  \advance\herm@tsy by 1 \advance\herm@tey by 1
+  \advance\herm@tsx by 2 \advance\herm@tex by 2%
+  \advance\herm@tsy by 1 \advance\herm@tey by 1%
   % compute differences
   \herm@tdx=\herm@tex \herm@tdy=\herm@tey%
   \herm@nsx=\herm@tsx \multiply\herm@nsx by -1 \herm@nsy=\herm@tsy \multiply\herm@nsy by -1%
@@ -344,23 +371,23 @@
   \herm@ex=\herm@tex%
   \herm@ey=\herm@tey%
   % correct start points
-  \ifherm@verbatim
-    \typeout{Correct starting points by (\the\herm@tdx, \the\herm@tdy)}
-  \fi
+  \ifherm@verbatim%
+    \typeout{Correct starting points by (\the\herm@tdx, \the\herm@tdy)}%
+  \fi%
   \ifnum\herm@tdx > \herm@tdy%
-    \ifherm@verbatim
-      \typeout{Use x correction}
-    \fi
+    \ifherm@verbatim%
+      \typeout{Use x correction}%
+    \fi%
     \ifnum\herm@tsx < \herm@tex%
       \advance\herm@sx by 2 \advance \herm@ex by -2%
     \fi%
     \ifnum\herm@tsx > \herm@tex%
       \advance\herm@sx by -2 \advance \herm@ex by 2%
     \fi%
-  \else
-    \ifherm@verbatim
-      \typeout{Use y correction}
-    \fi
+  \else%
+    \ifherm@verbatim%
+      \typeout{Use y correction}%
+    \fi%
     \ifnum\herm@tsy < \herm@tey%
       \advance\herm@sy by 1 \advance \herm@ey by -1%
     \fi%
@@ -369,7 +396,7 @@
     \fi%
   \fi%
   % draw connection
-  \connection(\herm@sx,\herm@sy)(\herm@ex,\herm@ey){#3}
+  \connection(\herm@sx,\herm@sy)(\herm@ex,\herm@ey){#3}%
 }%
 %
 % ---   END OF MODULE   ---
