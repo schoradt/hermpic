@@ -250,53 +250,6 @@ produces this
 \cluster*(13,1){Cluster\_3}
 \end{schema}
 
-\subsection{Cluster}
-
-\begin{quote}
-  {\bf Attention:} The Interface of the old style cluster macro must be changed. You have
-  to change all \verb|\cluster(x,y)| calls to \verb|\cluster(x,y){}|
-\end{quote}
-
-To use the cluster concept in your schema, you can use the \verb|\cluster| macro.
-The syntax is as followed:
-
-\begin{verbatim}
-\cluster(x,y){name}
-\end{verbatim}
-
-This draws the cluster item, thats a circle with the radius 2 whit a plus in it, on the position 
-{\tt (x,y)} and places the name right over the cluster.
-
-\paragraph{Example:}
-
-\begin{verbatim}
-\begin{schema}(4,4)
-\cluster(1,1){}
-\end{schema}
-
-\end{verbatim}
-
-produces this
-
-\begin{schema}(4,4)
-\cluster(1,1){}
-\end{schema}
-
-and 
-
-\begin{verbatim}
-\begin{schema}(4,4)
-\cluster(1,1){Mitarbeiter}
-\end{schema}
-
-\end{verbatim}
-
-produces this
-
-\begin{schema}(4,4)
-\cluster(1,1){Mitarbeiter}
-\end{schema}
-
 \subsection{Attributes}
 
 Attributes in HERM will be a string connected with the entity or relation.
@@ -365,9 +318,6 @@ Figure \ref{fig:attr_pos} shows the positionings.
 
 in the star version you can set the docking position with the (x,y) coordinates
 and the alignment to the object with the pos attribute (l,r,o,u).
-
-With this interface it is posible to move the object and the attributes
-move automaticaly to the new position.
 
 \paragraph{Example:}
 
