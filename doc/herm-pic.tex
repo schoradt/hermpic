@@ -1,0 +1,420 @@
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+\setlength{\unitlength}{.3cm}
+
+\usepackage{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\pagestyle{headings}
+
+\author{Sven Schoradt \\ (Sven.Schoradt@informatik.tu-cottbus.de)}
+
+\title{herm-pic - Graphical extension package for LaTeX2e to produce HER-Diagramms}
+
+\begin{document}
+
+\maketitle
+
+\section{General remarks}
+
+The {\tt herm-pic} package, helps you to draw Higher Entity Relationship Diagramms.
+This diagramms are the visualisation of HER schemas, an extended database modeling 
+concept. For more information to this see the original paper at 
+http://citeseer.nj.nec.com/thalheim91foundation.html.
+
+\section{Package information}
+
+You use the {\tt herm-pic} Package in Version \HERMpicRev{} from the \HERMpicDate.
+
+\section{Usage}
+
+To use the package you only have to insert the line
+
+\begin{verbatim}
+\usepackage{herm-pic}
+\end{verbatim}
+
+into the header part of your document. There are no known problems with other
+packages or classes. If you find something in this manner, mail to the package 
+author.
+
+\subsection{Package options}
+
+The package accepts the options {\tt verbatim} and {\tt nonames}.
+
+The {\tt nonames} option disables the named interface, so that you can work without
+the restrictions. The {\tt verbatim} options enables debuging informations.
+
+\section{The schema environment}
+
+In the {\tt herm-pic} package I defined the {\tt schema} environment.
+
+This environment is the standard way to use the schema elements, but you 
+can also use the schema elements in an ordinary picture environment.
+
+You use the schema environment in the following manner:
+
+\begin{verbatim}
+\begin{schema}(x,y)
+
+\end{schema}
+\end{verbatim}
+
+where {\tt x} is the width and {\tt y} is the height of 
+the schema.
+
+To scale the schema you can use the \verb|\hermpic| length.
+You set it with
+
+\begin{verbatim}
+\setlength{\hermunit}{.6cm}
+\end{verbatim}
+
+\section{The schema elements}
+
+\subsection{Entities}
+
+To use an entity in your schema, you can use the \verb|\entity| macro.
+The syntax is the following:
+
+\begin{verbatim}
+\entity(x,y){text}
+\end{verbatim}
+
+where {\tt (x,y)} are the coordinates of the left upper edge of the entity
+symbol. The {\tt text} was printed as the entity name. The entity name should
+only consits of Characters and Numbers, but no tex special chars are allowed.
+
+The entity symbol will be a rectangle with the width of 4 and the height of 2 
+units.
+
+\paragraph{Example:}
+\begin{verbatim}
+\begin{schema}(6,4)
+\entity(1,1){Person}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(6,4)
+\entity(1,1){Person}
+\end{schema}
+
+\subsection{Relationships}
+
+To draw relationships in your diagrams, you can use the \verb|\relation| macro.
+The syntax is the following:
+
+\begin{verbatim}
+\relation(x,y){text}
+\end{verbatim}
+
+where {\tt (x,y)} are the coordinates of the left edge. The {\tt text} will be displayed as 
+the name of the relationship. There are the same restrictions to the name.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(6,4)
+\relation(1,1){is a}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(6,4)
+\relation(1,1){is a}
+\end{schema}
+
+\subsection{Cluster}
+
+\begin{quote}
+  {\bf Attention:} The Interface of the old style cluster macro must be changed. You have
+  to change all \verb|\cluster(x,y)| calls to \verb|\cluster(x,y){}|
+\end{quote}
+
+To use the cluster concept in your schema, you can use the \verb|\cluster| macro.
+The syntax is as followed:
+
+\begin{verbatim}
+\cluster(x,y){name}
+\end{verbatim}
+
+This draws the cluster item, thats a circle with the radius 2 whit a plus in it, on the position 
+{\tt (x,y)} and places the name right over the cluster.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(4,4)
+\cluster(1,1){}
+\end{schema}
+
+\end{verbatim}
+
+produces this
+
+\begin{schema}(4,4)
+\cluster(1,1){}
+\end{schema}
+
+and 
+
+\begin{verbatim}
+\begin{schema}(4,4)
+\cluster(1,1){Mitarbeiter}
+\end{schema}
+
+\end{verbatim}
+
+produces this
+
+\begin{schema}(4,4)
+\cluster(1,1){Mitarbeiter}
+\end{schema}
+
+\subsection{Attributes}
+
+Attributes in HERM will be a string connected with the entity or relation.
+To draw attributes with herm-pic you have to use the macro \verb|\attr| with the syntax:
+
+\begin{verbatim}
+\attr(x,y)[pos]{text}
+\end{verbatim}
+
+with {\tt (x,y)} is the docking position on the entity or relationship. With the
+position you will say the macro in which direction the attribute will docked on
+the object. Possible values are {\tt r, l, o, u}, where r stands for right of the object,
+l stands for left of the object, o stands for over the object and u stands for under the object.
+
+Or you can use the named interface where you can add an attribute to an object by
+
+\begin{verbatim}
+\aattr[pos]{objectname}{attributename}
+\end{verbatim}
+
+In this case you have only 12 docking points to the object, setable with the pos attribute.
+Figure \ref{fig:attr_pos} shows the positionings.
+
+\begin{figure}[htb]
+  \centering
+  \begin{schema}(20,6)
+  \entity(1,2){Person}
+  \relation(9,2){arbeitet}
+  \aattr[ol]{Person}{ol}
+  \aattr[om]{Person}{om}
+  \aattr[or]{Person}{or}
+  \aattr[ro]{Person}{ro}
+  \aattr[rm]{Person}{rm}
+  \aattr[ru]{Person}{ru}
+  \aattr[ur]{Person}{ur}
+  \aattr[um]{Person}{um}
+  \aattr[ul]{Person}{ul}
+  \aattr[lu]{Person}{lu}
+  \aattr[lm]{Person}{lm}
+  \aattr[lo]{Person}{lo}
+  \aattr[ol]{arbeitet}{ol}
+  \aattr[om]{arbeitet}{om}
+  \aattr[or]{arbeitet}{or}
+  \aattr[ro]{arbeitet}{ro}
+  \aattr[rm]{arbeitet}{rm}
+  \aattr[ru]{arbeitet}{ru}
+  \aattr[ur]{arbeitet}{ur}
+  \aattr[um]{arbeitet}{um}
+  \aattr[ul]{arbeitet}{ul}
+  \aattr[lu]{arbeitet}{lu}
+  \aattr[lm]{arbeitet}{lm}
+  \aattr[lo]{arbeitet}{lo}
+  \cluster(17,2){cluster}
+  \aattr[ol]{cluster}{ol}
+  \aattr[om]{cluster}{om}
+  \aattr[or]{cluster}{or}
+  \aattr[ro]{cluster}{ro}
+  \aattr[rm]{cluster}{rm}
+  \aattr[ru]{cluster}{ru}
+  \aattr[ur]{cluster}{ur}
+  \aattr[um]{cluster}{um}
+  \aattr[ul]{cluster}{ul}
+  \aattr[lu]{cluster}{lu}
+  \aattr[lm]{cluster}{lm}
+  \aattr[lo]{cluster}{lo}
+\end{schema}
+
+  \caption{Positioning posibilities for attributes}
+  \label{fig:attr_pos}
+\end{figure}
+
+With this interface it is posible to move the object and the attributes
+move automaticaly to the new position.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr(4,3)[l]{left}
+\attr(6,4)[o]{over}
+\attr(8,3)[r]{right}
+\attr(6,2)[u]{under}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr(4,3)[l]{left}
+\attr(6,4)[o]{over}
+\attr(8,3)[r]{right}
+\attr(6,2)[u]{under}
+\end{schema}
+
+or
+
+\begin{verbatim}
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\aattr[lm]{Person}{left}
+\aattr[om]{Person}{over}
+\aattr[rm]{Person}{right}
+\aattr[um]{Person}{under}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\aattr[lm]{Person}{left}
+\aattr[om]{Person}{over}
+\aattr[rm]{Person}{right}
+\aattr[um]{Person}{under}
+\end{schema}
+
+To show that an attribute or an sub-attribute is a key concept for the object, entity or relationship,
+you can use the \verb|\key| macro, like this:
+
+\begin{verbatim}
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr(4,3)[r]{\key{key}}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr(5,2)[r]{\key{key}}
+\end{schema}
+
+\section{Connections between schema elements}
+
+A connection between two schema elements is a vector with an optional
+text marking for the cardinality constraint.
+
+The package provides for this the \verb|\connection| macro, with the syntax
+
+\begin{verbatim}
+\connection(x1,y1)(x2,y2){mathematical equation}
+\end{verbatim}
+
+It draws a vector from the point (x1,y1) to (x2,y2) and puts the mathematical 
+equation to an adequate point at the end of the vector enclosed by \$-signs. 
+
+Or their is also a named interface macro 
+
+\begin{verbatim}
+\conn(objectname1,objectname2){mathematical equation}
+\end{verbatim}
+
+which draws a connection from {\tt object1} to {\tt object2}.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitetin}
+  \connection(7,2)(5,2){(0,3)}
+  \connection(11,2)(13,2){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(20,4)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitetin}
+  \connection(7,2)(5,2){(0,3)}
+  \connection(11,2)(13,2){(2,10)}
+\end{schema}
+
+,
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitetin}
+  \conn(arbeitetin,Person){(0,3)}
+  \conn(arbeitetin,Team1){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitetin}
+  \conn(arbeitetin,Person){(0,3)}
+  \conn(arbeitetin,Team){(2,10)}
+\end{schema}
+
+and 
+
+\begin{verbatim}
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
+
+\end{document}
