@@ -1,1 +1,1 @@
-test .dist *.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *.pdf
+.dist *.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *.pdf
