@@ -42,7 +42,7 @@ install: Makefile.config herm-pic.sty doc_clean
 	@mkdir -p ${INSTALL_PATH}
 	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
 	@echo "Installing documentation ..."
-	@mkdir ${DOC_PATH}
+	@mkdir -p ${DOC_PATH}
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
 test: hermtest.ps 
