@@ -1,3 +1,10 @@
+hermpic (0.7.2) unstable; urgency=low
+
+  * add a shortcut for the connection macro family for the
+     lazy one (especially for Thomas K.)
+
+ -- Sven Schoradt <sven@dex.de>  Tue, 25 May 2004 15:11:29 +0200
+
 hermpic (0.7.1) unstable; urgency=low
 
   * add the posibility to select cluster name position 

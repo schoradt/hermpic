@@ -1,0 +1,139 @@
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+%\tracingmacros=2
+%\tracingcommands=1
+%\tracingonline=1
+
+%\usepackage[verbatim,center]{herm-pic}
+\usepackage[center,box,verbatim]{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\begin{document}
+
+
+\section{Connection examples}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \relation(8,6){R}
+  \connection(R,E1){(5,1000)}
+  \connection(R,E2){(1,n)}
+  \connection(R,E3){(n,m)}
+  \connection(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(8,11){E2}
+  \entity(15,11){E3}
+  \entity(15,6){E4}
+  \entity(15,1){E5}
+  \entity(8,1){E6}
+  \entity(1,1){E7}
+  \entity(1,6){E8}
+  \relation(8,6){R}
+  \connection(R,E1){}
+  \connection(R,E2){}
+  \connection(R,E3){}
+  \connection(R,E4){}
+  \connection(R,E5){}
+  \connection(R,E6){}
+  \connection(R,E7){}
+  \connection(R,E8){}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \relation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(8,11){E2}
+  \entity(15,11){E3}
+  \entity(15,6){E4}
+  \entity(15,1){E5}
+  \entity(8,1){E6}
+  \entity(1,1){E7}
+  \entity(1,6){E8}
+  \relation(8,6){R}
+  \conn(R,E1){}
+  \conn(R,E2){}
+  \conn(R,E3){}
+  \conn(R,E4){}
+  \conn(R,E5){}
+  \conn(R,E6){}
+  \conn(R,E7){}
+  \conn(R,E8){}
+\end{schema}
+
+\section{Larger example schema}
+
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,15)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+
+\end{document}

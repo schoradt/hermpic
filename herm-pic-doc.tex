@@ -403,7 +403,9 @@ or
 
 It draws a vector from one object to an other. The star version draws 
 a vector from the point (x1,y1) to (x2,y2) and puts the mathematical 
-equation to an adequate point at the end of the vector enclosed by \$-signs. 
+equation to an adequate point at the end of the vector.
+
+For the lazy guys there is a short name for theis macro, named \verb|\conn|. 
 
 \paragraph{Example:}
 
@@ -484,5 +486,116 @@ produces this
   \connection*(7,2)(5,2){(0,3)}
   \connection*(11,2)(13,2){(2,10)}
 \end{schema}
+
+\section{A more or less complex example}
+
+This more or less complex example shows you the usage of all the macros together.
+
+\begin{verbatim}
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,15)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+\end{verbatim}
+
+produces the schema
+
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,15)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+
 
 \end{document}
