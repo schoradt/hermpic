@@ -11,8 +11,8 @@
 % external revision display macros
 %
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\herm@revision $Revision: 1.17.2.6.2.3 $}
-\def\HERMpicDate{\herm@date $Date: 2003-11-12 17:48:36 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.17.2.6.2.4 $}
+\def\HERMpicDate{\herm@date $Date: 2003-11-13 11:13:01 $ }
 %
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
@@ -135,7 +135,7 @@
     }%
     \put(1,.3){\line(0,1){1.4}}%
     \put(.3,1){\line(1,0){1.4}}%
-    \put(2,2.5){\makebox(1,1){#3}}%
+    \put(2,2){\makebox(1,1)[bl]{#3}}%
   }%
   \ifherm@names%
     \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
@@ -644,7 +644,6 @@
      \typeout{post (dx=\the\herm@tdx, dy=\the\herm@tdy, sx=\the\herm@tsx, ex=\the\herm@tex, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
    \fi%
    \if\herm@corrected 0%
-     \typeout{Use correction}%
      \ifnum\herm@tdx > \herm@tdy%
        \ifherm@verbatim%
          \typeout{Use x correction}%
