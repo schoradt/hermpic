@@ -963,51 +963,50 @@
       \fi%
     \fi%
     \gdef\herm@corrected{1}%
-   \fi%
-   \ifherm@verbatim%
-     \PackageInfo{herm-pic}{post (dx=\the\herm@tdx, dy=\the\herm@tdy, sx=\the\herm@tsx, ex=\the\herm@tex, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
-   \fi%
-   \if\herm@corrected 0%
-     \ifnum\herm@tdx > \herm@tdy%
-       \ifherm@verbatim%
-         \PackageInfo{herm-pic}{Use x correction}%
-       \fi%
-       \ifnum\herm@tsx < \herm@tex%
-         \expandafter\if\csname hermcluster@#1 \endcsname 1%
-            \advance\herm@sx by 1%
-         \else%
-           \advance\herm@sx by 2%
-         \fi%
-         \expandafter\if\csname hermcluster@#2 \endcsname 1%
-           \advance\herm@ex by -1%
-         \else%
-           \advance\herm@ex by -2%
-         \fi%
-       \fi%
-       \ifnum\herm@tsx > \herm@tex%
-         \expandafter\if\csname hermcluster@#1 \endcsname 1%
-           \advance\herm@sx by -1%
-         \else%
-           \advance\herm@sx by -2%
-         \fi%
-         \expandafter\if\csname hermcluster@#2 \endcsname 1%
-           \advance\herm@ex by 1%
-         \else%
-           \advance\herm@ex by 2%
-         \fi%
-       \fi%
-     \fi%
-     \ifnum\herm@tdx < \herm@tdy%
-       \ifherm@verbatim%
-         \PackageInfo{herm-pic}{Use y correction}%
-       \fi%
-       \ifnum\herm@tsy < \herm@tey%
-         \advance\herm@sy by 1 \advance \herm@ey by -1%
-       \fi%
-       \ifnum\herm@tsy > \herm@tey%
-         \advance\herm@sy by -1 \advance \herm@ey by 1%
-       \fi%
-     \fi%
+  \fi%
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{post (dx=\the\herm@tdx, dy=\the\herm@tdy, sx=\the\herm@tsx, ex=\the\herm@tex, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
+  \fi%
+  \if\herm@corrected 0%
+    \ifnum\herm@tdx > \herm@tdy%
+      \ifherm@verbatim%
+        \PackageInfo{herm-pic}{Use x correction}%
+      \fi%
+      \ifnum\herm@tsx < \herm@tex%
+        \expandafter\if\csname hermcluster@#1 \endcsname 1%
+           \advance\herm@sx by 1%
+        \else%
+          \advance\herm@sx by 2%
+        \fi%
+        \expandafter\if\csname hermcluster@#2 \endcsname 1%
+          \advance\herm@ex by -1%
+        \else%
+          \advance\herm@ex by -2%
+        \fi%
+      \fi%
+      \ifnum\herm@tsx > \herm@tex%
+        \expandafter\if\csname hermcluster@#1 \endcsname 1%
+          \advance\herm@sx by -1%
+        \else%
+          \advance\herm@sx by -2%
+        \fi%
+        \expandafter\if\csname hermcluster@#2 \endcsname 1%
+          \advance\herm@ex by 1%
+        \else%
+          \advance\herm@ex by 2%
+        \fi%
+      \fi%
+    \else
+      \ifherm@verbatim%
+        \PackageInfo{herm-pic}{Use y correction}%
+      \fi%
+      \ifnum\herm@tsy < \herm@tey%
+        \advance\herm@sy by 1 \advance \herm@ey by -1%
+      \fi%
+      \ifnum\herm@tsy > \herm@tey%
+        \advance\herm@sy by -1 \advance \herm@ey by 1%
+      \fi%
+    \fi%
   \fi%
   % draw connection
   \ifherm@verbatim%

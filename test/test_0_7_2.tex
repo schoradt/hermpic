@@ -136,4 +136,30 @@
 \conn(Inhalt,Wort){}
 \end{schema}
 
+\section{Bugs}
+
+\subsection{Bug Id 24}
+
+\begin{schema}(24,16)                                                           
+  \entity(10,14){Person}                                                    
+                                                                                
+  \entity(10,8){Student}                                                    
+  \entity(0,8){Mitarbeiter}                                                 
+  \entity(20,8){Professor}                                                  
+                                                                                
+  \relation(10,11){isA}                                                     
+  \conn(isA,Person){}                                                       
+  \conn(Mitarbeiter,isA){}                                                  
+  \conn(Professor,isA){}                                                    
+  \conn(Student,isA){}                                                      
+                                                                                
+  \entity(17,2){Lehrveranstaltung}                                          
+                                                                                
+  \relation(20,5){anbieten}                                                 
+  \conn(anbieten,Professor){(0,n)}                                          
+  \conn(anbieten,Lehrveranstaltung){(1,n)}                                  
+                                                                                
+  \relation(12,5){hoeren}                                                   
+\end{schema}
+
 \end{document}
