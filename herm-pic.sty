@@ -11,8 +11,8 @@
 % external revision display macros
 %
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\herm@revision $Revision: 1.17.2.8 $}
-\def\HERMpicDate{\herm@date $Date: 2003-11-21 17:47:17 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.17.2.9 $}
+\def\HERMpicDate{\herm@date $Date: 2004-01-15 13:20:03 $ }
 %
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
@@ -110,7 +110,7 @@
     \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
     \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
   \fi%
- }%
+}%
 %
 % ---  Cluster  ---
 %
@@ -365,7 +365,15 @@
   \herm@dx=\herm@ex \herm@dy=\herm@ey%
   \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
   \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
-  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \else \herm@newx=-1 \fi \herm@newy=0%
+  \ifnum\herm@dy=0%
+    \ifnum\herm@dx>0%
+      \herm@newx=1%
+      \herm@newy=0%
+    \else%
+      \herm@newx=-1%
+      \herm@newy=0%
+    \fi%
+    \herm@newy=0%
   \else%
     \herm@dxdy=\herm@dx \multiply\herm@dxdy by 100 \divide\herm@dxdy by \herm@dy%
     \ifnum\herm@dxdy < 0 \multiply\herm@dxdy by -1 \fi%
@@ -393,7 +401,7 @@
               \fi%
             \fi%
           \fi%
-        \fi
+        \fi%
       \else%
         \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
           \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=-4 \else%
@@ -406,7 +414,9 @@
                         \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=-2 \else%
                           \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=-1 \else%
                             \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=-1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=-1%
+                                \else \herm@newx=-1 \herm@newy=0% 
+                              \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -417,7 +427,7 @@
               \fi%
             \fi%
           \fi%
-        \fi
+        \fi%
       \fi%
     \else%
       \ifnum\herm@dy > 0%
@@ -443,7 +453,7 @@
               \fi%
             \fi%
           \fi%
-        \fi
+        \fi%
       \else%
         \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
           \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=-4 \else%
@@ -456,7 +466,9 @@
                         \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=-2 \else%
                           \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=-1 \else%
                             \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=-1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=-1 \else%
+                                \herm@newx=-1 \herm@newy=0%
+                              \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -467,43 +479,43 @@
               \fi%
             \fi%
           \fi%
-        \fi
+        \fi%
       \fi%
     \fi%
   \fi%
   \ifherm@verbatim%
     \typeout{Pfeile \the\herm@newx, \the\herm@newy}%
   \fi% 
-  \ifnum \herm@newx=0
-    \ifnum\herm@newy<0
-      \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \char 63}}
-    \else
-      \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \char 54}}
-    \fi
-  \else
-    \ifnum\herm@newx<0
-      \ifnum\herm@newy<0
+  \ifnum \herm@newx=0%
+    \ifnum\herm@newy<0%
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \char 63}}%
+    \else%
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \char 54}}%
+    \fi%
+  \else%
+    \ifnum\herm@newx<0%
+      \ifnum\herm@newy<0%
         \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
-      \else
+      \else%
         \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
-      \fi
-    \else
-      \ifnum\herm@newy>0
+      \fi%
+    \else%
+      \ifnum\herm@newy>0%
         \put(\herm@ex,\herm@ey){\makebox(0,0)[tr]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
-      \else
+      \else%
         \put(\herm@ex,\herm@ey){\makebox(0,0)[br]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
-      \fi
-    \fi
-  \fi
+      \fi%
+    \fi%
+  \fi%
   \put(\herm@ex,\herm@ey){%
-    \ifnum\herm@dx > 0 %
-      \ifnum\herm@dy > 0 %
+    \ifnum\herm@dx>0%
+      \ifnum\herm@dy>0%
         \put(-.5,-.2){\makebox(0,0)[tr]{$ #5 $}}%
       \else%
         \put(-0.5,.2){\makebox(0,0)[br]{$ #5 $}}%
       \fi%
     \else%
-      \ifnum\herm@dy > 0 %
+      \ifnum\herm@dy>0%
         \put(.5,-.2){\makebox(0,0)[tl]{$ #5 $}}%
       \else%
         \put(.5,.2){\makebox(0,0)[bl]{$ #5 $}}%
