@@ -4,7 +4,7 @@
 #                                                           #
 # Prepared for the debian packaging system.                 #
 #                                                           #
-# Version: 0.7                                              #
+# Version: pre 1.0                                              #
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
@@ -23,10 +23,12 @@ PDFLATEX = pdflatex
 DESTDIR = 
 
 # path to install the latex packages
-INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
+DEB_INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
+INSTALL_PATH = $(DESTDIR)/texmf/tex/latex/herm-pic
 
 #path to install the documentation
-DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
+DEB_DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
+DOC_PATH = $(DESTDIR)/doc/hermpic
 
 all:
 
@@ -36,15 +38,20 @@ psdoc: herm-pic-doc.ps
 
 pdfdoc: herm-pic-doc.pdf
 
-install: Makefile.config herm-pic.sty doc_clean
+install:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc_clean
 	@${ECHO} "Installing package ..."
 	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
+	@${INSTALL} herm-rev.sty ${INSTALL_PATH}
+	@${INSTALL} herm-pic-impl.sty ${INSTALL_PATH}
+	@${INSTALL} herm-pic-old.sty ${INSTALL_PATH}
 	@${ECHO} "Installing documentation ..."
-	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
+	@${INSTALL} herm-pic-doc.ps ${DOC_PATH}
+	@${INSTALL} herm-pic-doc.pdf ${DOC_PATH}
 
 test:
 	@${ECHO} "Testing package ..."
-	@cd test; make 
+	@cd test; make
+	@${ECHO} "see under test/ for genereated test_*.ps files"
 
 doc_clean:
 	@${REMOVE} *.aux *.log *.toc *~
@@ -57,10 +64,11 @@ clean:	doc_clean
 FORCE: ;
 
 # Rule pattern
-%.ps:	%.dvi FORCE
+%.ps:	%.dvi
 	${DVIPS} -o $@ $<
 
 %.dvi:	%.tex
+	${LATEX} $<
 	${LATEX} $<
 
 %.pdf:	%.tex
