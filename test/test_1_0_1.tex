@@ -169,6 +169,18 @@
   \conn(R,E8){}
 \end{schema}
 
+\section{ERD extensions}
+
+\begin{schema}(20,14)
+  \entity(1,11){Unter1}
+  \entity(15,11){Unter2}
+  \isa(8,6){isa1}
+  \entity(8,1){Ober}
+  \conn(Unter1,isa1){}
+  \conn(Unter2,isa1){}
+  \conn(isa1,Ober){}
+\end{schema}
+
 \section{Larger example schema}
 
 \setlength{\hermunit}{.5cm}
