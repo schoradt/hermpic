@@ -1,24 +1,43 @@
 % Higher Entity Relationship Modell TeX Style
-\def\HPDate $#1 #2 #3${#2}
-\def\HPAuthor $#1 #2${#2}
-\def\HPRev $#1 #2 ${#2}
-
+%
+% global declarations:
+%   * all internal macros starts whith herm@
+%
+% macros for revision display
+\def\herm@date $#1 #2 #3${#2}
+\def\herm@author $#1 #2${#2}
+\def\herm@revision $#1 #2 ${#2}
+%
+% external revision display macros
+%
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\HPRev $Revision: 1.17.2.6 $}
-\def\HERMpicDate{\HPDate $Date: 2003-11-05 21:26:49 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.17.2.6.2.1 $}
+\def\HERMpicDate{\herm@date $Date: 2003-11-08 18:37:12 $ }
+%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
-
-\typeout{HERM-Pic <\HERMpicRev> \HERMpicId  by \HPAuthor $Author: sven $}
+%
+\typeout{HERM-Pic <\HERMpicRev> \HERMpicId  by \herm@author $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
 %
 % --- Package Options ---
+%
+% option conditionals
 \newif\ifherm@verbatim \herm@verbatimfalse%
+\newif\ifherm@names \herm@namestrue%
+%
+% Option processing
+%
+% * verbatim - display informations about package work
 \DeclareOption{verbatim}{%
   \herm@verbatimtrue%
   \typeout{  * Option verbatim - print information about diagramm processing}%
+}%
+\DeclareOption{nonames}{%
+  \herm@namesfalse%
+  \typeout{  * Option nonames - only the old style coordinates interface}%
 }%
 \DeclareOption*{%
   \PackageWarning{herm-pic}{Unnown Option '\CurrentOption'}%
@@ -52,8 +71,8 @@
 % Hoehe: 2 LE Breite: 4 LE
 \def\entity(#1,#2)#3{%
   \ifherm@verbatim%
-    \typeout{Register entity \string#3 ...}%
-  \fi
+    \typeout{Process entity \string#3 ...}%
+  \fi%
   \put(#1,#2){%
     \put(0,0){\line(1,0){4}}%
     \put(4,0){\line(0,1){2}}%
@@ -61,10 +80,12 @@
     \put(0,0){\line(0,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-  \global\expandafter\def\csname herment@#3 \endcsname{1}%
+  \ifherm@names%
+    \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+    \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+    \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+    \global\expandafter\def\csname herment@#3 \endcsname{1}%
+  \fi%
 }%
 %
 % ---  Relation  ---
@@ -74,7 +95,7 @@
 % Hoehe 2LE Breite 4LE
 \def\relation(#1,#2)#3{%
   \ifherm@verbatim%
-    \typeout{Doing relation #3 ...}%
+    \typeout{Process relation \string#3 ...}%
   \fi%
   \put(#1,#2){%
     \put(2,2){\line(-2,-1){2}}%
@@ -83,10 +104,12 @@
     \put(2,0){\line(-2,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-  \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
+  \ifherm@names%
+    \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+    \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+    \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+    \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
+  \fi%
  }%
 %
 % ---  Cluster  ---
@@ -138,6 +161,7 @@
 % where pos is from rlou
 %
 % adds an attribute to an object
+\ifherm@names%
 \def\aattr[#1]#2#3{%
   \ifherm@verbatim%
     \typeout{Attribute \string#3 to \string#2...}%
@@ -252,6 +276,7 @@
     \fi%
   \fi%
 }%
+\fi%
 %
 % --- Key marking of attribute values ---
 %
