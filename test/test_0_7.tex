@@ -9,12 +9,14 @@
 %\tracingcommands=1
 %\tracingonline=1
 
-\usepackage[verbatim,center]{herm-pic}
-%\usepackage{herm-pic}
+%\usepackage[verbatim,center]{herm-pic}
+\usepackage[center]{herm-pic}
 
 \setlength{\hermunit}{.6cm}
 
 \begin{document}
+
+\section{Objects}
 
 \setlength{\unitlength}{.6cm}
 \begin{schema}(15,15)
@@ -29,34 +31,48 @@
   \cluster[cluster3](11,9){Cluster\_3}
 \end{schema}
 
-\begin{schema}(20,10)
-  \entity(1,8){Person}
-  \entity(13,0){Team}
-  \relation[arbeitet](7,6){arbeitet\_in}
-  \attr[ol]{Person}{\key{a1}}
-  \attr[om]{Person}{\key{a2}}
-  \attr[or]{Person}{\key{a3}}
-  \attr[ro]{Person}{\key{ag4}}
-  \attr[rm]{Person}{\key{aA5}}
-  \attr[ru]{Person}{\key{aA6}}
-  \attr[ur]{Person}{a7}
-  \attr[um]{Person}{a8}
-  \attr[ul]{Person}{a9}
-  \attr[lu]{Person}{a10}
-  \attr[lm]{Person}{a11}
-  \attr[lo]{Person}{a12}
-  \attr[ol]{arbeitet}{a1}
-  \attr[om]{arbeitet}{a2}
-  \attr[or]{arbeitet}{a3}
-  \attr[ro]{arbeitet}{a4}
-  \attr[rm]{arbeitet}{a5}
-  \attr[ru]{arbeitet}{a6}
-  \attr[ur]{arbeitet}{a7}
-  \attr[um]{arbeitet}{a8}
-  \attr[ul]{arbeitet}{a9}
-  \attr[lu]{arbeitet}{a10}
-  \attr[lm]{arbeitet}{a11}
-  \attr[lo]{arbeitet}{a12}
+\section{Attributes}
+
+\begin{schema}(20,8)
+  \entity[entity](2,3){Entity}
+  \relation[relation](10,3){Relation}
+  \attr[ol]{entity}{\key{a1}}
+  \attr[om]{entity}{\key{a2}}
+  \attr[or]{entity}{\key{a3}}
+  \attr[ro]{entity}{\key{ag4}}
+  \attr[rm]{entity}{\key{aA5}}
+  \attr[ru]{entity}{\key{aA6}}
+  \attr[ur]{entity}{a7}
+  \attr[um]{entity}{a8}
+  \attr[ul]{entity}{a9}
+  \attr[lu]{entity}{a10}
+  \attr[lm]{entity}{a11}
+  \attr[lo]{entity}{a12}
+  \attr[ol]{relation}{a1}
+  \attr[om]{relation}{a2}
+  \attr[or]{relation}{a3}
+  \attr[ro]{relation}{a4}
+  \attr[rm]{relation}{a5}
+  \attr[ru]{relation}{a6}
+  \attr[ur]{relation}{a7}
+  \attr[um]{relation}{a8}
+  \attr[ul]{relation}{a9}
+  \attr[lu]{relation}{a10}
+  \attr[lm]{relation}{a11}
+  \attr[lo]{relation}{a12}
+  \cluster[cluster](18,3){Cluster}
+  \attr[ol]{cluster}{a1}
+  \attr[om]{cluster}{a2}
+  \attr[or]{cluster}{a3}
+  \attr[ro]{cluster}{a4}
+  \attr[rm]{cluster}{a5}
+  \attr[ru]{cluster}{a6}
+  \attr[ur]{cluster}{a7}
+  \attr[um]{cluster}{a8}
+  \attr[ul]{cluster}{a9}
+  \attr[lu]{cluster}{a10}
+  \attr[lm]{cluster}{a11}
+  \attr[lo]{cluster}{a12}
 \end{schema}
 
 \section{Connection examples}

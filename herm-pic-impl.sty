@@ -545,7 +545,7 @@
   \herm@dx=\herm@ex \herm@dy=\herm@ey%
   \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
   \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
-  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \else \herm@newx=-1 \fi \herm@newy=0%
+  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \herm@newy=0 \else \herm@newx=-1 \herm@newy=0 \fi \herm@newy=0%
   \else%
     \herm@dxdy=\herm@dx \multiply\herm@dxdy by 100 \divide\herm@dxdy by \herm@dy%
     \ifnum\herm@dxdy < 0 \multiply\herm@dxdy by -1 \fi%
