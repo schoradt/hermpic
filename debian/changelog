@@ -1,3 +1,11 @@
+hermpic (0.9.0) unstable; urgency=low
+
+  * clear installation process (Makefile and debian/rules)
+
+  * add ER diagramm module (experimantal, untested)
+
+ -- Sven Schoradt <sven@dex.de>  
+
 hermpic (0.7.2) unstable; urgency=low
 
   * add a shortcut for the connection macro family for the

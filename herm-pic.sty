@@ -26,7 +26,7 @@
 %
 % Option handling 
 %
-\newif\ifherm@oldrevision \herm@oldrevisionfalse%
+\newif\ifherm@erd \herm@erdfalse%
 \newif\ifherm@verbatim \herm@verbatimfalse%
 %
 % Option processing
@@ -36,10 +36,10 @@
   \PackageInfo{herm-pic}{HERM-Pic <\herm@revision> \HPdescription  by \herm@author}
   \PackageInfo{herm-pic}{  * Option verbatim - print information about processing}%
 }%
-\DeclareOption{rev-0-6}{%
-  \herm@oldrevisiontrue%
+\DeclareOption{erd}{%
+  \herm@erdtrue%
   \ifherm@verbatim%
-    \PackageInfo{herm-pic}{  * Using version 0.6.x interface}%
+    \PackageInfo{herm-pic}{  * Create ER diagramms (experimental)}%
   \fi%
 }%
 \DeclareOption*{}%
@@ -47,8 +47,8 @@
 %
 % -- Select the implementation to beused
 %
-\ifherm@oldrevision%
-  \RequirePackageWithOptions{herm-pic-old}
+\ifherm@erd%
+  \RequirePackageWithOptions{herm-pic-erd}
 \else
   \RequirePackageWithOptions{herm-pic-impl}
 \fi

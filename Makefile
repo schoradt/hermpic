@@ -12,7 +12,7 @@
 ECHO = echo
 REMOVE = rm -f
 
-INSTALL = install
+INSTALL = install -m 644
 
 LATEX = latex
 DVIPS = dvips
@@ -23,12 +23,12 @@ PDFLATEX = pdflatex
 DESTDIR = 
 
 # path to install the latex packages
-DEB_INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
-INSTALL_PATH = $(DESTDIR)/texmf/tex/latex/herm-pic
+SYS_INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
+HOME_INSTALL_PATH = $(DESTDIR)$(HOME)/texmf/tex/latex
 
 #path to install the documentation
-DEB_DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
-DOC_PATH = $(DESTDIR)/doc/hermpic
+SYS_DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
+HOME_DOC_PATH = $(DESTDIR)$(HOME)/doc
 
 all:
 
@@ -38,15 +38,25 @@ psdoc: herm-pic-doc.ps
 
 pdfdoc: herm-pic-doc.pdf
 
-install:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc_clean
+sysinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc doc_clean
 	@${ECHO} "Installing package ..."
-	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
-	@${INSTALL} herm-rev.sty ${INSTALL_PATH}
-	@${INSTALL} herm-pic-impl.sty ${INSTALL_PATH}
-	@${INSTALL} herm-pic-old.sty ${INSTALL_PATH}
+	@${INSTALL} herm-pic.sty ${SYS_INSTALL_PATH}
+	@${INSTALL} herm-rev.sty ${SYS_INSTALL_PATH}
+	@${INSTALL} herm-pic-impl.sty ${SYS_INSTALL_PATH}
+	@${INSTALL} herm-pic-old.sty ${SYS_INSTALL_PATH}
 	@${ECHO} "Installing documentation ..."
-	@${INSTALL} herm-pic-doc.ps ${DOC_PATH}
-	@${INSTALL} herm-pic-doc.pdf ${DOC_PATH}
+	@${INSTALL} herm-pic-doc.ps ${SYS_DOC_PATH}
+	@${INSTALL} herm-pic-doc.pdf ${SYS_DOC_PATH}
+
+homeinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc doc_clean
+	@${ECHO} "Installing package ..."
+	@${INSTALL} herm-pic.sty ${HOME_INSTALL_PATH}
+	@${INSTALL} herm-rev.sty ${HOME_INSTALL_PATH}
+	@${INSTALL} herm-pic-impl.sty ${HOME_INSTALL_PATH}
+	@${INSTALL} herm-pic-old.sty ${HOME_INSTALL_PATH}
+	@${ECHO} "Installing documentation ..."
+	@${INSTALL} herm-pic-doc.ps ${HOME_DOC_PATH}
+	@${INSTALL} herm-pic-doc.pdf ${HOME_DOC_PATH}
 
 test:
 	@${ECHO} "Testing package ..."
