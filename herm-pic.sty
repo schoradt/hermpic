@@ -3,14 +3,16 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-02-10 16:30:23 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-02-10 17:36:37 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
 \RequirePackage{texdraw}
 
-\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.12 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\input txdtools
+
+\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.13 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -19,13 +21,20 @@
 
 % hermunit sets the percent thet the unit will be to 1cm 
 %    -> if onr unit is 0.5cm the hermunit must be 50
+\newcount\hpunit
+\hpunit=50
 
+\def\sethermunit#1{\hpunit=#1}
+
+\def\hermunit{\hpunit}
 % ---  schema environment  ---
 
 % \begin{schema}(x,y)
 \def\schema{%
+  \realdiv{\hermunit}{100} \hus
   \begin{texdraw}
-    \drawdim{cm} \setunitscale 0.5
+    
+    \drawdim{cm} \setunitscale \hus
 }%
 
 % \end{schema}
