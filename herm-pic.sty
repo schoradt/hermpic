@@ -1,0 +1,221 @@
+% Higher Entity Relationship Modell TeX Style
+
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{herm-pic}[01/03/03 graphic extension package]
+
+\typeout{HERM-Pic <v0.2> graphic extension package.}
+
+% This package provide some graphical elements to draw 
+% HER Modells.
+
+% ---  Entity  ---
+
+% \entity(x,y){name}
+
+% Hoehe: 2 LE Breite: 4 LE
+\def\entity(#1,#2)#3{%
+  \put(#1,#2){%
+    \put(0,0){\line(1,0){4}}%
+    \put(4,0){\line(0,1){2}}%
+    \put(4,2){\line(-1,0){4}}%
+    \put(0,0){\line(0,1){2}}%
+    \put(0,0){\makebox(4,2){#3}}%
+  }%
+}%
+
+% ---  Relation  ---
+
+% \relation(x,y){name}
+
+% Hoehe 2LE Breite 4LE
+\def\relation(#1,#2)#3{%
+  \put(#1,#2){%
+    \put(2,2){\line(-2,-1){2}}%
+    \put(2,2){\line(2,-1){2}}%
+    \put(2,0){\line(2,1){2}}%
+    \put(2,0){\line(-2,1){2}}%
+    \put(0,0){\makebox(4,2){#3}}%
+  }%
+}%
+
+% ---  Attributes  ---
+
+% \attr[pos]{name}
+% where pos is from rlou
+
+% the start point is the point where the attribut line docks on the
+% object.
+\def\attr(#1,#2)[#3]#4{%
+  \def\pos{#3} \def\r{r} \def\l{l} \def\o{o} \def\u{u}%
+  \ifx\pos\r \put(#1,#2){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#4$}}}%
+  \else
+    \ifx\pos\l \put(#1,#2){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#4$}}}%
+    \else
+      \ifx\pos\o \put(#1,#2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#4$}}}%
+      \else
+        \ifx\pos\u \put(#1,#2){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#4$}}}%
+        \else
+        \PackageWarning{herm-pic}{%
+          Undefind attribute positioning parameter #1 \MessageBreak have to come from r,l,o,u (r as default).
+          \MessageBreak Using default [r].
+        }%
+        \attr(#1,#2)[r]{#4}%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+}%
+
+% --- Key marking of attribute values ---
+
+% marks an attribute or an attribute part as a key.
+
+% \key{attribute}
+
+\def\key#1{\underline{#1}}%
+
+% ---  Connection  ---
+
+% Draws an arrow from the start to the endpoint and places the label
+% an a 'good' place.
+
+% \connection(x1,y1)(x2,y2){label}
+
+\def\connection(#1,#2)(#3,#4)#5{%
+  \newcount\sx \newcount\sy \newcount\ex \newcount\ey%
+  \sx=#1%
+  \sy=#2%
+  \ex=#3%
+  \ey=#4%
+  % try to compute \vector parameter
+  \newcount\dx \newcount\dy \dx=\ex \dy=\ey%
+  \newcount\nsx \newcount\nsy \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
+  \advance\dx by \nsx \advance\dy by \nsy%
+  \newcount\newx \newcount\newy%
+  \ifnum\dy = 0 \ifnum\dx > 0 \newx=1 \else \newx=-1 \fi \newy=0%
+  \else%
+    \newcount\dxdy \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
+    \ifnum\dx > 0%
+      \ifnum\dy > 0%
+        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
+          \ifnum\dxdy < 29 \newx=1 \newy=4 \else%
+            \ifnum\dxdy < 41 \newx=1 \newy=3 \else%
+              \ifnum\dxdy < 58 \newx=1 \newy=2 \else%
+                \ifnum\dxdy < 71 \newx=2 \newy=3 \else%
+                  \ifnum\dxdy < 87 \newx=3 \newy=4 \else%
+                    \ifnum\dxdy < 116 \newx=1 \newy=1 \else%
+                      \ifnum\dxdy < 141 \newx=4 \newy=3 \else%
+                        \ifnum\dxdy < 175 \newx=3 \newy=2 \else%
+                          \ifnum\dxdy < 250 \newx=2 \newy=1 \else%
+                            \ifnum\dxdy < 350 \newx=3 \newy=1 \else%
+                              \ifnum\dxdy < 1000 \newx=4 \newy=1 \else \newx=1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
+          \ifnum\dxdy < 29 \newx=1 \newy=-4 \else%
+            \ifnum\dxdy < 41 \newx=1 \newy=-3 \else%
+              \ifnum\dxdy < 58 \newx=1 \newy=-2 \else%
+                \ifnum\dxdy < 71 \newx=2 \newy=-3 \else%
+                  \ifnum\dxdy < 87 \newx=3 \newy=-4 \else%
+                    \ifnum\dxdy < 116 \newx=1 \newy=-1 \else%
+                      \ifnum\dxdy < 141 \newx=4 \newy=-3 \else%
+                        \ifnum\dxdy < 175 \newx=3 \newy=-2 \else%
+                          \ifnum\dxdy < 250 \newx=2 \newy=-1 \else%
+                            \ifnum\dxdy < 350 \newx=3 \newy=-1 \else%
+                              \ifnum\dxdy < 1000 \newx=4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \else%
+      \ifnum\dy > 0%
+        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
+          \ifnum\dxdy < 29 \newx=-1 \newy=4 \else%
+            \ifnum\dxdy < 41 \newx=-1 \newy=3 \else%
+              \ifnum\dxdy < 58 \newx=-1 \newy=2 \else%
+                \ifnum\dxdy < 71 \newx=-2 \newy=3 \else%
+                  \ifnum\dxdy < 87 \newx=-3 \newy=4 \else%
+                    \ifnum\dxdy < 116 \newx=-1 \newy=1 \else%
+                      \ifnum\dxdy < 141 \newx=-4 \newy=3 \else%
+                        \ifnum\dxdy < 175 \newx=-3 \newy=2 \else%
+                          \ifnum\dxdy < 250 \newx=-2 \newy=1 \else%
+                            \ifnum\dxdy < 350 \newx=-3 \newy=1 \else%
+                              \ifnum\dxdy < 1000 \newx=-4 \newy=1 \else \newx=1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
+          \ifnum\dxdy < 29 \newx=-1 \newy=-4 \else%
+            \ifnum\dxdy < 41 \newx=-1 \newy=-3 \else%
+              \ifnum\dxdy < 58 \newx=-1 \newy=-2 \else%
+                \ifnum\dxdy < 71 \newx=-2 \newy=-3 \else%
+                  \ifnum\dxdy < 87 \newx=-3 \newy=-4 \else%
+                    \ifnum\dxdy < 116 \newx=-1 \newy=-1 \else%
+                      \ifnum\dxdy < 141 \newx=-4 \newy=-3 \else%
+                        \ifnum\dxdy < 175 \newx=-3 \newy=-2 \else%
+                          \ifnum\dxdy < 250 \newx=-2 \newy=-1 \else%
+                            \ifnum\dxdy < 350 \newx=-3 \newy=-1 \else%
+                              \ifnum\dxdy < 1000 \newx=-4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \fi%
+  \fi%
+  \newcount\length \length=\dx%
+  \ifnum\newx = 0 \length=\dy \fi%
+  \ifnum\length < 0 \multiply\length by -1 \fi%
+  \put(\sx,\sy){\vector(\newx,\newy){\length}}%
+  % cardinality placement
+  \ifnum\newx > 0%
+    \ifnum\newy > 0 \put(\ex,\ey){\makebox(-1,0)[tr]{$ #5 $}} \else \put(\ex,\ey){\makebox(-1,1)[tr]{$ #5 $}} \fi%
+  \else%
+    \ifnum\newy > 0 \put(\ex,\ey){\makebox(1,-1)[tr]{$ #5 $}} \else \put(\ex,\ey){\makebox(1,1)[tl]{$ #5 $}} \fi%
+  \fi%
+}
+
+% ---  Constraint  ---
+
+%\constr(sx,sy)(ex,ey){contents}
+
+% Create Constraint by given start and end koordinates and given contents.
+
+% !!! TODO !!!
+\def\constr(#1,#2)(#3,#4)#5{%
+  % compute the line parameters
+}

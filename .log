@@ -1,0 +1,54 @@
+This is TeX, Version 3.14159 (Web2C 7.3.7) (format=latex 2002.6.17)  29 NOV 2002 17:35
+**help \multiply
+(/usr/share/texmf/tex/latex/tools/.tex
+LaTeX2e <2001/06/01>
+Babel <v3.7h> and hyphenation patterns for american, french, german, ngerman, n
+ohyphenation, loaded.
+File ignored)
+*
+! You can't use `\par' after \multiply.
+<*> 
+    
+? h
+I'm forgetting what you said and not changing anything.
+
+? h
+Sorry, I already gave what help I could...
+Maybe you should try asking a human?
+An error might have occurred before I noticed any problems.
+``If all else fails, read the instructions.''
+
+? 
+(Please type a command or say `\end')
+*\multiply
+
+*2
+! You can't use `the character 2' after \multiply.
+<*> 2
+     
+? h
+I'm forgetting what you said and not changing anything.
+
+? help
+Sorry, I already gave what help I could...
+Maybe you should try asking a human?
+An error might have occurred before I noticed any problems.
+``If all else fails, read the instructions.''
+
+? q
+OK, entering \batchmode...
+! Emergency stop.
+<*> 2
+     
+*** (job aborted, no legal \end found)
+
+ 
+Here is how much of TeX's memory you used:
+ 5 strings out of 50847
+ 115 string characters out of 445946
+ 44507 words of memory out of 2630001
+ 3034 multiletter control sequences out of 10000+50000
+ 3640 words of font info for 14 fonts, out of 400000 for 1000
+ 14 hyphenation exceptions out of 1000
+ 5i,0n,1p,94b,7s stack positions out of 1500i,500n,1500p,50000b,40000s
+No pages of output.
