@@ -43,8 +43,9 @@ build-indep-stamp:
 	dh_testdir
 
 	# Add here command to compile/build the arch indep package.
-	
+
 	# create documentation for herm-pic
+	$(MAKE) doc
 	$(MAKE) doc
 
 	touch build-indep-stamp

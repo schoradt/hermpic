@@ -5,8 +5,15 @@
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
-# Include configuration file
-include ../Makefile.config
+# Config Variable for tools used
+ECHO = echo
+REMOVE = rm -f
+LINK = ln -s
+
+INSTALL = install
+
+LATEX = latex
+DVIPS = dvips
 
 SHELL = /bin/sh
 
@@ -23,15 +30,20 @@ all: ../herm-pic.sty $(TESTSPS)
 %.ps:	%.dvi
 	${DVIPS} -o $@ $<
 
-%.dvi:	%.tex ../herm-pic.sty
-	@echo -n "   Making test for "
-	@echo $<
+%.dvi:	%.tex herm-pic.sty
+	@${ECHO} -n "   Making test for "
+	@${ECHO} $<
 	@TEXINPUTS=:..;${LATEX} $<
 
+herm-pic.sty: ../herm-pic.sty
+	@${ECHO} "Making test link to module ..."
+	@${LINK} $< $@
+
 doc_clean: FORCE
-	@rm -f *.aux *.log *.toc *.bbl *.blg *~
+	@${REMOVE} *.aux *.log *.toc *.bbl *.blg *~
 
 clean: doc_clean
-	@rm -f *.dvi *.ps *.pdf
+	@${REMOVE} *.dvi *.ps *.pdf
+	@${REMOVE} herm-pic.sty
 
 FORCE: ;
