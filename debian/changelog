@@ -1,3 +1,9 @@
+hermpic (0.7.2-1) unstable; urgency=low
+
+  * fix bug #24
+
+ -- Sven Schoradt <sven@dex.de>  Mon, 26 Jul 2004 17:28:03 +0200
+
 hermpic (0.7.2) unstable; urgency=low
 
   * add a shortcut for the connection macro family for the
