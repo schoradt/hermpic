@@ -1,9 +1,16 @@
 % Higher Entity Relationship Modell TeX Style
+\def\HPDate $#1 #2 #3${#2}
+\def\HPAuthor $#1 #2${#2}
+\def\HPRev $#1 #2${#2}
+
+\def\HERMpicId{\HPDate $Date: 2003-02-06 18:50:37 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{herm-pic}[03/01/10 graphic extension package]
+\ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <v0.4> graphic extension package.}
+\RequirePackage{texdraw}
+
+\typeout{HERM-Pic \HPRev $Revision: 1.7 $ \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
