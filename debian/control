@@ -10,7 +10,7 @@ Architecture: all
 Depends: tetex-extra
 Description: LaTeX class for drawing HERM diagramms.
  HERM-Pic is a LaTeX class for drawing HERM diagramms. Its written
- the basis of a privat package by Bernhard Thalheim. Its aim is 
- offering a comfortable way to draw HERM diagramms, with less
+ on the basis of a privat package from Bernhard Thalheim. Its aim is 
+ to offer a comfortable way to draw HERM diagramms, with less
  limitations to the processibility of the consisting tex document.
 

@@ -25,8 +25,8 @@ hermpic (0.5.0-3) unstable; urgency=low
 hermpic (0.5.0-2) unstable; urgency=low
 
   * Minor changes
-
-    change makefile to generate to DESTDIR and to run under linux 
+    
+    fix some package building bugs
 
  -- Sven Schoradt <sven@dex.de>  Thu, 24 Jul 2003 00:51:25 +0200
 
