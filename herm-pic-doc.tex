@@ -9,8 +9,7 @@
 
 \usepackage{herm-pic}
 
-\setlength{\hermunit}{.6cm}
-
+\sethermunit{60}
 \pagestyle{headings}
 
 \author{Sven Schoradt \\ (Sven.Schoradt@informatik.tu-cottbus.de)}
@@ -21,7 +20,13 @@
 
 \maketitle
 
-\section{General usage}
+\section{HER Diagramms in LaTeX}
+
+The {\tt herm-pic} package provides some macros for creating higher entity relationship
+diagramms in LaTeX. The package use the {\tt texdraw} package from Peter Kabal for the 
+painting part.
+
+\section{Usage}
 
 To use the package you only have to insert the line
 
@@ -32,30 +37,26 @@ To use the package you only have to insert the line
 into the header part of your document. There are no known problems with other
 packages or classes. If you find something in this manner, mail to the package author.
 
-The package defines a length for the unit length in the schema environments, it was called
-\verb|\hermunit|. So you can use pictures and schemas with different unit length in your 
-document without redefining the unit length every time. You can set it with
-\begin{verbatim}
-\setlength{\hermunit}{1cm}
-\end{verbatim}
-The standard for \verb|\hermunit| is 0.5cm for one unit.
+For the scale of your diagramms, I define two makros to set a scale factor.
+
+Whith the macro \verb|\sethermunit| you set the value of percents, that one unit in your drawing 
+is to one centimeter.
+
+The macro \verb|\hermunit| give you the value. Default it is set to 50\%.
 
 \section{The schema environment}
 
 In the here described package I defined the {\tt schema} environment.
-This environment is the standard way to use the schema elements, but you 
-can also use the schema elements in an ordinary picture environment.
+
+You can only use the macros in this environment.
 
 You use the schema environment in the following manner:
 
 \begin{verbatim}
-\begin{schema}(x,y)
+\begin{schema}
 
 \end{schema}
 \end{verbatim}
-
-where {\tt x} is the width and {\tt y} is the height of 
-the schema graphic.
 
 \section{The schema elements}
 
@@ -75,14 +76,14 @@ The entity symbol will be a rectangle with the width of 4 and the height of 2.
 
 \paragraph{Example:}
 \begin{verbatim}
-\begin{schema}(6,4)
+\begin{schema}
 \entity(1,1){Person}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(6,4)
+\begin{schema}
 \entity(1,1){Person}
 \end{schema}
 
@@ -101,14 +102,14 @@ the name of the relationship.
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(6,4)
+\begin{schema}
 \relation(1,1){is a}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(6,4)
+\begin{schema}
 \relation(1,1){is a}
 \end{schema}
 
@@ -129,7 +130,7 @@ l stands for left of the object, o stands for over the object and u stands for u
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(10,6)
+\begin{schema}
 \entity(4,2){Person}
 \attr(4,3)[l]{left}
 \attr(6,4)[o]{over}
@@ -140,7 +141,7 @@ l stands for left of the object, o stands for over the object and u stands for u
 
 produces this
 
-\begin{schema}(10,6)
+\begin{schema}
 \entity(4,2){Person}
 \attr(4,3)[l]{left}
 \attr(6,4)[o]{over}
@@ -152,7 +153,7 @@ To show that an attribute or an sub-attribute is a key concept for the object, e
 you can use the \verb|\key| macro, like this:
 
 \begin{verbatim}
-\begin{schema}(10,4)
+\begin{schema}
 \entity(1,1){Person}
 \attr(4,3)[r]{\key{key}}
 \end{schema}
@@ -160,7 +161,7 @@ you can use the \verb|\key| macro, like this:
 
 produces this
 
-\begin{schema}(10,4)
+\begin{schema}
 \entity(1,1){Person}
 \attr(5,2)[r]{\key{key}}
 \end{schema}
@@ -180,7 +181,7 @@ This draws the cluster item, thats a circle with the radius 2 whit a plus in it,
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(4,4)
+\begin{schema}
 \cluster(1,1)
 \end{schema}
 
@@ -188,7 +189,7 @@ This draws the cluster item, thats a circle with the radius 2 whit a plus in it,
 
 produces this
 
-\begin{schema}(4,4)
+\begin{schema}
 \cluster(1,1)
 \end{schema}
 
@@ -197,10 +198,10 @@ produces this
 A connection between two schema elements is a vector with an optional
 text marking for the cardinality constraint.
 
-The package provides for this the \verb|\connection| macro, with the syntax
+The package provides for this the \verb|\conn| macro, with the syntax
 
 \begin{verbatim}
-\connection(x1,y1)(x2,y2){mathematical equation}
+\conn(x1,y1)(x2,y2){mathematical equation}
 \end{verbatim}
 
 It draws a vector from the point (x1,y1) to the next possible point in the near
@@ -210,23 +211,23 @@ vector enclosed by \$-signs.
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(20,5)
+\begin{schema}
   \entity(1,1){Person}
   \entity(13,1){Team}
   \relation(7,1){arbeitet\_in}
-  \connection(7,2)(5,2){(0,3)}
-  \connection(11,2)(13,2){(2,10)}
+  \conn(7,2)(5,2){(0,3)}
+  \conn(11,2)(13,2){(2,10)}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(20,4)
+\begin{schema}
   \entity(1,1){Person}
   \entity(13,1){Team}
   \relation(7,1){arbeitet\_in}
-  \connection(7,2)(5,2){(0,3)}
-  \connection(11,2)(13,2){(2,10)}
+  \conn(7,2)(5,2){(0,3)}
+  \conn(11,2)(13,2){(2,10)}
 \end{schema}
 
 \end{document}
