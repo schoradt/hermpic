@@ -219,10 +219,11 @@
   \ifnum\length < 0 \multiply\length by -1 \fi%
   \put(\sx,\sy){\vector(\newx,\newy){\length}}%
   % cardinality placement
+  \dx=\ex \dy=\ey \advance \dx by -1 \advance \dy by -1%
   \ifnum\newx > 0%
-    \ifnum\newy > 0 \put(\ex,\ey){\makebox(-1,0)[tr]{$ #5 $}} \else \put(\ex,\ey){\makebox(-1,1)[tr]{$ #5 $}} \fi%
+    \ifnum\newy > 0 \put(\ex,\ey){\makebox(-1,1)[tr]{$ #5 $}} \else \put(\dx,\dy){\makebox(1,1)[br]{$ #5 $}} \fi%
   \else%
-    \ifnum\newy > 0 \put(\ex,\ey){\makebox(1,-1)[tr]{$ #5 $}} \else \put(\ex,\ey){\makebox(1,1)[tl]{$ #5 $}} \fi%
+    \ifnum\newy > 0 \put(\ex,\ey){\makebox(1,1)[tl]{$ #5 $}} \else \put(\ex,\dy){\makebox(1,1)[bl]{$ #5 $}} \fi%
   \fi%
 }
 
