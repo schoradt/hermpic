@@ -38,6 +38,23 @@
   }%
 }%
 
+% ---  Cluster  ---
+
+% \cluster(x,y)
+
+% defines the cluster representation
+% width = 2
+% height = 2
+%
+% a circle width a plus in it
+\def\cluster(#1,#2){%
+  \put(#1,#2){%
+    \put(1,1){\circle{2}}%
+    \put(1,.3){\line(0,1){1.4}}%
+    \put(.3,1){\line(1,0){1.4}}%
+  }%
+}%
+
 % ---  Attributes  ---
 
 % \attr[pos]{name}
