@@ -442,4 +442,365 @@
 %
 \def\key#1{\underline{#1}}%
 %
-
+%
+% ---  Connection  ---
+%
+\def\connection{%
+  \futurelet\connLockedAt\connDecide
+}%
+\def\connDecide{%
+  \ifx\connLockedAt *%
+    \let\next=\connb
+  \else
+    \let\next=\conna
+  \fi
+  \next
+}%
+%
+% Draws an arrow from the start to the endpoint and places the label
+% an a 'good' place.
+%
+% \connection(x1,y1)(x2,y2){label}
+\newcount\herm@sx \newcount\herm@sy \newcount\herm@ex \newcount\herm@ey%
+\newcount\herm@mx \newcount\herm@my%
+\newcount\herm@dx \newcount\herm@dy%
+\newcount\herm@nsx \newcount\herm@nsy%
+\newcount\herm@newx \newcount\herm@newy \newcount\herm@dxdy%
+\newcount\herm@length%
+\def\connb *(#1,#2)(#3,#4)#5{%
+  \herm@sx=#1%
+  \herm@sy=#2%
+  \herm@ex=#3%
+  \herm@ey=#4%
+  \qbezier(\herm@sx,\herm@sy)(\herm@sx,\herm@sy)(\herm@ex,\herm@ey)%
+  \herm@dx=\herm@ex \herm@dy=\herm@ey%
+  \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
+  \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
+  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \else \herm@newx=-1 \fi \herm@newy=0%
+  \else%
+    \herm@dxdy=\herm@dx \multiply\herm@dxdy by 100 \divide\herm@dxdy by \herm@dy%
+    \ifnum\herm@dxdy < 0 \multiply\herm@dxdy by -1 \fi%
+    \ifnum\herm@dx > 0%
+      \ifnum\herm@dy > 0%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=-4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=-3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=-2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=-3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=-4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=-1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=-3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=-2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=-1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=-1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \else%
+      \ifnum\herm@dy > 0%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=-4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=-3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=-2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=-3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=-4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=-1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=-3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=-2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=-1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=-1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \fi%
+  \fi%
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{Pfeile \the\herm@newx, \the\herm@newy}%
+  \fi% 
+  \ifnum \herm@newx=0
+    \ifnum\herm@newy<0
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \char 63}}
+    \else
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \char 54}}
+    \fi
+  \else
+    \ifnum\herm@newx<0
+      \ifnum\herm@newy<0
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \else
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \fi
+    \else
+      \ifnum\herm@newy>0
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[tr]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \else
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[br]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \fi
+    \fi
+  \fi
+  \put(\herm@ex,\herm@ey){%
+    \ifnum\herm@dx > 0 %
+      \ifnum\herm@dy > 0 %
+        \put(-.5,-.2){\makebox(0,0)[tr]{$ #5 $}}%
+      \else%
+        \put(-0.5,.2){\makebox(0,0)[br]{$ #5 $}}%
+      \fi%
+    \else%
+      \ifnum\herm@dy > 0 %
+        \put(.5,-.2){\makebox(0,0)[tl]{$ #5 $}}%
+      \else%
+        \put(.5,.2){\makebox(0,0)[bl]{$ #5 $}}%
+      \fi%
+    \fi%
+  }%
+}%
+%
+% Draws an arrow from one object to an other and place 
+% the label.
+%
+% Use the old \connection macro for drawing.
+%
+% \conn(oname1,oname2){label}
+%
+\newcount\herm@tsx \newcount\herm@tsy \newcount\herm@tex \newcount\herm@tey%
+\newcount\herm@tdx \newcount\herm@tdy \newcount\herm@corrected \newcount\herm@null%
+\def\conna(#1,#2)#3{%
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{Connection between \string#1 and \string#2 ...}%
+  \fi%
+  \newif\ifherm@conerra \herm@conerratrue%
+  \newif\ifherm@conerrb \herm@conerrbtrue%
+  \expandafter\if\csname hermobj@#1 \endcsname 1%
+    \herm@conerrafalse%
+    \herm@tsx=\csname hermobjx@#1 \endcsname%
+    \herm@tsy=\csname hermobjy@#1 \endcsname%
+  \fi%
+  \expandafter\if\csname hermobj@#2 \endcsname 1%
+    \herm@conerrbfalse%
+    \herm@tex=\csname hermobjx@#2 \endcsname%
+    \herm@tey=\csname hermobjy@#2 \endcsname%
+  \fi%
+  \ifherm@conerra%
+    \PackageError {herm-pic}{Undefined object #1 in addvanced connection}{See herm-pic Documentaion.}%
+  \fi%
+  \ifherm@conerrb%
+    \PackageError {herm-pic}{Undefined object #2 in addvanced connection}{See herm-pic Documentaion.}%
+  \fi%
+  % compute middle of objects
+  \expandafter\if\csname hermcluster@#1 \endcsname 1%
+    \advance\herm@tsx by 1%
+  \else%
+    \advance\herm@tsx by 2%
+  \fi%
+  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+    \advance\herm@tex by 1%
+  \else%
+    \advance\herm@tex by 2%
+  \fi%
+  \advance\herm@tsy by 1 \advance\herm@tey by 1%
+  % compute differences
+  \herm@tdx=\herm@tex \herm@tdy=\herm@tey%
+  \herm@nsx=\herm@tsx \multiply\herm@nsx by -1 \herm@nsy=\herm@tsy \multiply\herm@nsy by -1%
+  \advance\herm@tdx by \herm@nsx \advance\herm@tdy by \herm@nsy%
+  \ifnum\herm@tdx < 0 \multiply\herm@tdx by -1 \fi%
+  \ifnum\herm@tdy < 0 \multiply\herm@tdy by -1 \fi%
+  % set initial start points
+  \herm@sx=\herm@tsx%
+  \herm@sy=\herm@tsy%
+  \herm@ex=\herm@tex%
+  \herm@ey=\herm@tey%
+  % correct start points
+  \gdef\herm@corrected{0}%
+  % x - Correction
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{X correction (dx=\the\herm@tdx, sx=\the\herm@tsx, ex=\the\herm@tex)}%
+  \fi%
+  \ifnum\herm@tdx > 6%
+    \ifnum\herm@tsx < \herm@tex%
+      \expandafter\if\csname hermcluster@#1 \endcsname 1%
+        \advance\herm@sx by 1%
+      \else%
+        \advance\herm@sx by 2%
+      \fi%
+      \expandafter\if\csname hermcluster@#2 \endcsname 1%
+        \advance\herm@ex by -1%
+      \else%
+        \advance\herm@ex by -2%
+      \fi%
+    \fi%
+    \ifnum\herm@tsx > \herm@tex%
+      \expandafter\if\csname hermcluster@#1 \endcsname 1%
+        \advance\herm@sx by -1%
+      \else%
+        \advance\herm@sx by -2%
+      \fi%
+      \expandafter\if\csname hermcluster@#2 \endcsname 1%
+        \advance\herm@ex by 1%
+      \else%
+        \advance\herm@ex by 2%
+      \fi%
+    \fi%
+    \gdef\herm@corrected{1}%
+  \fi%
+  % y - Correction
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{Y correction (dy=\the\herm@tdy, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
+  \fi%
+  \ifnum\herm@tdy > 4%
+    \expandafter\if\csname hermrel@#1 \endcsname 1%
+      \if\herm@corrected 0%
+        \ifnum\herm@tsy < \herm@tey%
+          \advance\herm@sy by 1%
+        \fi%
+        \ifnum\herm@tsy > \herm@tey%
+          \advance\herm@sy by -1%
+        \fi%
+      \fi%
+    \else%
+      \ifnum\herm@tsy < \herm@tey%
+        \advance\herm@sy by 1%
+      \fi%
+      \ifnum\herm@tsy > \herm@tey%
+        \advance\herm@sy by -1%
+      \fi%
+    \fi%
+    \expandafter\if\csname hermrel@#2 \endcsname 1%
+      \ifnum\herm@corrected 0%
+        \ifnum\herm@tsy<\herm@tey%
+          \advance\herm@ey by -1%
+        \fi%
+        \ifnum\herm@tsy>\herm@tey%
+          \advance\herm@ey by 1%
+        \fi%
+      \fi%
+    \else%
+      \ifnum\herm@tsy < \herm@tey%
+        \advance\herm@ey by -1%
+      \fi%
+      \ifnum\herm@tsy > \herm@tey%
+        \advance\herm@ey by 1%
+      \fi%
+    \fi%
+    \gdef\herm@corrected{1}%
+   \fi%
+   \ifherm@verbatim%
+     \PackageInfo{herm-pic}{post (dx=\the\herm@tdx, dy=\the\herm@tdy, sx=\the\herm@tsx, ex=\the\herm@tex, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
+   \fi%
+   \if\herm@corrected 0%
+     \ifnum\herm@tdx > \herm@tdy%
+       \ifherm@verbatim%
+         \PackageInfo{herm-pic}{Use x correction}%
+       \fi%
+       \ifnum\herm@tsx < \herm@tex%
+         \expandafter\if\csname hermcluster@#1 \endcsname 1%
+            \advance\herm@sx by 1%
+         \else%
+           \advance\herm@sx by 2%
+         \fi%
+         \expandafter\if\csname hermcluster@#2 \endcsname 1%
+           \advance\herm@ex by -1%
+         \else%
+           \advance\herm@ex by -2%
+         \fi%
+       \fi%
+       \ifnum\herm@tsx > \herm@tex%
+         \expandafter\if\csname hermcluster@#1 \endcsname 1%
+           \advance\herm@sx by -1%
+         \else%
+           \advance\herm@sx by -2%
+         \fi%
+         \expandafter\if\csname hermcluster@#2 \endcsname 1%
+           \advance\herm@ex by 1%
+         \else%
+           \advance\herm@ex by 2%
+         \fi%
+       \fi%
+     \fi%
+     \ifnum\herm@tdx < \herm@tdy%
+       \ifherm@verbatim%
+         \packageInfo{herm-pic}{Use y correction}%
+       \fi%
+       \ifnum\herm@tsy < \herm@tey%
+         \advance\herm@sy by 1 \advance \herm@ey by -1%
+       \fi%
+       \ifnum\herm@tsy > \herm@tey%
+         \advance\herm@sy by -1 \advance \herm@ey by 1%
+       \fi%
+     \fi%
+  \fi%
+  % draw connection
+  \ifherm@verbatim%
+    \PackageInfo{herm-pic}{  Drawing with (\the\herm@sx,\the\herm@sy)(\the\herm@ex,\the\herm@ey)}%
+  \fi%
+  \connection*(\herm@sx,\herm@sy)(\herm@ex,\herm@ey){#3}%
+}%
+%
+% ---   END OF MODULE   ---

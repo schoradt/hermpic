@@ -56,5 +56,73 @@
   \attr[lo]{arbeitet}{a12}
 \end{schema}
 
+\section{Connection examples}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \relation(8,6){R}
+  \connection(R,E1){(5,1000)}
+  \connection(R,E2){(1,n)}
+  \connection(R,E3){(n,m)}
+  \connection(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(8,11){E2}
+  \entity(15,11){E3}
+  \entity(15,6){E4}
+  \entity(15,1){E5}
+  \entity(8,1){E6}
+  \entity(1,1){E7}
+  \entity(1,6){E8}
+  \relation(8,6){R}
+  \connection(R,E1){}
+  \connection(R,E2){}
+  \connection(R,E3){}
+  \connection(R,E4){}
+  \connection(R,E5){}
+  \connection(R,E6){}
+  \connection(R,E7){}
+  \connection(R,E8){}
+\end{schema}
+
+\section{Cluster example}
+
+\begin{schema}(15,15)
+  \entity(1,4){Person}
+  \attr[ol]{Person}{Name}
+  \attr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \attr[ol]{Mitarbeiter}{\key{mnr}}
+  \connection(Mitarbeiter,Person){}
+  \connection(Professor,Mitarbeiter){}
+  \connection(WiMi,Mitarbeiter){}
+  \connection(Student,Mitarbeiter){}
+\end{schema}
+
+\begin{schema}(20,10)
+  \cluster(10,4){cluster}
+  \attr[ol]{cluster}{a1}
+  \attr[om]{cluster}{a2}
+  \attr[or]{cluster}{a3}
+  \attr[ro]{cluster}{a4}
+  \attr[rm]{cluster}{a5}
+  \attr[ru]{cluster}{a6}
+  \attr[ur]{cluster}{a7}
+  \attr[um]{cluster}{a8}
+  \attr[ul]{cluster}{a9}
+  \attr[lu]{cluster}{a10}
+  \attr[lm]{cluster}{a11}
+  \attr[lo]{cluster}{a12}
+\end{schema}
+
+
 
 \end{document}
