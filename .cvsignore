@@ -1,1 +1,1 @@
-test *.swp *.log *.dvi *.ps *.aux
+test *.swp *.log *.dvi *.ps *.aux *.ps*
