@@ -3,12 +3,12 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-07-15 15:46:49 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-07-25 15:22:59 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <\HPRev $Revision: 1.16 $> \HERMpicId by \HPAuthor $Author: sven $}
+\typeout{HERM-Pic <\HPRev $Revision: 1.17 $> \HERMpicId by \HPAuthor $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -16,14 +16,14 @@
 % ---  package wide definitions  ---
 %
 \global\newdimen{\hermunit}
-\newdimen{\hermtempul}
+\newdimen{\herm@tempul}
 % ---  set \hermunit to standard value  ---
 \setlength{\hermunit}{.5cm} 
 % ---  schema environment  ---
 %
 % \begin{schema}(x,y)
 \def\schema(#1,#2){%
-  \setlength{\hermtempul}{\unitlength}
+  \setlength{\herm@tempul}{\unitlength}
   \setlength{\unitlength}{\hermunit}
   \begin{picture}(#1,#2)
 }%
@@ -31,7 +31,7 @@
 % \end{schema}
 \def\endschema{
   \end{picture}
-  \setlength{\unitlength}{\hermtempul}
+  \setlength{\unitlength}{\herm@tempul}
 }%
 %
 % ---  Entity  ---
@@ -89,14 +89,14 @@
 % the start point is the point where the attribut line docks on the
 % object.
 \def\attr(#1,#2)[#3]#4{%
-  \def\pos{#3} \def\r{r} \def\l{l} \def\o{o} \def\u{u}%
-  \ifx\pos\r \put(#1,#2){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#4$}}}%
+  \def\herm@pos{#3} \def\herm@r{r} \def\herm@l{l} \def\herm@o{o} \def\herm@u{u}%
+  \ifx\herm@pos\herm@r \put(#1,#2){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#4$}}}%
   \else
-    \ifx\pos\l \put(#1,#2){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#4$}}}%
+    \ifx\herm@pos\herm@l \put(#1,#2){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#4$}}}%
     \else
-      \ifx\pos\o \put(#1,#2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#4$}}}%
+      \ifx\herm@pos\herm@o \put(#1,#2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#4$}}}%
       \else
-        \ifx\pos\u \put(#1,#2){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#4$}}}%
+        \ifx\herm@pos\herm@u \put(#1,#2){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#4$}}}%
         \else
         \PackageWarning{herm-pic}{%
           Undefind attribute positioning parameter #1 \MessageBreak have to come from r,l,o,u (r as default).
@@ -123,38 +123,39 @@
 % an a 'good' place.
 %
 % \connection(x1,y1)(x2,y2){label}
-\newcount\sx \newcount\sy \newcount\ex \newcount\ey%
-\newcount\dx \newcount\dy%
-\newcount\nsx \newcount\nsy%
-\newcount\newx \newcount\newy \newcount\dxdy%
-\newcount\length%
+\newcount\herm@sx \newcount\herm@sy \newcount\herm@ex \newcount\herm@ey%
+\newcount\herm@dx \newcount\herm@dy%
+\newcount\herm@nsx \newcount\herm@nsy%
+\newcount\herm@newx \newcount\herm@newy \newcount\herm@dxdy%
+\newcount\herm@length%
 %
 \def\connection(#1,#2)(#3,#4)#5{%
-  \sx=#1%
-  \sy=#2%
-  \ex=#3%
-  \ey=#4%
+  \herm@sx=#1%
+  \herm@sy=#2%
+  \herm@ex=#3%
+  \herm@ey=#4%
   % try to compute \vector parameter
-  \dx=\ex \dy=\ey%
-  \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
-  \advance\dx by \nsx \advance\dy by \nsy%
-  \ifnum\dy = 0 \ifnum\dx > 0 \newx=1 \else \newx=-1 \fi \newy=0%
+  \herm@dx=\herm@ex \herm@dy=\herm@ey%
+  \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
+  \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
+  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \else \herm@newx=-1 \fi \herm@newy=0%
   \else%
-    \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
-    \ifnum\dx > 0%
-      \ifnum\dy > 0%
-        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
-          \ifnum\dxdy < 29 \newx=1 \newy=4 \else%
-            \ifnum\dxdy < 41 \newx=1 \newy=3 \else%
-              \ifnum\dxdy < 58 \newx=1 \newy=2 \else%
-                \ifnum\dxdy < 71 \newx=2 \newy=3 \else%
-                  \ifnum\dxdy < 87 \newx=3 \newy=4 \else%
-                    \ifnum\dxdy < 116 \newx=1 \newy=1 \else%
-                      \ifnum\dxdy < 141 \newx=4 \newy=3 \else%
-                        \ifnum\dxdy < 175 \newx=3 \newy=2 \else%
-                          \ifnum\dxdy < 250 \newx=2 \newy=1 \else%
-                            \ifnum\dxdy < 350 \newx=3 \newy=1 \else%
-                              \ifnum\dxdy < 1000 \newx=4 \newy=1 \else \newx=1 \newy=0 \fi%
+    \herm@dxdy=\herm@dx \multiply\herm@dxdy by 100 \divide\herm@dxdy by \herm@dy%
+    \ifnum\herm@dxdy < 0 \multiply\herm@dxdy by -1 \fi%
+    \ifnum\herm@dx > 0%
+      \ifnum\herm@dy > 0%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -167,18 +168,18 @@
           \fi%
         \fi
       \else%
-        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
-          \ifnum\dxdy < 29 \newx=1 \newy=-4 \else%
-            \ifnum\dxdy < 41 \newx=1 \newy=-3 \else%
-              \ifnum\dxdy < 58 \newx=1 \newy=-2 \else%
-                \ifnum\dxdy < 71 \newx=2 \newy=-3 \else%
-                  \ifnum\dxdy < 87 \newx=3 \newy=-4 \else%
-                    \ifnum\dxdy < 116 \newx=1 \newy=-1 \else%
-                      \ifnum\dxdy < 141 \newx=4 \newy=-3 \else%
-                        \ifnum\dxdy < 175 \newx=3 \newy=-2 \else%
-                          \ifnum\dxdy < 250 \newx=2 \newy=-1 \else%
-                            \ifnum\dxdy < 350 \newx=3 \newy=-1 \else%
-                              \ifnum\dxdy < 1000 \newx=4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
+          \ifnum\dxdy < 29 \herm@newx=1 \herm@newy=-4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=-3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=-2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=-3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=-4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=-1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=-3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=-2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=-1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=-1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -192,19 +193,19 @@
         \fi
       \fi%
     \else%
-      \ifnum\dy > 0%
-        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
-          \ifnum\dxdy < 29 \newx=-1 \newy=4 \else%
-            \ifnum\dxdy < 41 \newx=-1 \newy=3 \else%
-              \ifnum\dxdy < 58 \newx=-1 \newy=2 \else%
-                \ifnum\dxdy < 71 \newx=-2 \newy=3 \else%
-                  \ifnum\dxdy < 87 \newx=-3 \newy=4 \else%
-                    \ifnum\dxdy < 116 \newx=-1 \newy=1 \else%
-                      \ifnum\dxdy < 141 \newx=-4 \newy=3 \else%
-                        \ifnum\dxdy < 175 \newx=-3 \newy=2 \else%
-                          \ifnum\dxdy < 250 \newx=-2 \newy=1 \else%
-                            \ifnum\dxdy < 350 \newx=-3 \newy=1 \else%
-                              \ifnum\dxdy < 1000 \newx=-4 \newy=1 \else \newx=1 \newy=0 \fi%
+      \ifnum\herm@dy > 0%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -217,18 +218,18 @@
           \fi%
         \fi
       \else%
-        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
-          \ifnum\dxdy < 29 \newx=-1 \newy=-4 \else%
-            \ifnum\dxdy < 41 \newx=-1 \newy=-3 \else%
-              \ifnum\dxdy < 58 \newx=-1 \newy=-2 \else%
-                \ifnum\dxdy < 71 \newx=-2 \newy=-3 \else%
-                  \ifnum\dxdy < 87 \newx=-3 \newy=-4 \else%
-                    \ifnum\dxdy < 116 \newx=-1 \newy=-1 \else%
-                      \ifnum\dxdy < 141 \newx=-4 \newy=-3 \else%
-                        \ifnum\dxdy < 175 \newx=-3 \newy=-2 \else%
-                          \ifnum\dxdy < 250 \newx=-2 \newy=-1 \else%
-                            \ifnum\dxdy < 350 \newx=-3 \newy=-1 \else%
-                              \ifnum\dxdy < 1000 \newx=-4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
+          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=-4 \else%
+            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=-3 \else%
+              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=-2 \else%
+                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=-3 \else%
+                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=-4 \else%
+                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=-1 \else%
+                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=-3 \else%
+                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=-2 \else%
+                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=-1 \else%
+                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=-1 \else%
+                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
                             \fi%
                           \fi%
                         \fi%
@@ -243,19 +244,19 @@
       \fi%
     \fi%
   \fi%
-  \length=\dx%
-  \ifnum\newx = 0 \length=\dy \fi%
-  \ifnum\length < 0 \multiply\length by -1 \fi%
-  \put(\sx,\sy){\vector(\newx,\newy){\length}}%
-  \put(\ex,\ey){%
-    \ifnum\dx > 0 %
-      \ifnum\dy > 0 %
+  \herm@length=\herm@dx%
+  \ifnum\herm@newx = 0 \herm@length=\herm@dy \fi%
+  \ifnum\herm@length < 0 \multiply\herm@length by -1 \fi%
+  \put(\herm@sx,\herm@sy){\vector(\herm@newx,\herm@newy){\herm@length}}%
+  \put(\herm@ex,\herm@ey){%
+    \ifnum\herm@dx > 0 %
+      \ifnum\herm@dy > 0 %
         \put(-.5,-.2){\makebox(0,0)[tr]{$ #5 $}}%
       \else%
         \put(-0.5,.2){\makebox(0,0)[br]{$ #5 $}}%
       \fi%
     \else%
-      \ifnum\dy > 0 %
+      \ifnum\herm@dy > 0 %
         \put(.5,-.2){\makebox(0,0)[tl]{$ #5 $}}%
       \else%
         \put(.5,.2){\makebox(0,0)[bl]{$ #5 $}}%
