@@ -94,6 +94,12 @@ The syntax is the following:
 \entity(x,y){text}
 \end{verbatim}
 
+,
+
+\begin{verbatim}
+\entityi[internal_name](x,y){text}
+\end{verbatim}
+
 or 
 
 \begin{verbatim}
@@ -101,26 +107,31 @@ or
 \end{verbatim}
 
 where {\tt (x,y)} are the coordinates of the left upper edge of the entity
-symbol. The {\tt text} was printed as the entity name. The entity name should
-only consits of Characters and Numbers, but no tex special chars are allowed.
-In the star version there are no known limitations to the name.
+symbol. The {\tt text} was printed as the entity name. In the first version 
+the entity name should only consits of Characters and Numbers, 
+but no tex special chars are allowed.
+In the other version there is no limitation to the text.
+
+The internal name should only consits of characters and numbers.
 
 The entity symbol will be a rectangle with the width of 4 and the height of 2 
 units.
 
 \paragraph{Example:}
 \begin{verbatim}
-\begin{schema}(12,4)
+\begin{schema}(17,4)
 \entity(1,1){Person}
-\entity*(7,1){arbeitetr\_in}
+\entity[person2](7,1){Person\_2}
+\entity*(12,1){Person\_3}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(12,4)
+\begin{schema}(18,4)
 \entity(1,1){Person}
-\entity*(7,1){arbeitet\_in}
+\entity[person2](7,1){Person\_2}
+\entity*(13,1){Person\_3}
 \end{schema}
 
 \subsection{Relationships}
@@ -132,6 +143,12 @@ The syntax is the following:
 \relation(x,y){text}
 \end{verbatim}
 
+,
+
+\begin{verbatim}
+\relation[internal_name](x,y){text}
+\end{verbatim}
+
 or
 
 \begin{verbatim}
@@ -140,22 +157,24 @@ or
 
 where {\tt (x,y)} are the coordinates of the left edge. The {\tt text} will be displayed as 
 the name of the relationship. There are the same restrictions to the name 
-how they are discriped for entitys.
+how they are descriped for entitys.
 
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(12,4)
-\relation(1,1){is a}
-\relation*(7,1){arbeitet_in}
+\begin{schema}(17,4)
+\relation(1,1){Relation}
+\relation[relation2](7,1){Relation\_2}
+\relation*(12,1){Relation\_3}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(12,4)
-\relation(1,1){is a}
-\relation*(7,1){arbeitet\_in}
+\begin{schema}(18,4)
+\relation(1,1){Relation}
+\relation[relation2](7,1){Relation\_2}
+\relation*(13,1){Relation\_3}
 \end{schema}
 
 \subsection{Cluster}
@@ -165,6 +184,12 @@ The syntax is as followed:
 
 \begin{verbatim}
 \cluster(x,y){name}
+\end{verbatim}
+
+,
+
+\begin{verbatim}
+\cluster[internal_name](x,y){name}
 \end{verbatim}
 
 or
@@ -180,19 +205,21 @@ the cluster.
 \paragraph{Example:}
 
 \begin{verbatim}
-\begin{schema}(12,4)
+\begin{schema}(16,4)
 \cluster(1,1){}
 \cluster(5,1){Cluster 1}
-\cluster*(9,1){Cluster\_2}
+\cluster[cluster2](9,1){Cluster\_2}
+\cluster*(13,1){Cluster\_3}
 \end{schema}
 \end{verbatim}
 
 produces this
 
-\begin{schema}(12,4)
+\begin{schema}(16,4)
 \cluster(1,1){}
 \cluster(5,1){Cluster 1}
-\cluster*(9,1){Cluster\_2}
+\cluster[cluster2](9,1){Cluster\_2}
+\cluster*(13,1){Cluster\_3}
 \end{schema}
 
 \subsection{Attributes}
@@ -330,7 +357,7 @@ equation to an adequate point at the end of the vector enclosed by \$-signs.
 \begin{schema}(20,5)
   \entity(1,1){Person}
   \entity(13,1){Team}
-  \relation(7,1){arbeitetin}
+  \relation[arbeitetin](7,1){arbeitet\_in}
   \connection(arbeitetin,Person){(0,3)}
   \connection(arbeitetin,Team1){(2,10)}
 \end{schema}
@@ -341,7 +368,7 @@ produces
 \begin{schema}(20,5)
   \entity(1,1){Person}
   \entity(13,1){Team}
-  \relation(7,1){arbeitetin}
+  \relation[arbeitetin](7,1){arbeitet\_in}
   \connection(arbeitetin,Person){(0,3)}
   \connection(arbeitetin,Team){(2,10)}
 \end{schema}
@@ -388,7 +415,7 @@ and
 \begin{schema}(20,5)
   \entity(1,1){Person}
   \entity(13,1){Team}
-  \relation(7,1){arbeitetin}
+  \relation*(7,1){arbeitet\_in}
   \connection*(7,2)(5,2){(0,3)}
   \connection*(11,2)(13,2){(2,10)}
 \end{schema}
@@ -399,7 +426,7 @@ produces this
 \begin{schema}(20,4)
   \entity(1,1){Person}
   \entity(13,1){Team}
-  \relation(7,1){arbeitetin}
+  \relation*(7,1){arbeitet\_in}
   \connection*(7,2)(5,2){(0,3)}
   \connection*(11,2)(13,2){(2,10)}
 \end{schema}
