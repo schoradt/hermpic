@@ -5,8 +5,6 @@
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
-SHELL = /bin/tcsh
-
 # Include configuration file
 include ../Makefile.config
 
@@ -28,10 +26,18 @@ all: ../herm-pic.sty $(TESTSPS)
 	@echo $<
 	setenv TEXINPUTS :..;${LATEX} $<
 
-doc_clean:
-	rm -f *.aux *.log *.toc *.bbl *.blg *~
+doc_clean: FORCE
+	rm -f *.aux
+	rm -f *.log 
+	rm -f *.toc 
+	rm -f *.bbl 
+	rm -f *.blg 
+	rm -f *~
 
 clean:
-	rm -f *.dvi *.ps *.pdf *.ps*
+	rm -f *.dvi 
+	rm -f *.ps
+	rm -f *.pdf
+	rm -f *.ps*
 
-
+FORCE: ;
