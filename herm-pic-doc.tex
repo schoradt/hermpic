@@ -250,6 +250,32 @@ produces this
 \cluster*(13,1){Cluster\_3}
 \end{schema}
 
+To slect the position where the cluster name is displayed, you can use the 
+\verb|\cnamepos| macro. The possible values are the same like at the attribute 
+possitioning (see there).
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(16,4)
+\cnamepos{ru}
+\cluster(1,1){}
+\cluster(5,1){Cluster 1}
+\cluster[cluster2](9,1){Cluster\_2}
+\cluster*(13,1){Cluster\_3}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(16,4)
+\cnamepos{ru}
+\cluster(1,1){}
+\cluster(5,1){Cluster 1}
+\cluster[cluster2](9,1){Cluster\_2}
+\cluster*(13,1){Cluster\_3}
+\end{schema}
+
 \subsection{Attributes}
 
 Attributes in HERM will be a string connected with the entity or relation.
