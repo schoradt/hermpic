@@ -3,12 +3,12 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-08-04 16:17:14 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-10-14 20:33:19 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.3 $> \HERMpicId by \HPAuthor $Author: sven $}
+\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.4 $> \HERMpicId by \HPAuthor $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -63,6 +63,7 @@
   \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
   \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
   \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+  \global\expandafter\def\csname herment@#3 \endcsname{1}%
 }%
 %
 % ---  Relation  ---
@@ -84,6 +85,7 @@
   \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
   \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
   \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+  \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
  }%
 %
 % ---  Cluster  ---
@@ -145,8 +147,8 @@
       \typeout{   object \string#2 found}%
     \fi%
     \herm@conerrfalse%
-    \herm@tsx=\csname hermobjx@#1 \endcsname%
-    \herm@tsy=\csname hermobjy@#1 \endcsname%
+    \herm@tsx=\csname hermobjx@#2 \endcsname%
+    \herm@tsy=\csname hermobjy@#2 \endcsname%
     \ifherm@verbatim%
       \typeout{      with \the\herm@tsx, \the\herm@tsy}%
     \fi%
@@ -155,7 +157,99 @@
     \PackageError {herm-pic}{Undefined object #2 in addvanced attribute}{See herm-pic documentation}%
   \fi%
   % prepare attribute placement
-  % process attribute drawing
+  \def\herm@inpos{#1}%
+  \def\herm@or{or} \def\herm@ol{ol} \def\herm@ur{ur} \def\herm@ul{ul}%
+  \def\herm@ro{ro} \def\herm@ru{ru} \def\herm@lo{lo} \def\herm@lu{lu}%
+  \def\herm@om{om} \def\herm@rm{rm} \def\herm@lm{lm} \def\herm@um{um}%
+  % compute attribute drawing
+  \expandafter\if\csname herment@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol \put(\herm@tsx,\herm@tsy){\put(.5,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
+    \else
+      \ifx\herm@inpos\herm@or \put(\herm@tsx,\herm@tsy){\put(3.5,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
+      \else
+        \ifx\herm@inpos\herm@ro \put(\herm@tsx,\herm@tsy){\put(4,1.5){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+        \else
+          \ifx\herm@inpos\herm@ru \put(\herm@tsx,\herm@tsy){\put(4,.5){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+          \else
+            \ifx\herm@inpos\herm@ur \put(\herm@tsx,\herm@tsy){\put(3.5,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
+            \else
+              \ifx\herm@inpos\herm@ul \put(\herm@tsx,\herm@tsy){\put(.5,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
+              \else
+                \ifx\herm@inpos\herm@lu \put(\herm@tsx,\herm@tsy){\put(0,.5){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                \else
+                  \ifx\herm@inpos\herm@lo \put(\herm@tsx,\herm@tsy){\put(0,1.5){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                  \else
+                    \ifx\herm@inpos\herm@om \put(\herm@tsx,\herm@tsy){\put(2,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
+                    \else
+                      \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(4,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+                      \else
+                        \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(2,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
+                        \else
+                          \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1 
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \aattr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+  \expandafter\if\csname hermrel@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol \put(\herm@tsx,\herm@tsy){\put(1,1.5){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[rb]{$#3$}}}}%
+    \else
+      \ifx\herm@inpos\herm@or \put(\herm@tsx,\herm@tsy){\put(3,1.5){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[lb]{$#3$}}}}%
+      \else
+        \ifx\herm@inpos\herm@ro \put(\herm@tsx,\herm@tsy){\put(3,1.5){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+        \else
+          \ifx\herm@inpos\herm@ru \put(\herm@tsx,\herm@tsy){\put(3,.5){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+          \else
+            \ifx\herm@inpos\herm@ur \put(\herm@tsx,\herm@tsy){\put(3,.5){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[lt]{$#3$}}}}%
+            \else
+              \ifx\herm@inpos\herm@ul \put(\herm@tsx,\herm@tsy){\put(1,.5){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[rt]{$#3$}}}}%
+              \else
+                \ifx\herm@inpos\herm@lu \put(\herm@tsx,\herm@tsy){\put(1,.5){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                \else
+                  \ifx\herm@inpos\herm@lo \put(\herm@tsx,\herm@tsy){\put(1,1.5){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                  \else
+                    \ifx\herm@inpos\herm@om \put(\herm@tsx,\herm@tsy){\put(2,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
+                    \else
+                      \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(4,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+                      \else
+                        \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(2,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
+                        \else
+                          \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1 
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \aattr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
 }%
 %
 % --- Key marking of attribute values ---
