@@ -42,7 +42,7 @@ doc_clean:
 	@rm -f *.aux *.log *.toc *.bbl *.blg *~
 
 clean:	doc_clean
-	@rm -f *.dvi *.ps *.pdf
+	@rm -f *.dvi *.ps *.pdf *.ps*
 
 FORCE: ;
 
