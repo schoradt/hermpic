@@ -1,3 +1,9 @@
+hermpic (0.7.0-rc2-2) unstable; urgency=low
+
+  * Version fix in revision information 
+
+ -- Sven Schoradt <sven@dex.de>  Wed, 14 Jan 2004 14:27:34 +0100
+
 hermpic (0.7.0-rc2) unstable; urgency=low
 
   * Named object interface also for objects with special chars.
