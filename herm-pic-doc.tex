@@ -1,0 +1,232 @@
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+\setlength{\unitlength}{.3cm}
+
+\usepackage{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\pagestyle{headings}
+
+\author{Sven Schoradt \\ (Sven.Schoradt@informatik.tu-cottbus.de)}
+
+\title{herm-pic - Graphical extension package for LaTeX2e to produce HER-Diagramms}
+
+\begin{document}
+
+\maketitle
+
+\section{General usage}
+
+To use the package you only have to insert the line
+
+\begin{verbatim}
+\usepackage{herm-pic}
+\end{verbatim}
+
+into the header part of your document. There are no known problems with other
+packages or classes. If you find something in this manner, mail to the package author.
+
+The package defines a length for the unit length in the schema environments, it was called
+\verb|\hermunit|. So you can use pictures and schemas with different unit length in your 
+document without redefining the unit length every time. You can set it with
+\begin{verbatim}
+\setlength{\hermunit}{1cm}
+\end{verbatim}
+The standard for \verb|\hermunit| is 0.5cm for one unit.
+
+\section{The schema environment}
+
+In the here described package I defined the {\tt schema} environment.
+This environment is the standard way to use the schema elements, but you 
+can also use the schema elements in an ordinary picture environment.
+
+You use the schema environment in the following manner:
+
+\begin{verbatim}
+\begin{schema}(x,y)
+
+\end{schema}
+\end{verbatim}
+
+where {\tt x} is the width and {\tt y} is the height of 
+the schema graphic.
+
+\section{The schema elements}
+
+\subsection{Entities}
+
+To use an entity in your schema, you can use the \verb|\entity| macro.
+The syntax is the following:
+
+\begin{verbatim}
+\entity(x,y){text}
+\end{verbatim}
+
+where {\tt (x,y)} are the coordinates of the left upper edge of the entity
+symbol. The {\tt text} was printed as the entity name.
+
+The entity symbol will be a rectangle with the width of 4 and the height of 2.
+
+\paragraph{Example:}
+\begin{verbatim}
+\begin{schema}(6,4)
+\entity(1,1){Person}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(6,4)
+\entity(1,1){Person}
+\end{schema}
+
+\subsection{Relationships}
+
+To draw relationships in your diagrams, you can use the \verb|\relation| macro.
+The syntax is the following:
+
+\begin{verbatim}
+\relation(x,y){text}
+\end{verbatim}
+
+where {\tt (x,y)} are the coordinates of the left edge. The {\tt text} will be displayed as 
+the name of the relationship.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(6,4)
+\relation(1,1){is a}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(6,4)
+\relation(1,1){is a}
+\end{schema}
+
+\subsection{Attributes}
+
+Attributes in HERM will be a string connected with the entity or relation.
+To draw attributes with herm-pic you have to use the macro \verb|\attr| with the syntax:
+
+\begin{verbatim}
+\attr(x,y)[pos]{text}
+\end{verbatim}
+
+with {\tt (x,y)} is the docking position on the entity or relationship. With the
+position you will say the macro in which direction the attribute will docked on
+the object. Possible values are {\tt r, l, o, u}, where r stands for right of the object,
+l stands for left of the object, o stands for over the object and u stands for under the object.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr(4,3)[l]{left}
+\attr(6,4)[o]{over}
+\attr(8,3)[r]{right}
+\attr(6,2)[u]{under}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr(4,3)[l]{left}
+\attr(6,4)[o]{over}
+\attr(8,3)[r]{right}
+\attr(6,2)[u]{under}
+\end{schema}
+
+To show that an attribute or an sub-attribute is a key concept for the object, entity or relationship,
+you can use the \verb|\key| macro, like this:
+
+\begin{verbatim}
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr(4,3)[r]{\key{key}}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr(5,2)[r]{\key{key}}
+\end{schema}
+
+\subsection{Cluster}
+
+To use the cluster concept in your schema, you can use the \verb|\cluster| macro.
+The syntax is as followed:
+
+\begin{verbatim}
+\cluster(x,y)
+\end{verbatim}
+
+This draws the cluster item, thats a circle with the radius 2 whit a plus in it, on the position 
+{\tt (x,y)}.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(4,4)
+\cluster(1,1)
+\end{schema}
+
+\end{verbatim}
+
+produces this
+
+\begin{schema}(4,4)
+\cluster(1,1)
+\end{schema}
+
+\section{Connections between schema elements}
+
+A connection between two schema elements is a vector with an optional
+text marking for the cardinality constraint.
+
+The package provides for this the \verb|\connection| macro, with the syntax
+
+\begin{verbatim}
+\connection(x1,y1)(x2,y2){mathematical equation}
+\end{verbatim}
+
+It draws a vector from the point (x1,y1) to the next possible point in the near
+of (x2,y2) and puts the mathematical equation to an adequate point at the end of the 
+vector enclosed by \$-signs. 
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitet\_in}
+  \connection(7,2)(5,2){(0,3)}
+  \connection(11,2)(13,2){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(20,4)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation(7,1){arbeitet\_in}
+  \connection(7,2)(5,2){(0,3)}
+  \connection(11,2)(13,2){(2,10)}
+\end{schema}
+
+\end{document}
