@@ -68,6 +68,9 @@
     \begin{center}
   \fi
   \begin{picture}(#1,#2)
+    \ifherm@boxschema
+      \put(0,0){\framebox(#1,#2){}}
+    \fi
 }%
 %
 % \end{schema}
@@ -855,7 +858,7 @@
      \fi%
      \ifnum\herm@tdx < \herm@tdy%
        \ifherm@verbatim%
-         \packageInfo{herm-pic}{Use y correction}%
+         \PackageInfo{herm-pic}{Use y correction}%
        \fi%
        \ifnum\herm@tsy < \herm@tey%
          \advance\herm@sy by 1 \advance \herm@ey by -1%
