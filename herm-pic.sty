@@ -3,14 +3,14 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-02-10 15:19:21 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-02-10 15:33:11 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
 \RequirePackage{texdraw}
 
-\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.10 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.11 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -84,11 +84,6 @@
   \move(0.3 1)%
   \lvec(1.7 1)%
   \esegment
-%  \put(#1,#2){%
-%    \put(1,1){\circle{2}}%
-%    \put(1,.3){\line(0,1){1.4}}%
-%    \put(.3,1){\line(1,0){1.4}}%
-%  }%
 }%
 
 % ---  Attributes  ---
@@ -100,13 +95,13 @@
 % object.
 \def\attr(#1,#2)[#3]#4{%
   \def\pos{#3} \def\r{r} \def\l{l} \def\o{o} \def\u{u}%
-  \ifx\pos\r \put(#1,#2){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#4$}}}%
+  \ifx\pos\r \move(#1 #2) \bsegment \lvec(0.5 0) \textref h:L v:C \htext{$#4$} \esegment%
   \else
-    \ifx\pos\l \put(#1,#2){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#4$}}}%
+    \ifx\pos\l \move(#1 #2) \bsegment \lvec(-0.5 0) \textref h:R v:C \htext{$#4$} \esegment%
     \else
-      \ifx\pos\o \put(#1,#2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#4$}}}%
+      \ifx\pos\o \move(#1 #2) \bsegment \lvec(0 0.5) \textref h:C v:B \htext{$#4$} \esegment%
       \else
-        \ifx\pos\u \put(#1,#2){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#4$}}}%
+        \ifx\pos\u \move(#1 #2) \bsegment \lvec(0 -0.5) \textref h:C v:T \htext{$#4$} \esegment%
         \else
         \PackageWarning{herm-pic}{%
           Undefind attribute positioning parameter #1 \MessageBreak have to come from r,l,o,u (r as default).
