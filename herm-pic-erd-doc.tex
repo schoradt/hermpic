@@ -280,6 +280,56 @@ produces
   \conn(isa1,type){}
 \end{schema}
 
+\section{Specialising}
+
+To implement ER specialising you can use the macros
+
+\begin{verbatim}
+  \dpsecial(x,y){iname}
+  \dspecial*(x,y){iname}
+  \opsecial(x,y){iname}
+  \opsecial*(x,y){iname}
+ 
+  \special(oname1,oname2)
+\end{verbatim}
+
+This works like this:
+
+\begin{verbatim}
+\begin{schema}(14,30)
+  \entity[entity](5,27){Entity}
+  \dspecial(6,23){test1}
+  \connection(entity,test1){}
+  \entity[entity2](1,19){Entity}
+  \entity[entity3](9,19){Entity}
+  \special(entity2,test1)
+  \special(entity3,test1)
+  \entity[entity4](5,16){Entity}
+  \ospecial*(6,12){test2}
+  \connection(entity4,test2){}
+  \entity[entity5](1,8){Entity}
+  \entity[entity6](9,8){Entity}
+  \special(entity5,test2)
+  \special(entity6,test2)
+\end{schema}
+\end{verbatim}
+
+\begin{schema}(14,21)
+  \entity[entity](5,19){Entity}
+  \dspecial(6,15){test1}
+  \connection(entity,test1){}
+  \entity[entity2](1,11){Entity}
+  \entity[entity3](9,11){Entity}
+  \special(entity2,test1)
+  \special(entity3,test1)
+  \entity[entity4](5,8){Entity}
+  \ospecial*(6,4){test2}
+  \connection(entity4,test2){}
+  \entity[entity5](1,0){Entity}
+  \entity[entity6](9,0){Entity}
+  \special(entity5,test2)
+  \special(entity6,test2)
+\end{schema}
 
 \section{A more or less complex example}
 
