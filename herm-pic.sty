@@ -3,16 +3,26 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-07-30 23:26:10 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-07-31 13:37:54 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.1 $> \HERMpicId by \HPAuthor $Author: sven $}
+\typeout{HERM-Pic <\HPRev $Revision: 1.17.2.2 $> \HERMpicId by \HPAuthor $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
 %
+% --- Package Options ---
+\newif\ifherm@verbatim \herm@verbatimfalse%
+\DeclareOption{verbatim}{%
+  \herm@verbatimtrue%
+  \typeout{  * Option verbatim - print information about diagramm processing}%
+}%
+\DeclareOption*{%
+  \PackageWarning{herm-pic}{Unnown Option '\CurrentOption'}%
+}%
+\ProcessOptions\relax%
 % ---  package wide definitions  ---
 %
 \global\newdimen{\hermunit}
@@ -40,7 +50,9 @@
 %
 % Hoehe: 2 LE Breite: 4 LE
 \def\entity(#1,#2)#3{%
-  \typeout{Doing entity \string#3 ...}%
+  \ifherm@verbatim%
+    \typeout{Register entity \string#3 ...}%
+  \fi
   \put(#1,#2){%
     \put(0,0){\line(1,0){4}}%
     \put(4,0){\line(0,1){2}}%
@@ -48,17 +60,9 @@
     \put(0,0){\line(0,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \edef\herm@oname{#3}
   \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
   \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
   \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-%  \global\expandafter\newif\csname ifhermobj@\herm@oname{} \endcsname%
-%  \global\expandafter\let
-%     \csname ifhermobj@\herm@oname{}true \endcsname 
-%     \iftrue%
-  \expandafter\if\csname hermobj@#3 \endcsname 1%
-    \typeout{!!! True !!! (\string#3)}
-  \fi
 }%
 %
 % ---  Relation  ---
@@ -67,7 +71,9 @@
 %
 % Hoehe 2LE Breite 4LE
 \def\relation(#1,#2)#3{%
-  \typeout{Doing relation #3 ...}%
+  \ifherm@verbatim%
+    \typeout{Doing relation #3 ...}%
+  \fi%
   \put(#1,#2){%
     \put(2,2){\line(-2,-1){2}}%
     \put(2,2){\line(2,-1){2}}%
@@ -75,18 +81,9 @@
     \put(2,0){\line(-2,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \edef\herm@oname{\string#3}
-  \global\expandafter\def\csname hermobjx@\string#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@\string#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@\string#3 \endcsname{1}%
-%  \global\expandafter\newif\csname ifhermobj@\herm@oname{} \endcsname%
-%  \global\expandafter\let
-%     \csname ifhermobj@\herm@oname{}true \endcsname 
-%     \iftrue%
-  \expandafter\if\csname hermobj@\string#3 \endcsname 1%
-    \typeout{!!! True !!! (\string#3)}
-  \fi
-
+  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
  }%
 %
 % ---  Cluster  ---
@@ -153,7 +150,6 @@
 \newcount\herm@nsx \newcount\herm@nsy%
 \newcount\herm@newx \newcount\herm@newy \newcount\herm@dxdy%
 \newcount\herm@length%
-%
 \def\connection(#1,#2)(#3,#4)#5{%
   \herm@sx=#1%
   \herm@sy=#2%
@@ -290,33 +286,42 @@
   }%
 }%
 %
+% Draws an arrow from one object to an other and place 
+% the label.
 %
-% ---  Connection  ---
+% Use the old \connection macro for drawing.
 %
-% Draws an arrow from the start to the endpoint and places the label
-% an a 'good' place.
-%
-% \connection2(x1,y1)(x2,y2){label}
+% \conn(oname1,oname2){label}
 %
 \newcount\herm@tsx \newcount\herm@tsy \newcount\herm@tex \newcount\herm@tey%
 \newcount\herm@tdx \newcount\herm@tdy%
 \def\conn(#1,#2)#3{%
-  \typeout{Connection between \string#1 and \string#2 ...}
+  \ifherm@verbatim
+    \typeout{Connection between \string#1 and \string#2 ...}
+  \fi
   \newif\ifherm@conerra \herm@conerratrue
   \newif\ifherm@conerrb \herm@conerrbtrue
   \expandafter\if\csname hermobj@#1 \endcsname 1%
-    \typeout{   \string#1 found}
+    \ifherm@verbatim
+      \typeout{   \string#1 found}
+    \fi
     \herm@conerrafalse%
     \herm@tsx=\csname hermobjx@#1 \endcsname%
     \herm@tsy=\csname hermobjy@#1 \endcsname%
-    \typeout{      with \the\herm@tsx, \the\herm@tsy}
+    \ifherm@verbatim
+      \typeout{      with \the\herm@tsx, \the\herm@tsy}
+    \fi
   \fi%
   \expandafter\if\csname hermobj@#2 \endcsname 1%
-    \typeout{   \string#2 found}
+    \ifherm@verbatim
+      \typeout{   \string#2 found}
+    \fi
     \herm@conerrbfalse
     \herm@tex=\csname hermobjx@#2 \endcsname%
     \herm@tey=\csname hermobjy@#2 \endcsname%
-    \typeout{      with \the\herm@tex, \the\herm@tey}
+    \ifherm@verbatim
+      \typeout{      with \the\herm@tex, \the\herm@tey}
+    \fi
   \fi%
   \ifherm@conerra
     \PackageError {herm-pic}{Undefined object #1 in addvanced connection}{See herm-pic Documentaion.}
@@ -339,19 +344,23 @@
   \herm@ex=\herm@tex%
   \herm@ey=\herm@tey%
   % correct start points
-  \typeout{Correct starting points by (\the\herm@tdx, \the\herm@tdy)}
+  \ifherm@verbatim
+    \typeout{Correct starting points by (\the\herm@tdx, \the\herm@tdy)}
+  \fi
   \ifnum\herm@tdx > \herm@tdy%
-    \typeout{Use x correction}
+    \ifherm@verbatim
+      \typeout{Use x correction}
+    \fi
     \ifnum\herm@tsx < \herm@tex%
       \advance\herm@sx by 2 \advance \herm@ex by -2%
     \fi%
     \ifnum\herm@tsx > \herm@tex%
       \advance\herm@sx by -2 \advance \herm@ex by 2%
     \fi%
-  %\fi%
   \else
-  %\ifnum\herm@tdx < \herm@tdy%
-    \typeout{Use y correction}
+    \ifherm@verbatim
+      \typeout{Use y correction}
+    \fi
     \ifnum\herm@tsy < \herm@tey%
       \advance\herm@sy by 1 \advance \herm@ey by -1%
     \fi%
@@ -359,135 +368,8 @@
       \advance\herm@sy by -1 \advance \herm@ey by 1%
     \fi%
   \fi%
-  % try to compute \vector parameter
-  \herm@dx=\herm@ex \herm@dy=\herm@ey%
-  \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
-  \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
-  \ifnum\herm@dy = 0 \ifnum\herm@dx > 0 \herm@newx=1 \else \herm@newx=-1 \fi \herm@newy=0%
-  \else%
-    \herm@dxdy=\herm@dx \multiply\herm@dxdy by 100 \divide\herm@dxdy by \herm@dy%
-    \ifnum\herm@dxdy < 0 \multiply\herm@dxdy by -1 \fi%
-    \ifnum\herm@dx > 0%
-      \ifnum\herm@dy > 0%
-        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
-          \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=4 \else%
-            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=3 \else%
-              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=2 \else%
-                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=3 \else%
-                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=4 \else%
-                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=1 \else%
-                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=3 \else%
-                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=2 \else%
-                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=1 \else%
-                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \else%
-        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
-          \ifnum\herm@dxdy < 29 \herm@newx=1 \herm@newy=-4 \else%
-            \ifnum\herm@dxdy < 41 \herm@newx=1 \herm@newy=-3 \else%
-              \ifnum\herm@dxdy < 58 \herm@newx=1 \herm@newy=-2 \else%
-                \ifnum\herm@dxdy < 71 \herm@newx=2 \herm@newy=-3 \else%
-                  \ifnum\herm@dxdy < 87 \herm@newx=3 \herm@newy=-4 \else%
-                    \ifnum\herm@dxdy < 116 \herm@newx=1 \herm@newy=-1 \else%
-                      \ifnum\herm@dxdy < 141 \herm@newx=4 \herm@newy=-3 \else%
-                        \ifnum\herm@dxdy < 175 \herm@newx=3 \herm@newy=-2 \else%
-                          \ifnum\herm@dxdy < 250 \herm@newx=2 \herm@newy=-1 \else%
-                            \ifnum\herm@dxdy < 350 \herm@newx=3 \herm@newy=-1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \fi%
-    \else%
-      \ifnum\herm@dy > 0%
-        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=1 \else%
-          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=4 \else%
-            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=3 \else%
-              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=2 \else%
-                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=3 \else%
-                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=4 \else%
-                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=1 \else%
-                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=3 \else%
-                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=2 \else%
-                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=1 \else%
-                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=1 \else \herm@newx=1 \herm@newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \else%
-        \ifnum\herm@dxdy < 12 \herm@newx=0 \herm@newy=-1 \else%
-          \ifnum\herm@dxdy < 29 \herm@newx=-1 \herm@newy=-4 \else%
-            \ifnum\herm@dxdy < 41 \herm@newx=-1 \herm@newy=-3 \else%
-              \ifnum\herm@dxdy < 58 \herm@newx=-1 \herm@newy=-2 \else%
-                \ifnum\herm@dxdy < 71 \herm@newx=-2 \herm@newy=-3 \else%
-                  \ifnum\herm@dxdy < 87 \herm@newx=-3 \herm@newy=-4 \else%
-                    \ifnum\herm@dxdy < 116 \herm@newx=-1 \herm@newy=-1 \else%
-                      \ifnum\herm@dxdy < 141 \herm@newx=-4 \herm@newy=-3 \else%
-                        \ifnum\herm@dxdy < 175 \herm@newx=-3 \herm@newy=-2 \else%
-                          \ifnum\herm@dxdy < 250 \herm@newx=-2 \herm@newy=-1 \else%
-                            \ifnum\herm@dxdy < 350 \herm@newx=-3 \herm@newy=-1 \else%
-                              \ifnum\herm@dxdy < 1000 \herm@newx=-4 \herm@newy=-1 \else \herm@newx=-1 \herm@newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \fi%
-    \fi%
-  \fi%
-  \herm@length=\herm@dx%
-  \ifnum\herm@newx = 0 \herm@length=\herm@dy \fi%
-  \ifnum\herm@length < 0 \multiply\herm@length by -1 \fi%
-  \put(\herm@sx,\herm@sy){\vector(\herm@newx,\herm@newy){\herm@length}}%
-  \put(\herm@ex,\herm@ey){%
-    \ifnum\herm@dx > 0 %
-      \ifnum\herm@dy > 0 %
-        \put(-.5,-.2){\makebox(0,0)[tr]{$ #3 $}}%
-      \else%
-        \put(-0.5,.2){\makebox(0,0)[br]{$ #3 $}}%
-      \fi%
-    \else%
-      \ifnum\herm@dy > 0 %
-        \put(.5,-.2){\makebox(0,0)[tl]{$ #3 $}}%
-      \else%
-        \put(.5,.2){\makebox(0,0)[bl]{$ #3 $}}%
-      \fi%
-    \fi%
-  }%
+  % draw connection
+  \connection(\herm@sx,\herm@sy)(\herm@ex,\herm@ey){#3}
 }%
 %
 % ---   END OF MODULE   ---
