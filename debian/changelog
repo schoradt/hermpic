@@ -1,3 +1,9 @@
+hermpic (0.7.0) unstable; urgency=low
+
+  * release version 0.7.0 after intensive testing
+
+ -- Sven Schoradt <sven@dex.de>  Fri,  5 Mar 2004 12:09:39 +0100
+
 hermpic (0.7.0-rc2-5) unstable; urgency=low
 
   * fix documentation bug (thanks to Thomas Feyer)
