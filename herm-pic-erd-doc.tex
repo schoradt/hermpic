@@ -290,14 +290,14 @@ To implement ER specialising you can use the macros
   \ospecial(x,y){iname}
   \ospecial*(x,y){iname}
  
-  \special(oname1,oname2)
+  \sconn(oname1,oname2)
 \end{verbatim}
 
 The \verb|\dspecial| macro represents an disjunct specialisation, the \verb|\ospecial| macro 
 an overlapping specialisation. The star versions represents the total versions of the 
 specialisation.
 
-The \verb|\special| macro represents the specilisation between two objects. The objects must give in the 
+The \verb|\sconn| macro represents the specilisation between two objects. The objects must give in the 
 order subtype, supertype.
 
 This works like this:
@@ -307,22 +307,22 @@ This works like this:
   \entity[entity7](5,26){Entity}
   \entity[entity8](1,22){Entity}
   \entity[entity9](9,22){Entity}
-  \special(entity8,entity7)
-  \special(entity9,entity7)
+  \sconn(entity8,entity7)
+  \sconn(entity9,entity7)
   \entity[entity](5,27){Entity}
   \dspecial(6,23){test1}
   \connection(entity,test1){}
   \entity[entity2](1,19){Entity}
   \entity[entity3](9,19){Entity}
-  \special(entity2,test1)
-  \special(entity3,test1)
+  \sconn(entity2,test1)
+  \sconn(entity3,test1)
   \entity[entity4](5,16){Entity}
   \ospecial*(6,12){test2}
   \connection(entity4,test2){}
   \entity[entity5](1,8){Entity}
   \entity[entity6](9,8){Entity}
-  \special(entity5,test2)
-  \special(entity6,test2)
+  \sconn(entity5,test2)
+  \sconn(entity6,test2)
 \end{schema}
 \end{verbatim}
 
@@ -330,22 +330,22 @@ This works like this:
   \entity[entity7](5,26){Entity}
   \entity[entity8](1,22){Entity}
   \entity[entity9](9,22){Entity}
-  \special(entity8,entity7)
-  \special(entity9,entity7)
+  \sconn(entity8,entity7)
+  \sconn(entity9,entity7)
   \entity[entity](5,19){Entity}
   \dspecial(6,15){test1}
   \connection(entity,test1){}
   \entity[entity2](1,11){Entity}
   \entity[entity3](9,11){Entity}
-  \special(entity2,test1)
-  \special(entity3,test1)
+  \sconn(entity2,test1)
+  \sconn(entity3,test1)
   \entity[entity4](5,8){Entity}
   \ospecial*(6,4){test2}
   \connection(entity4,test2){}
   \entity[entity5](1,0){Entity}
   \entity[entity6](9,0){Entity}
-  \special(entity5,test2)
-  \special(entity6,test2)
+  \sconn(entity5,test2)
+  \sconn(entity6,test2)
 \end{schema}
 
 \section{A more or less complex example}
