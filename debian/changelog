@@ -1,6 +1,14 @@
+hermpic (0.9.0-pre-1-0-2) unstable; urgency=low
+
+  * Beispiele in Distribution eingefuegt
+
+  * changelog korrigiert
+
+ -- Sven Schoradt <sven@dex.de>  Wed, 30 Jun 2004 14:50:44 +0200
+
 hermpic (0.9.0-pre-1-0-1) unstable; urgency=low
 
-  * FIX Bug für alternative Attributdarstellung im ERD Modul
+  * FIX Bug fuer alternative Attributdarstellung im ERD Modul
 
  -- Sven Schoradt <sven@dex.de>  Tue, 29 Jun 2004 11:46:06 +0200
 
