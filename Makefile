@@ -8,8 +8,16 @@
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
-# Include configuration file
-include Makefile.config
+# Config Variable for tools used
+ECHO = echo
+REMOVE = rm -f
+
+INSTALL = install
+
+LATEX = latex
+DVIPS = dvips
+
+PDFLATEX = pdflatex
 
 # directories
 DESTDIR = 
@@ -31,21 +39,21 @@ psdoc: herm-pic-doc.ps
 pdfdoc: herm-pic-doc.pdf
 
 install: Makefile.config herm-pic.sty doc_clean
-	@echo "Installing package ..."
+	@${ECHO} "Installing package ..."
 	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
-	@echo "Installing documentation ..."
+	@${ECHO} "Installing documentation ..."
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
 test:
-	@echo "Testing package ..."
+	@${ECHO} "Testing package ..."
 	@cd test; make 
 
 doc_clean:
-	@rm -f *.aux *.log *.toc *~
+	@${REMOVE} *.aux *.log *.toc *~
 	@cd test; make doc_clean
 
 clean:	doc_clean
-	@rm -f *.dvi *.ps *.pdf *.ps*
+	@${REMOVE} *.dvi *.ps *.pdf *.ps*
 	@cd test; make clean
 
 FORCE: ;
