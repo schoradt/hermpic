@@ -25,6 +25,7 @@ build-indep-stamp:
 	# create documentation for herm-pic
 	$(MAKE) doc
 	$(MAKE) doc
+	$(MAKE) create_examples
 
 	touch build-indep-stamp
 
@@ -53,7 +54,7 @@ binary-indep: build install
 	dh_testroot
 	dh_installchangelogs
 	dh_installdocs
-#	dh_installexamples
+	dh_installexamples
 #	dh_installmenu
 #	dh_installdebconf
 #	dh_installlogrotate
