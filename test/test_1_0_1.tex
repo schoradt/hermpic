@@ -181,6 +181,20 @@
   \conn(isa1,Ober){}
 \end{schema}
 
+\begin{schema}(20,14)
+  \wentity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \wrelation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+
+
+
 \section{Larger example schema}
 
 \setlength{\hermunit}{.5cm}

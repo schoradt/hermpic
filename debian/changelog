@@ -1,5 +1,16 @@
 hermpic (0.9.1-pre-1-0) unstable; urgency=low
 
+  * ER diagramme verfollstaendigt, weak entity und relation Typen
+    hinzugefuegt
+
+  * Dokumentation erweitert
+
+  * Fix ifnum Bug
+
+ -- Sven Schoradt <sven@dex.de>  Thu, 29 Jul 2004 11:54:45 +0200
+
+hermpic (0.9.1-pre-1-0) unstable; urgency=low
+
   * ER diagramme verfollstaendigt
 
   * Dokumentation erweitert
