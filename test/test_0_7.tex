@@ -118,7 +118,9 @@ section{Attributes}
   \relation(13,7){Professor}
   \relation(13,4){WiMi}
   \relation(13,1){Student}
+  \cnamepos{um}
   \cluster(7,4){Mitarbeiter}
+  \cnamepos{or}
   \attr[ol]{Mitarbeiter}{\key{mnr}}
   \connection(Mitarbeiter,Person){}
   \connection(Professor,Mitarbeiter){}
@@ -193,5 +195,35 @@ section{Attributes}
 \connection(Inhalt,Wort){}
 \end{schema}
 
+\subsection{Cluster name positioning}
+
+\begin{schema}(6,40)
+\cnamepos{ol}
+\cluster*(2,38){Cluster\_ol}
+\cnamepos{or}
+\cluster*(2,35){Cluster\_or}
+\cnamepos{ro}
+\cluster*(2,32){Cluster\_ro}
+\cnamepos{ru}
+\cluster*(2,29){Cluster\_ru}
+\cnamepos{ur}
+\cluster*(2,26){Cluster\_ur}
+\cnamepos{ul}
+\cluster*(2,23){Cluster\_ul}
+\cnamepos{lu}
+\cluster*(2,20){Cluster\_lu}
+\cnamepos{lo}
+\cluster*(2,17){Cluster\_lo}
+\cnamepos{om}
+\cluster*(2,14){Cluster\_om}
+\cnamepos{rm}
+\cluster*(2,11){Cluster\_rm}
+\cnamepos{um}
+\cluster*(2,8){Cluster\_um}
+\cnamepos{lm}
+\cluster*(2,5){Cluster\_lm}
+\cnamepos{xx}
+\cluster*(2,2){Cluster\_xx}
+\end{schema}
 
 \end{document}
