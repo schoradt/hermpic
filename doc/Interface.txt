@@ -12,14 +12,13 @@ Interface hermpic
 2. Parameter
 
   * verbatim -> viel Ausgaben console
-     -> besser waehre nur logfile
+     -> besser waehre nur logfile (OK)
 
-  * nonames -> altes Interface (OK)
+  * center -> zentrieren der Schemata (OK)
 
-( neu: center -> zentrieren der Schemata,
-       box -> umranden der Schemata
-       rel_0_6 -> waehlt Inteface von Version 0_6
-)
+  * box -> umranden der Schemata (OK)
+
+  * rel_0_6 -> waehlt Inteface von Version 0_6 (OK)
 
 3. Schema
 
@@ -31,17 +30,14 @@ Interface hermpic
 
   * \cluster (x,y) {name} (OK)
 
-  * \attr, \aattr
-    -> zu \attribute => Semantik von \aattr und \attribute* fuer \attr
+  * \attr (OK)
 
   * \key {name} (OK)
 
-  * \connection, \conn
-    -> zu \connection => Semantik von \conn und \connection* fuer \connection
+  * \connection (OK)
 
-4. Integritaetsbedingungen (alles neu)
-  => nur neues Interface
+4. Integritaetsbedingungen
 
-  * \incude, \exclude, \disjunct
+  * \incude, \exclude, \disjunct (moved to pre-0-8)
 
    
