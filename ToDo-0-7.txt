@@ -4,6 +4,7 @@ ToDo fuer hermpic Version 0.7
 * (0.7-1) clear make process
 
 * (0.7-2) using docstrip to genarate module and documentation
+  => canceled because the sty is to large whith included documentation
 
 * (0.7-3) global Interface redesign
   => Goal: 
