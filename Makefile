@@ -1,21 +1,32 @@
 #############################################################
-# Makefile for the instalation of the herm-pic latex        #
-# package for Debian GNU/Linux.                             #
+# Makefile for the installation of the herm-pic latex       #
+# package.                                                  #
 #                                                           #
-# Version: 0.2                                              #
+# Prepared for the debian packaging system.                 #
+#                                                           #
+# Version: 0.6                                              #
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
-# Config section
+# Config Variable for tools used
+ECHO = echo
+REMOVE = rm -f
+
+INSTALL = install
+
 LATEX = latex
 DVIPS = dvips
 
 PDFLATEX = pdflatex
 
-INSTALL = install
+# directories
+DESTDIR = 
 
-# Edited for Debian GNU/Linux.
-DESTDIR =
+# path to install the latex packages
+INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
+
+#path to install the documentation
+DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
 
 # path to install the latex packages
 INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
@@ -31,17 +42,23 @@ psdoc: herm-pic-doc.ps
 
 pdfdoc: herm-pic-doc.pdf
 
-install: herm-pic.sty doc_clean
-	@echo "Installing package ..."
+install: Makefile.config herm-pic.sty doc_clean
+	@${ECHO} "Installing package ..."
 	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
-	@echo "Installing documentation ..."
+	@${ECHO} "Installing documentation ..."
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
+test:
+	@${ECHO} "Testing package ..."
+	@cd test; make 
+
 doc_clean:
-	@rm -f *.aux *.log *.toc *.bbl *.blg *~
+	@${REMOVE} *.aux *.log *.toc *~
+	@cd test; make doc_clean
 
 clean:	doc_clean
-	@rm -f *.dvi *.ps *.pdf *.ps*
+	@${REMOVE} *.dvi *.ps *.pdf *.ps*
+	@cd test; make clean
 
 FORCE: ;
 
@@ -54,3 +71,5 @@ FORCE: ;
 
 %.pdf:	%.tex
 	${PDFLATEX} $<
+
+.PHONY: test clean doc_clean all doc psdoc pdfdoc 
