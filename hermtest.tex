@@ -15,16 +15,16 @@
 %\setlength{\unitlength}{.6cm}
 \begin{schema}
   \entity(1,4){Person}
-%  \attr(2,6)[o]{Name}
-%  \attr(4,6)[o]{\key{PNr}}
+  \attr(2,6)[o]{Name}
+  \attr(2,4)[u]{\key{PNr}}
   \relation(13,7){Professor}
   \relation(13,4){WiMi}
   \relation(13,1){Student}
   \cluster(7,4)
-%  \connection(7,5)(5,5){}
-%  \connection(13,8)(9,5){}
-%  \connection(13,5)(9,5){}
-%  \connection(13,2)(9,5){}
+  \conn(7,5)(5,5){}
+  \conn(13,8)(9,5){}
+  \conn(13,5)(9,5){}
+  \conn(13,2)(9,5){}
 \end{schema}
 
 % new schema 
@@ -32,8 +32,8 @@
   \entity(1,1){Person}
   \entity(13,1){Team}
   \relation(7,1){arbeitet\_in}
-%  \connection(7,2)(5,2){(0,3)}
-%  \connection(11,2)(13,2){(2,10)}
+  \conn(7,2)(5,2){(0,3)}
+  \conn(11,2)(13,2){(2,10)}
 \end{schema}
 
 
