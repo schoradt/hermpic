@@ -1,8 +1,8 @@
-hermpic (0.9.0) unstable; urgency=low
+hermpic (0.9.0-pre-1-0) unstable; urgency=low
 
   * clear installation process (Makefile and debian/rules)
 
-  * add ER diagramm module (experimantal, untested)
+  * add ER diagramm module (experimantal, minimal tested)
 
  -- Sven Schoradt <sven@dex.de>  
 
