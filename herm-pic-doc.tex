@@ -32,6 +32,18 @@ http://citeseer.nj.nec.com/thalheim91foundation.html.
 
 You use the {\tt herm-pic} Package in Version \HPlongrevision{} from the \HPdate.
 
+This information and some more about the package state you can request from the 
+revision macros defined in {\tt herm-rev.sty}. This are
+
+\begin{description}
+\item[$\backslash{}$HPdescription] prints a short description of the package
+\item[$\backslash{}$HPrevision] prints the full revision information, consisting major, minor and releaseversion
+  and a releasecomment like {\tt '-rc2'}
+\item[$\backslash{}$HPlongrevision] prints also the version information and the cvs revision number of the 
+  {\tt herm-rev.sty} file for consistency checks
+\item[$\backslash{}$HPdate] prints the date the revision is last changed
+\end{description}
+
 \section{Usage}
 
 To use the package you only have to insert the line
@@ -46,21 +58,23 @@ author.
 
 \subsection{Package options}
 
-For compatibility for lower versions (up to 0.6.1) there is the option
-rev-0-6. This option lets load the last offical released version of the 
-hermpic package of the 0.6 version tree. I think it will be removed in 
-the first release candidate of the nexti minor release step (version 0.8).
+For compatibility to lower versions (up to 0.6.1) there is the option
+rev-0-6. This option lets load a minimal pathed version of the last offical 
+release of the hermpic package of the 0.6 version tree. 
+I think it will be removed in the first release candidate of the next
+minor release step (first release candidate of version 0.8 or higher).
 
-So port your schemas :-) 
+{\bf So port your schemas {\tt :-) } }
 
 The package accepts the options {\tt verbatim}, {\tt center} and {\tt box}.
 
-The verbatim option let the package output some processiong information to the
-log file, for debugging purposes.
-
-The center option lets the package center the schemas on the page.
-
-The box option lets the package draw a box around the schemas (not implemented yet).
+\begin{description}
+\item[verbatim] prints some processing information to the log file, its mainly 
+  usable for debugging purposes
+\item[center] center the scema verticaly on the page
+\item[box] draw a box with the exact dimensions of the schema around the schema, so you
+  can see if some elements will be drawn outside the schema boarders
+\end{description}
 
 \section{The schema environment}
 
@@ -91,6 +105,13 @@ You set it with
 
 To most of the schema element macros there exists a star version that
 provides an interface with to point placing and with unlimited names.
+For the nonstar version you can give a valid internal name as an optional 
+parameter.
+
+The names of object, that are used for internal things should not consist any
+active tex stuff, that means no macros, no escaped chars (like the undersgore)
+and the on. To garantee that there are no limits to the printed object names 
+you can give optional an internal name without these things.
 
 \subsection{Entities}
 
@@ -104,7 +125,7 @@ The syntax is the following:
 ,
 
 \begin{verbatim}
-\entityi[internal_name](x,y){text}
+\entity[internal_name](x,y){text}
 \end{verbatim}
 
 or 
