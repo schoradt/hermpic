@@ -60,4 +60,4 @@ FORCE: ;
 %.pdf:	%.tex
 	${PDFLATEX} $<
 
-.PHONY: test
+.PHONY: test clean doc_clean all doc psdoc pdfdoc 
