@@ -1,0 +1,8 @@
+Install
+=====
+
+To install the package you have to unpack it via gzip and tar
+and than make install.
+
+Then you should run mktexlsr.
+

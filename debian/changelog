@@ -1,0 +1,87 @@
+hermpic (0.7.0) unstable; urgency=low
+
+  * release version 0.7.0 after intensive testing
+
+ -- Sven Schoradt <sven@dex.de>  Fri,  5 Mar 2004 12:09:39 +0100
+
+hermpic (0.7.0-rc2-5) unstable; urgency=low
+
+  * fix documentation bug (thanks to Thomas Feyer)
+
+  * fix bug in arrow drawwing
+
+ -- Sven Schoradt <sven@dex.de>  Tue, 02 Mar 2004 01:19:51 +0100
+
+hermpic (0.7.0-rc2-4) unstable; urgency=low
+
+  * fix typo in verbatim output :-(
+
+ -- Sven Schoradt <sven@dex.de>  Mon, 01 Mar 2004 23:57:21 +0100
+
+hermpic (0.7.0-rc2-3) unstable; urgency=low
+
+  * fix warning in herm-pic-old for unknown option rev-0-6 
+
+ -- Sven Schoradt <sven@dex.de>  Mon, 01 Mar 2004 23:02:26 +0100
+
+hermpic (0.7.0-rc2-2) unstable; urgency=low
+
+  * Version fix in revision information 
+
+ -- Sven Schoradt <sven@dex.de>  Wed, 14 Jan 2004 14:27:34 +0100
+
+hermpic (0.7.0-rc2-1) unstable; urgency=low
+
+  * Named object interface also for objects with special chars.
+
+  * better Attribute positioning for entities (thanks to Thomas)
+
+ -- Sven Schoradt <sven@dex.de>  Fri,  9 Jan 2004 18:27:47 +0100
+
+hermpic (0.7.0-rc1) unstable; urgency=low
+
+  * Major interface changes
+
+    See the interface documentaion for more information.
+
+ -- Sven Schoradt <sven@dex.de>  Thu,  8 Jan 2004 15:04:11 +0100
+
+hermpic (0.6.0-1) unstable; urgency=low
+
+  * Interface changes
+
+    I added a named object interface for the attribute and
+    connection macros. See documentation for more information
+    on this.
+
+ -- Sven Schoradt <sven@dex.de>  Thu,  7 Aug 2003 01:51:45 +0200
+
+hermpic (0.5.0-4) unstable; urgency=low
+
+  * improve the documentation
+  * last 0.5.0 revision - 0.6 coming soon
+
+ -- Sven Schoradt <sven@dex.de>  Mon, 11 Aug 2003 01:11:23 +0200
+
+hermpic (0.5.0-3) unstable; urgency=low
+
+  * Add new documentaion link from tex-documentation directory
+    to the hermpic package documentation
+
+ -- Sven Schoradt <sven@dex.de>  Sun, 10 Aug 2003 23:30:44 +0200
+
+hermpic (0.5.0-2) unstable; urgency=low
+
+  * Minor changes
+    
+    fix some package building bugs
+
+ -- Sven Schoradt <sven@dex.de>  Thu, 24 Jul 2003 00:51:25 +0200
+
+hermpic (0.5.0-1) unstable; urgency=low
+
+  * Initial Release.
+
+ -- Sven Schoradt <sven@dex.de>  Wed, 23 Jul 2003 23:01:27 +0200
+
+

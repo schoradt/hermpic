@@ -4,7 +4,7 @@
 #                                                           #
 # Prepared for the debian packaging system.                 #
 #                                                           #
-# Version: 0.6                                              #
+# Version: 0.7                                              #
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
@@ -21,12 +21,6 @@ PDFLATEX = pdflatex
 
 # directories
 DESTDIR = 
-
-# path to install the latex packages
-INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
-
-#path to install the documentation
-DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
 
 # path to install the latex packages
 INSTALL_PATH = $(DESTDIR)/usr/share/texmf/tex/latex/herm-pic
