@@ -1,4 +1,9 @@
-\documentclass[11pt,a4paper]{article}
+\documentclass[a4paper,11pt, titlepage]{article}
+
+\usepackage{german}
+\usepackage[latin1]{inputenc}
+
+\usepackage{herm-pic}
 
 % standard definitions
 \setlength{\parindent}{0pt}
@@ -6,35 +11,28 @@
 \frenchspacing
 \sloppy
 
-% package to test
-\usepackage{herm-pic}
-
-% document start
-\begin{document} 
-
-\sethermunit{70}
-\begin{schema}
-  \entity(1,4){Person}
-  \attr(2,6)[o]{Name}
-  \attr(2,4)[u]{\key{PNr}}
-  \relation(13,7){Professor}
-  \relation(13,4){WiMi}
-  \relation(13,1){Student}
-  \cluster(7,4)
-  \conn(7,5)(5,5){}
-  \conn(13,8)(9,5){}
-  \conn(13,5)(9,5){}
-  \conn(13,2)(9,5){}
-\end{schema}
-
-% new schema 
-\begin{schema}
+\begin{document}
+\setlength{\unitlength}{.6cm}
+\begin{picture}(20,5)
   \entity(1,1){Person}
   \entity(13,1){Team}
   \relation(7,1){arbeitet\_in}
-  \conn(7,2)(5,2){(0,3)}
-  \conn(11,2)(13,2){(2,10)}
-\end{schema}
+  \put(11,2){\vector(1,0){2}}%
+  \put(13,2){\framebox(-1,-1)[tl]{$(2,10)$}}% 
+\end{picture}
 
+
+\setlength{\unitlength}{.6cm}
+\begin{picture}(20,10)
+  \entity(1,4){Person}
+  \entity(7,8){Person2}
+  \entity(13,4){Team}
+  \entity(7,0){Team2}
+  \relation(7,4){arbeitet\_in}
+  \connection(7,5)(5,5){(0,3)}
+  \connection(11,5)(13,5){(2,10)}
+  \connection(9,6)(9,8){(2,10)}
+  \connection(9,4)(9,2){(2,10)}
+\end{picture}
 
 \end{document}
