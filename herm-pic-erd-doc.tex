@@ -285,18 +285,30 @@ produces
 To implement ER specialising you can use the macros
 
 \begin{verbatim}
-  \dpsecial(x,y){iname}
+  \dspecial(x,y){iname}
   \dspecial*(x,y){iname}
-  \opsecial(x,y){iname}
-  \opsecial*(x,y){iname}
+  \ospecial(x,y){iname}
+  \ospecial*(x,y){iname}
  
   \special(oname1,oname2)
 \end{verbatim}
+
+The \verb|\dspecial| macro represents an disjunct specialisation, the \verb|\ospecial| macro 
+an overlapping specialisation. The star versions represents the total versions of the 
+specialisation.
+
+The \verb|\special| macro represents the specilisation between two objects. The objects must give in the 
+order subtype, supertype.
 
 This works like this:
 
 \begin{verbatim}
 \begin{schema}(14,30)
+  \entity[entity7](5,26){Entity}
+  \entity[entity8](1,22){Entity}
+  \entity[entity9](9,22){Entity}
+  \special(entity8,entity7)
+  \special(entity9,entity7)
   \entity[entity](5,27){Entity}
   \dspecial(6,23){test1}
   \connection(entity,test1){}
@@ -314,7 +326,12 @@ This works like this:
 \end{schema}
 \end{verbatim}
 
-\begin{schema}(14,21)
+\begin{schema}(14,28)
+  \entity[entity7](5,26){Entity}
+  \entity[entity8](1,22){Entity}
+  \entity[entity9](9,22){Entity}
+  \special(entity8,entity7)
+  \special(entity9,entity7)
   \entity[entity](5,19){Entity}
   \dspecial(6,15){test1}
   \connection(entity,test1){}

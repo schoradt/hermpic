@@ -3639,10 +3639,10 @@
   \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
   \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
   % draw lines
-  \ifnum\herm@dy > 1%
+  \ifnum\herm@dy > 0%
     \gdef\herm@xdouble{1}%
   \else%
-    \ifnum\herm@dy < -1%
+    \ifnum\herm@dy < 0%
       \gdef\herm@xdouble{1}%
     \else
       \gdef\herm@xdouble{0}%
