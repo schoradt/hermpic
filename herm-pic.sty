@@ -1,24 +1,43 @@
 % Higher Entity Relationship Modell TeX Style
-\def\HPDate $#1 #2 #3${#2}
-\def\HPAuthor $#1 #2${#2}
-\def\HPRev $#1 #2 ${#2}
-
+%
+% global declarations:
+%   * all internal macros starts whith herm@
+%
+% macros for revision display
+\def\herm@date $#1 #2 #3${#2}
+\def\herm@author $#1 #2${#2}
+\def\herm@revision $#1 #2 ${#2}
+%
+% external revision display macros
+%
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\HPRev $Revision: 1.17.2.6 $}
-\def\HERMpicDate{\HPDate $Date: 2003-11-05 21:26:49 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.17.2.7 $}
+\def\HERMpicDate{\herm@date $Date: 2003-11-21 17:29:54 $ }
+%
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
-
-\typeout{HERM-Pic <\HERMpicRev> \HERMpicId  by \HPAuthor $Author: sven $}
+%
+\typeout{HERM-Pic <\HERMpicRev> \HERMpicId  by \herm@author $Author: sven $}
 %
 % This package provide some graphical elements to draw 
 % HER Modells.
 %
 % --- Package Options ---
+%
+% option conditionals
 \newif\ifherm@verbatim \herm@verbatimfalse%
+\newif\ifherm@names \herm@namestrue%
+%
+% Option processing
+%
+% * verbatim - display informations about package work
 \DeclareOption{verbatim}{%
   \herm@verbatimtrue%
   \typeout{  * Option verbatim - print information about diagramm processing}%
+}%
+\DeclareOption{nonames}{%
+  \herm@namesfalse%
+  \typeout{  * Option nonames - only the old style coordinates interface}%
 }%
 \DeclareOption*{%
   \PackageWarning{herm-pic}{Unnown Option '\CurrentOption'}%
@@ -30,6 +49,8 @@
 \newdimen{\herm@tempul}
 % ---  set \hermunit to standard value  ---
 \setlength{\hermunit}{.5cm} 
+%font for arcs
+\font\tenln  =line10
 % ---  schema environment  ---
 %
 % \begin{schema}(x,y)
@@ -52,8 +73,8 @@
 % Hoehe: 2 LE Breite: 4 LE
 \def\entity(#1,#2)#3{%
   \ifherm@verbatim%
-    \typeout{Register entity \string#3 ...}%
-  \fi
+    \typeout{Process entity \string#3 ...}%
+  \fi%
   \put(#1,#2){%
     \put(0,0){\line(1,0){4}}%
     \put(4,0){\line(0,1){2}}%
@@ -61,10 +82,12 @@
     \put(0,0){\line(0,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-  \global\expandafter\def\csname herment@#3 \endcsname{1}%
+  \ifherm@names%
+    \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+    \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+    \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+    \global\expandafter\def\csname herment@#3 \endcsname{1}%
+  \fi%
 }%
 %
 % ---  Relation  ---
@@ -74,7 +97,7 @@
 % Hoehe 2LE Breite 4LE
 \def\relation(#1,#2)#3{%
   \ifherm@verbatim%
-    \typeout{Doing relation #3 ...}%
+    \typeout{Process relation \string#3 ...}%
   \fi%
   \put(#1,#2){%
     \put(2,2){\line(-2,-1){2}}%
@@ -83,10 +106,12 @@
     \put(2,0){\line(-2,1){2}}%
     \put(0,0){\makebox(4,2){#3}}%
   }%
-  \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
-  \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
-  \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
-  \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
+  \ifherm@names%
+    \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+    \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+    \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+    \global\expandafter\def\csname hermrel@#3 \endcsname{1}%
+  \fi%
  }%
 %
 % ---  Cluster  ---
@@ -268,6 +293,7 @@
 %
 % \connection(x1,y1)(x2,y2){label}
 \newcount\herm@sx \newcount\herm@sy \newcount\herm@ex \newcount\herm@ey%
+\newcount\herm@mx \newcount\herm@my%
 \newcount\herm@dx \newcount\herm@dy%
 \newcount\herm@nsx \newcount\herm@nsy%
 \newcount\herm@newx \newcount\herm@newy \newcount\herm@dxdy%
@@ -277,7 +303,7 @@
   \herm@sy=#2%
   \herm@ex=#3%
   \herm@ey=#4%
-  % try to compute \vector parameter
+  \qbezier(\herm@sx,\herm@sy)(\herm@sx,\herm@sy)(\herm@ex,\herm@ey)%
   \herm@dx=\herm@ex \herm@dy=\herm@ey%
   \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
   \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
@@ -387,10 +413,33 @@
       \fi%
     \fi%
   \fi%
-  \herm@length=\herm@dx%
-  \ifnum\herm@newx = 0 \herm@length=\herm@dy \fi%
-  \ifnum\herm@length < 0 \multiply\herm@length by -1 \fi%
-  \put(\herm@sx,\herm@sy){\vector(\herm@newx,\herm@newy){\herm@length}}%
+  \ifherm@verbatim%
+    \typeout{Pfeile \the\herm@newx, \the\herm@newy}%
+  \fi% 
+  \ifnum \herm@newx=0
+    \ifnum\herm@newy<0
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \char 63}}
+    \else
+      \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \char 54}}
+    \fi
+  \else
+    \ifnum\herm@newx<0
+      \ifnum\herm@newy<0
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[bl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \else
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[tl]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \fi
+    \else
+      \ifnum\herm@newy>0
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[tr]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \else
+        \put(\herm@ex,\herm@ey){\makebox(0,0)[br]{\@linefnt \ifnum\herm@newx<0 \multiply \herm@newx by -1 \multiply \herm@newy by -1 \@getlarrow(\herm@newx,\herm@newy)\else \@getrarrow(\herm@newx,\herm@newy)\fi}}%
+      \fi
+    \fi
+  \fi
+  \herm@dx=\herm@ex \herm@dy=\herm@ey%
+  \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
+  \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
   \put(\herm@ex,\herm@ey){%
     \ifnum\herm@dx > 0 %
       \ifnum\herm@dy > 0 %
