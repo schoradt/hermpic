@@ -8,16 +8,27 @@
 % This package provide some graphical elements to draw 
 % HER Modells.
 
+% ---  package wide definitions  ---
+
+\global\newdimen{\hermunit}
+
+\newdimen{\hermtempul}
+% ---  set \hermunit to standard value  ---
+\setlength{\hermunit}{.5cm}
+
 % ---  schema environment  ---
 
 % \begin{schema}(x,y)
 \def\schema(#1,#2){%
+  \setlength{\hermtempul}{\unitlength}
+  \setlength{\unitlength}{\hermunit}
   \begin{picture}(#1,#2)
 }%
 
 % \end{schema}
 \def\endschema{
   \end{picture}
+  \setlength{\unitlength}{\hermtempul}
 }
 % ---  Entity  ---
 
@@ -68,7 +79,7 @@
 
 % ---  Attributes  ---
 
-% \attr[pos]{name}
+% \attr(x,y)[pos]{name}
 % where pos is from rlou
 
 % the start point is the point where the attribut line docks on the
@@ -238,13 +249,4 @@
   \fi%
 }
 
-% ---  Constraint  ---
-
-%\constr(sx,sy)(ex,ey){contents}
-
-% Create Constraint by given start and end koordinates and given contents.
-
-% !!! TODO !!!
-\def\constr(#1,#2)(#3,#4)#5{%
-  % compute the line parameters
-}
+% ---   END OF MODULE   ---
