@@ -3,12 +3,12 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-04-14 20:51:10 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-06-11 23:31:03 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\typeout{HERM-Pic <v0.4>(\HPRev $Revision: 1.14 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\typeout{HERM-Pic <v0.4>(\HPRev $Revision: 1.15 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -124,21 +124,24 @@
 % an a 'good' place.
 
 % \connection(x1,y1)(x2,y2){label}
+\newcount\sx \newcount\sy \newcount\ex \newcount\ey%
+\newcount\dx \newcount\dy%
+\newcount\nsx \newcount\nsy 
+\newcount\newx \newcount\newy \newcount\dxdy%
+\newcount\length 
 
 \def\connection(#1,#2)(#3,#4)#5{%
-  \newcount\sx \newcount\sy \newcount\ex \newcount\ey%
   \sx=#1%
   \sy=#2%
   \ex=#3%
   \ey=#4%
   % try to compute \vector parameter
-  \newcount\dx \newcount\dy \dx=\ex \dy=\ey%
-  \newcount\nsx \newcount\nsy \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
+  \dx=\ex \dy=\ey%
+  \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
   \advance\dx by \nsx \advance\dy by \nsy%
-  \newcount\newx \newcount\newy%
   \ifnum\dy = 0 \ifnum\dx > 0 \newx=1 \else \newx=-1 \fi \newy=0%
   \else%
-    \newcount\dxdy \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
+    \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
     \ifnum\dx > 0%
       \ifnum\dy > 0%
         \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
@@ -241,7 +244,7 @@
       \fi%
     \fi%
   \fi%
-  \newcount\length \length=\dx%
+  \length=\dx%
   \ifnum\newx = 0 \length=\dy \fi%
   \ifnum\length < 0 \multiply\length by -1 \fi%
   \put(\sx,\sy){\vector(\newx,\newy){\length}}%
