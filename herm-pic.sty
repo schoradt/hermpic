@@ -1,41 +1,38 @@
 % Higher Entity Relationship Modell TeX Style
 \def\HPDate $#1 #2 #3${#2}
 \def\HPAuthor $#1 #2${#2}
-\def\HPRev $#1 #2${#2}
+\def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-02-06 18:52:39 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-02-07 13:28:04 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
 \RequirePackage{texdraw}
 
-\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.8 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.9 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
 
-% ---  package wide definitions  ---
+% \hermunit removed because whith the texdraw package there is no usage of it
 
-\global\newdimen{\hermunit}
+% hermunit sets the percent thet the unit will be to 1cm 
+%    -> if onr unit is 0.5cm the hermunit must be 50
 
-\newdimen{\hermtempul}
-% ---  set \hermunit to standard value  ---
-\setlength{\hermunit}{.5cm}
+
 
 % ---  schema environment  ---
 
 % \begin{schema}(x,y)
-\def\schema(#1,#2){%
-  \setlength{\hermtempul}{\unitlength}
-  \setlength{\unitlength}{\hermunit}
-  \begin{picture}(#1,#2)
+\def\schema{%
+  \begin{texdraw}
+    \drawdim{cm} \setunitscale 0.5
 }%
 
 % \end{schema}
 \def\endschema{
-  \end{picture}
-  \setlength{\unitlength}{\hermtempul}
+  \end{texdraw}
 }
 % ---  Entity  ---
 
@@ -43,13 +40,14 @@
 
 % Hoehe: 2 LE Breite: 4 LE
 \def\entity(#1,#2)#3{%
-  \put(#1,#2){%
-    \put(0,0){\line(1,0){4}}%
-    \put(4,0){\line(0,1){2}}%
-    \put(4,2){\line(-1,0){4}}%
-    \put(0,0){\line(0,1){2}}%
-    \put(0,0){\makebox(4,2){#3}}%
-  }%
+  \move(#1 #2)
+  \bsegment
+  \rlvec(4 0)%
+  \rlvec(0 2)%
+  \rlvec(-4 0)%
+  \rlvec(0 -2)%
+  \textref h:C v:C \htext(2 1){#3}
+  \esegment
 }%
 
 % ---  Relation  ---
@@ -58,13 +56,15 @@
 
 % Hoehe 2LE Breite 4LE
 \def\relation(#1,#2)#3{%
-  \put(#1,#2){%
-    \put(2,2){\line(-2,-1){2}}%
-    \put(2,2){\line(2,-1){2}}%
-    \put(2,0){\line(2,1){2}}%
-    \put(2,0){\line(-2,1){2}}%
-    \put(0,0){\makebox(4,2){#3}}%
-  }%
+  \move(#1 #2)
+  \bsegment
+  \move(0 1)
+  \lvec(2 2)
+  \lvec(4 1)
+  \lvec(2 0)
+  \lvec(0 1)
+  \textref h:C v:C \htext(2 1){#3}
+  \esegment
 }%
 
 % ---  Cluster  ---
