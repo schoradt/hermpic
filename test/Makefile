@@ -25,7 +25,7 @@ TESTSPS = $(patsubst %.tex, %.ps, $(TESTS))
 
 #############################################################
 
-all: ../herm-pic.sty $(TESTSPS)
+all: herm-pic.sty $(TESTSPS)
 
 %.ps:	%.dvi
 	${DVIPS} -o $@ $<
