@@ -1,13 +1,24 @@
 % Higher Entity Relationship Modell TeX Style
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesPackage{herm-pic}[01/03/03 graphic extension package]
+\ProvidesPackage{herm-pic}[03/01/10 graphic extension package]
 
 \typeout{HERM-Pic <v0.2> graphic extension package.}
 
 % This package provide some graphical elements to draw 
 % HER Modells.
 
+% ---  schema environment  ---
+
+% \begin{schema}(x,y)
+\def\schema(#1,#2){%
+  \begin{picture}(#1,#2)
+}%
+
+% \end{schema}
+\def\endschema{
+  \end{picture}
+}
 % ---  Entity  ---
 
 % \entity(x,y){name}
