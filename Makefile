@@ -45,13 +45,17 @@ install: Makefile.config herm-pic.sty doc_clean
 	@mkdir -p ${DOC_PATH}
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
-test: hermtest.ps 
+test:
+	@echo "Testing package ..."
+	@cd test; make 
 
 doc_clean:
 	@rm -f *.aux *.log *.toc *.bbl *.blg *~
+	@cd test; make doc_clean
 
 clean:	doc_clean dist_clean
 	@rm -f *.dvi *.ps *.pdf *.ps*
+	@cd test; make clean
 
 FORCE: ;
 
@@ -78,3 +82,5 @@ dist: dist_prepare
 
 %.pdf:	%.tex
 	${PDFLATEX} $<
+
+.PHONY: test
