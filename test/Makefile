@@ -8,6 +8,8 @@
 # Include configuration file
 include ../Makefile.config
 
+SHELL = /bin/tcsh
+
 #############################################################
 
 TESTS = $(wildcard test_*.tex)

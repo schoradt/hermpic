@@ -11,7 +11,7 @@
 
 \setlength{\unitlength}{.3cm}
 
-\usepackage[verbatim]{herm-pic}
+\usepackage[verbatim]{herm-pic}[2003/07/16]
 
 \setlength{\hermunit}{.6cm}
 
@@ -32,15 +32,37 @@
   \connection(13,2)(9,5){}
 \end{schema}
 
-
+ 
 \begin{schema}(20,5)
   \entity(1,3){Person}
   \entity(13,-5){Team}
-  \relation(7,1){arbeitet}
+  \relation(10,1){arbeitet}
   \conn(arbeitet,Person){(0,3)}
   \conn(arbeitet,Team){(2,10)}
-%  \connection(7,2)(5,2){(0,3)}
-%  \connection(11,2)(13,2){(2,10)}
+  \aattr[ol]{Person}{a1}
+  \aattr[om]{Person}{a2}
+  \aattr[or]{Person}{a3}
+  \aattr[ro]{Person}{a4}
+  \aattr[rm]{Person}{a5}
+  \aattr[ru]{Person}{a6}
+  \aattr[ur]{Person}{a7}
+  \aattr[um]{Person}{a8}
+  \aattr[ul]{Person}{a9}
+  \aattr[lu]{Person}{a10}
+  \aattr[lm]{Person}{a11}
+  \aattr[lo]{Person}{a12}
+  \aattr[ol]{arbeitet}{a1}
+  \aattr[om]{arbeitet}{a2}
+  \aattr[or]{arbeitet}{a3}
+  \aattr[ro]{arbeitet}{a4}
+  \aattr[rm]{arbeitet}{a5}
+  \aattr[ru]{arbeitet}{a6}
+  \aattr[ur]{arbeitet}{a7}
+  \aattr[um]{arbeitet}{a8}
+  \aattr[ul]{arbeitet}{a9}
+  \aattr[lu]{arbeitet}{a10}
+  \aattr[lm]{arbeitet}{a11}
+  \aattr[lo]{arbeitet}{a12}
 \end{schema}
 
 
