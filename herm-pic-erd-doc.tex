@@ -172,6 +172,35 @@ and
   \attr[lo]{cluster}{lo}
 \end{schema}
 
+\subsection{Special attribute types}
+
+Special attribute types are the multivalued attribute ( \verb|\multivaluedattr|),
+the optional attribute (\verb|\optattr|) and derived attributes (\verb|\derivedattr|).
+
+They was used like simple attributes but there is no star or plus version available.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(14,10)
+  \entity[entity](5,3){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+\end{schema}
+
 \section{Connections between schema elements}
 
 Connections are drawn without arrows in ER diagramms. Only if you use a 

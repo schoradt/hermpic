@@ -193,6 +193,58 @@
   \conn(R,E4){(1,1)}
 \end{schema}
 
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+\end{schema}
+
+\subsection{optional attributes}
+
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \relation[relation](5,13){Relation}
+  \optattr[ol]{entity}{\key{a1}}
+  \optattr[om]{entity}{\key{a2}}
+  \optattr[or]{entity}{\key{a3}}
+  \optattr[ro]{entity}{\key{a4}}
+  \optattr[rm]{entity}{\key{a5}}
+  \optattr[ru]{entity}{\key{a6}}
+  \optattr[ur]{entity}{a7}
+  \optattr[um]{entity}{a8}
+  \optattr[ul]{entity}{a9}
+  \optattr[lu]{entity}{a10}
+  \optattr[lm]{entity}{a11}
+  \optattr[lo]{entity}{a12}
+  \optattr[ol]{relation}{a1}
+  \optattr[om]{relation}{a2}
+  \optattr[or]{relation}{a3}
+  \optattr[ro]{relation}{a4}
+  \optattr[rm]{relation}{a5}
+  \optattr[ru]{relation}{a6}
+  \optattr[ur]{relation}{a7}
+  \optattr[um]{relation}{a8}
+  \optattr[ul]{relation}{a9}
+  \optattr[lu]{relation}{a10}
+  \optattr[lm]{relation}{a11}
+  \optattr[lo]{relation}{a12}
+  \cluster[cluster](6,3){Cluster}
+  \optattr[ol]{cluster}{a1}
+  \optattr[om]{cluster}{a2}
+  \optattr[or]{cluster}{a3}
+  \optattr[ro]{cluster}{a4}
+  \optattr[rm]{cluster}{a5}
+  \optattr[ru]{cluster}{a6}
+  \optattr[ur]{cluster}{a7}
+  \optattr[um]{cluster}{a8}
+  \optattr[ul]{cluster}{a9}
+  \optattr[lu]{cluster}{a10}
+  \optattr[lm]{cluster}{a11}
+  \optattr[lo]{cluster}{a12}
+\end{schema}
+
 
 
 \section{Larger example schema}
