@@ -1,25 +1,25 @@
 ToDo fuer hermpic Version 0.7
 =============================
 
-* clear make process
+* (0.7-1) clear make process
 
-* using docstrip to genarate module and documentation
+* (0.7-2) using docstrip to genarate module and documentation
 
-* global Interface redesign
+* (0.7-3) global Interface redesign
   => Goal: 
           - remove design faults 
           - clear namespace
 
-* add improvements to cluster types
+* (0.7-4) add improvements to cluster types
   - names
   - attributes
   - named connections
 
-* improve graphical design for objects
+* (0.7-5) improve graphical design for objects
   - compute width from name
   - improve connection docking
 
-* create distibution concept and put this to the make process
+* (0.7-6) create distibution concept and put this to the make process
   - tar.gz archiv (source, bin)
   - Debian (source, bin)
 
