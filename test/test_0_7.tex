@@ -86,4 +86,37 @@
   \conn(R,E8){}
 \end{schema}
 
+\section{Cluster example}
+
+\begin{schema}(15,15)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
+
+\begin{schema}(20,10)
+  \cluster(10,4){cluster}
+  \aattr[ol]{cluster}{a1}
+  \aattr[om]{cluster}{a2}
+  \aattr[or]{cluster}{a3}
+  \aattr[ro]{cluster}{a4}
+  \aattr[rm]{cluster}{a5}
+  \aattr[ru]{cluster}{a6}
+  \aattr[ur]{cluster}{a7}
+  \aattr[um]{cluster}{a8}
+  \aattr[ul]{cluster}{a9}
+  \aattr[lu]{cluster}{a10}
+  \aattr[lm]{cluster}{a11}
+  \aattr[lo]{cluster}{a12}
+\end{schema}
+
 \end{document}
