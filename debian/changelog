@@ -1,12 +1,10 @@
-hermpic (0.7.0-1) unstable; urgency=low
+hermpic (0.7.0-rc1) unstable; urgency=low
 
-  * Interface changes
+  * Major interface changes
 
-     Added support for named clusters.
+    See the interface documentaion for more information.
 
-  * Improve the graphical layout of some elements.
-
- -- Sven Schoradt <sven@dex.de>  Thu, 13 Nov 2003 12:25:03 +0100
+ -- Sven Schoradt <sven@dex.de>  Thu,  8 Jan 2004 15:04:11 +0100
 
 hermpic (0.6.0-1) unstable; urgency=low
 

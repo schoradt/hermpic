@@ -70,9 +70,7 @@ install: build
 	dh_installdirs
 
 	# Add here commands to install the package into debian/hermpic.
-	#$(MAKE) install DESTDIR=$(CURDIR)/debian/hermpic
 
-	#dh_movefiles
 
 # Build architecture-independent files here.
 # Pass -i to all debhelper commands in this target to reduce clutter.
