@@ -11,6 +11,8 @@
 # Config Variable for tools used
 ECHO = echo
 REMOVE = rm -f
+MKDIR = mkdir
+COPY = cp
 
 INSTALL = install -m 644
 
@@ -63,11 +65,22 @@ test:
 	@cd test; make
 	@${ECHO} "see under test/ for genereated test_*.ps files"
 
+create_examples: examples
+	@${COPY} test/test_*.tex examples/
+	@rename 's/test/example/' examples/test_*
+
+examples:
+	@${ECHO} "Create example dir ... "
+	@${MKDIR} $@
+
 doc_clean:
 	@${REMOVE} *.aux *.log *.toc *~
 	@cd test; make doc_clean
 
-clean:	doc_clean
+example_clean:
+	@${REMOVE} -rf examples
+
+clean:	doc_clean example_clean
 	@${REMOVE} *.dvi *.ps *.pdf *.ps*
 	@cd test; make clean
 
@@ -84,4 +97,4 @@ FORCE: ;
 %.pdf:	%.tex
 	${PDFLATEX} $<
 
-.PHONY: test clean doc_clean all doc psdoc pdfdoc 
+.PHONY: test clean doc_clean all doc psdoc pdfdoc create_examples
