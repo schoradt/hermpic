@@ -36,9 +36,9 @@ all:
 
 doc: psdoc pdfdoc
 
-psdoc: herm-pic-doc.ps
+psdoc: herm-pic-doc.ps herm-pic-erd-doc.ps
 
-pdfdoc: herm-pic-doc.pdf
+pdfdoc: herm-pic-doc.pdf herm-pic-erd-doc.pdf
 
 sysinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc doc_clean
 	@${ECHO} "Installing package ..."
@@ -49,6 +49,9 @@ sysinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc d
 	@${ECHO} "Installing documentation ..."
 	@${INSTALL} herm-pic-doc.ps ${SYS_DOC_PATH}
 	@${INSTALL} herm-pic-doc.pdf ${SYS_DOC_PATH}
+	@${INSTALL} herm-pic-erd-doc.ps ${SYS_DOC_PATH}
+	@${INSTALL} herm-pic-erd-doc.pdf ${SYS_DOC_PATH}
+
 
 homeinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc doc_clean
 	@${ECHO} "Installing package ..."
@@ -59,6 +62,8 @@ homeinstall:  herm-pic.sty herm-rev.sty herm-pic-impl.sty  herm-pic-old.sty doc 
 	@${ECHO} "Installing documentation ..."
 	@${INSTALL} herm-pic-doc.ps ${HOME_DOC_PATH}
 	@${INSTALL} herm-pic-doc.pdf ${HOME_DOC_PATH}
+	@${INSTALL} herm-pic-erd-doc.ps ${SYS_DOC_PATH}
+	@${INSTALL} herm-pic-erd-doc.pdf ${SYS_DOC_PATH}
 
 test:
 	@${ECHO} "Testing package ..."

@@ -1,0 +1,363 @@
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+\setlength{\unitlength}{.3cm}
+
+\usepackage[erd]{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\pagestyle{headings}
+
+\author{Sven Schoradt \\ (Sven.Schoradt@informatik.tu-cottbus.de)}
+
+\title{herm-pic - Graphical extension package for LaTeX2e to produce HER-Diagramms\\The Entity-Relationship Diagramm mode}
+
+\begin{document}
+
+\maketitle
+
+\section{General remarks}
+
+For a wider view on HermPic see the HermPic documentation.
+
+\section{The schema elements}
+
+All of the macros from the normal herm-pic you find also in the ERD mode.
+Some, especialy \verb|\cluster| are not known in ERD diagramms. In the ERD mode there are also some special macros that you not find outside this mode.
+
+So herm-pic schemas are compatible to the ERD mode, but ERD diagramms work not in the normal herm-pic environment.
+
+On entities and relations there are no changes, but there is a new object type,
+the is-a.
+
+\subsection{Is A}
+
+To use the is-a concept in your schema, you can use the \verb|\isa| macro.
+The syntax is as followed:
+
+\begin{verbatim}
+\isa(x,y){name}
+\end{verbatim}
+
+This draws an is-a sign with the height of 2 and a width of 4 units.
+The name is only for internal use and have to be unique.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(16,4)
+\isa(6,1){isa1}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(16,4)
+\isa(6,1){isa1}
+\end{schema}
+
+\subsection{Attributes}
+
+Attribute are drawn as an oval with the name in it conected with the object.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr[lm]{Person}{left}
+\attr[om]{Person}{over}
+\attr[rm]{Person}{right}
+\attr[um]{Person}{under}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr[lm]{Person}{left}
+\attr[om]{Person}{over}
+\attr[rm]{Person}{right}
+\attr[um]{Person}{under}
+\end{schema}
+
+and
+
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr[rm]{Person}{\key{key}}
+\end{schema}
+
+
+\begin{schema}(14,30)
+  \entity[Person](5,23){person}
+  \relation[arbeitet](5,13){works}
+  \attr[ol]{Person}{ol}
+  \attr[om]{Person}{om}
+  \attr[or]{Person}{or}
+  \attr[ro]{Person}{ro}
+  \attr[rm]{Person}{rm}
+  \attr[ru]{Person}{ru}
+  \attr[ur]{Person}{ur}
+  \attr[um]{Person}{um}
+  \attr[ul]{Person}{ul}
+  \attr[lu]{Person}{lu}
+  \attr[lm]{Person}{lm}
+  \attr[lo]{Person}{lo}
+  \attr[ol]{arbeitet}{ol}
+  \attr[om]{arbeitet}{om}
+  \attr[or]{arbeitet}{or}
+  \attr[ro]{arbeitet}{ro}
+  \attr[rm]{arbeitet}{rm}
+  \attr[ru]{arbeitet}{ru}
+  \attr[ur]{arbeitet}{ur}
+  \attr[um]{arbeitet}{um}
+  \attr[ul]{arbeitet}{ul}
+  \attr[lu]{arbeitet}{lu}
+  \attr[lm]{arbeitet}{lm}
+  \attr[lo]{arbeitet}{lo}
+  \cluster(6,3){cluster}
+  \attr[ol]{cluster}{ol}
+  \attr[om]{cluster}{om}
+  \attr[or]{cluster}{or}
+  \attr[ro]{cluster}{ro}
+  \attr[rm]{cluster}{rm}
+  \attr[ru]{cluster}{ru}
+  \attr[ur]{cluster}{ur}
+  \attr[um]{cluster}{um}
+  \attr[ul]{cluster}{ul}
+  \attr[lu]{cluster}{lu}
+  \attr[lm]{cluster}{lm}
+  \attr[lo]{cluster}{lo}
+\end{schema}
+
+\section{Connections between schema elements}
+
+Connections are drawn without arrows in ER diagramms. Only if you use a 
+connection to or from an is-a type, ther will be drawn arrows.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation[arbeitetin](7,1){arbeitet\_in}
+  \connection(arbeitetin,Person){(0,3)}
+  \connection(arbeitetin,Team1){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation[arbeitetin](7,1){arbeitet\_in}
+  \connection(arbeitetin,Person){(0,3)}
+  \connection(arbeitetin,Team){(2,10)}
+\end{schema}
+
+, 
+
+\begin{verbatim}
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \attr[ol]{Person}{Name}
+  \attr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \attr[om]{Mitarbeiter}{\key{mnr}}
+  \connection(Mitarbeiter,Person){}
+  \connection(Professor,Mitarbeiter){}
+  \connection(WiMi,Mitarbeiter){}
+  \connection(Student,Mitarbeiter){}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \attr[ol]{Person}{Name}
+  \attr[om]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \attr[om]{Mitarbeiter}{\key{mnr}}
+  \connection(Mitarbeiter,Person){}
+  \connection(Professor,Mitarbeiter){}
+  \connection(WiMi,Mitarbeiter){}
+  \connection(Student,Mitarbeiter){}
+\end{schema}
+
+and 
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation*(7,1){arbeitet\_in}
+  \connection*(7,2)(5,2){(0,3)}
+  \connection*(11,2)(13,2){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(20,4)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation*(7,1){arbeitet\_in}
+  \connection*(7,2)(5,2){(0,3)}
+  \connection*(11,2)(13,2){(2,10)}
+\end{schema}
+
+and
+
+\begin{verbatim}
+\begin{schema}(20,14)
+  \entity(1,11){Unter1}
+  \entity(15,11){Unter2}
+  \isa(8,6){isa1}
+  \entity(8,1){Ober}
+  \conn(Unter1,isa1){}
+  \conn(Unter2,isa1){}
+  \conn(isa1,Ober){}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,14)
+  \entity(1,1){subtype1}
+  \entity(15,1){subtype2}
+  \isa(8,6){isa1}
+  \entity(8,11){type}
+  \conn(subtype1,isa1){}
+  \conn(subtype2,isa1){}
+  \conn(isa1,type){}
+\end{schema}
+
+
+\section{A more or less complex example}
+
+This more or less complex example shows you the usage of all the macros together.
+
+\begin{verbatim}
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,17)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+\end{verbatim}
+
+produces the schema
+
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,17)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+
+
+\end{document}
