@@ -6,6 +6,13 @@
 # Author: Sven Schoradt <schoradt@informatik.tu-cottbus.de> #
 #############################################################
 
+DATE := $(shell date +%Y_%m_%e)
+
+CVSROOT = :pserver:sven@cvs.dex.de:/var/cvs
+CVSPATH = schoradt/tex
+
+VERSION := 0_5
+
 # Include configuration file
 include Makefile.config
 
@@ -32,8 +39,10 @@ pdfdoc: herm-pic-doc.pdf
 
 install: Makefile.config herm-pic.sty doc_clean
 	@echo "Installing package ..."
+	@mkdir -p ${INSTALL_PATH}
 	@${INSTALL} herm-pic.sty ${INSTALL_PATH}
 	@echo "Installing documentation ..."
+	@mkdir ${DOC_PATH}
 	@${INSTALL} herm-pic-doc.* ${DOC_PATH}
 
 test: hermtest.ps 
@@ -41,10 +50,24 @@ test: hermtest.ps
 doc_clean:
 	@rm -f *.aux *.log *.toc *.bbl *.blg *~
 
-clean:	doc_clean
+clean:	doc_clean dist_clean
 	@rm -f *.dvi *.ps *.pdf *.ps*
 
 FORCE: ;
+
+dist_clean:
+	@rm -rf .dist
+
+dist_prepare: dist_clean
+	@echo "Prepare distributing herm-pic ..."
+	@mkdir .dist
+	@cd .dist; mkdir herm-pic_$(VERSION)
+	@cd .dist; cvs -d $(CVSROOT) export -D now $(CVSPATH)
+	@mv .dist/$(CVSPATH)/* .dist/herm-pic_$(VERSION)
+        
+
+dist: dist_prepare
+	@cd .dist; tar -czf ../herm-pic_$(VERSION)_${DATE}.tar.gz herm-pic_$(VERSION)
 
 # Rule pattern
 %.ps:	%.dvi FORCE
