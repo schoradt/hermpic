@@ -46,8 +46,10 @@ author.
 
 \subsection{Package options}
 
-The package has only one option that is {\tt verbatim}. If it is set the package
-reports some actions doing between tex processing.
+The package accepts the options {\tt verbatim} and {\tt nonames}.
+
+The {\tt nonames} option disables the named interface, so that you can work without
+the restrictions. The {\tt verbatim} options enables debuging informations.
 
 \section{The schema environment}
 
@@ -131,6 +133,53 @@ produces this
 \relation(1,1){is a}
 \end{schema}
 
+\subsection{Cluster}
+
+\begin{quote}
+  {\bf Attention:} The Interface of the old style cluster macro must be changed. You have
+  to change all \verb|\cluster(x,y)| calls to \verb|\cluster(x,y){}|
+\end{quote}
+
+To use the cluster concept in your schema, you can use the \verb|\cluster| macro.
+The syntax is as followed:
+
+\begin{verbatim}
+\cluster(x,y){name}
+\end{verbatim}
+
+This draws the cluster item, thats a circle with the radius 2 whit a plus in it, on the position 
+{\tt (x,y)} and places the name right over the cluster.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(4,4)
+\cluster(1,1){}
+\end{schema}
+
+\end{verbatim}
+
+produces this
+
+\begin{schema}(4,4)
+\cluster(1,1){}
+\end{schema}
+
+and 
+
+\begin{verbatim}
+\begin{schema}(4,4)
+\cluster(1,1){Mitarbeiter}
+\end{schema}
+
+\end{verbatim}
+
+produces this
+
+\begin{schema}(4,4)
+\cluster(1,1){Mitarbeiter}
+\end{schema}
+
 \subsection{Attributes}
 
 Attributes in HERM will be a string connected with the entity or relation.
@@ -156,9 +205,9 @@ Figure \ref{fig:attr_pos} shows the positionings.
 
 \begin{figure}[htb]
   \centering
-  \begin{schema}(20,5)
-  \entity(1,3){Person}
-  \relation(10,3){arbeitet}
+  \begin{schema}(20,6)
+  \entity(1,2){Person}
+  \relation(9,2){arbeitet}
   \aattr[ol]{Person}{ol}
   \aattr[om]{Person}{om}
   \aattr[or]{Person}{or}
@@ -183,6 +232,19 @@ Figure \ref{fig:attr_pos} shows the positionings.
   \aattr[lu]{arbeitet}{lu}
   \aattr[lm]{arbeitet}{lm}
   \aattr[lo]{arbeitet}{lo}
+  \cluster(17,2){cluster}
+  \aattr[ol]{cluster}{ol}
+  \aattr[om]{cluster}{om}
+  \aattr[or]{cluster}{or}
+  \aattr[ro]{cluster}{ro}
+  \aattr[rm]{cluster}{rm}
+  \aattr[ru]{cluster}{ru}
+  \aattr[ur]{cluster}{ur}
+  \aattr[um]{cluster}{um}
+  \aattr[ul]{cluster}{ul}
+  \aattr[lu]{cluster}{lu}
+  \aattr[lm]{cluster}{lm}
+  \aattr[lo]{cluster}{lo}
 \end{schema}
 
   \caption{Positioning posibilities for attributes}
@@ -253,33 +315,6 @@ produces this
 \attr(5,2)[r]{\key{key}}
 \end{schema}
 
-\subsection{Cluster}
-
-To use the cluster concept in your schema, you can use the \verb|\cluster| macro.
-The syntax is as followed:
-
-\begin{verbatim}
-\cluster(x,y)
-\end{verbatim}
-
-This draws the cluster item, thats a circle with the radius 2 whit a plus in it, on the position 
-{\tt (x,y)}.
-
-\paragraph{Example:}
-
-\begin{verbatim}
-\begin{schema}(4,4)
-\cluster(1,1)
-\end{schema}
-
-\end{verbatim}
-
-produces this
-
-\begin{schema}(4,4)
-\cluster(1,1)
-\end{schema}
-
 \section{Connections between schema elements}
 
 A connection between two schema elements is a vector with an optional
@@ -291,9 +326,8 @@ The package provides for this the \verb|\connection| macro, with the syntax
 \connection(x1,y1)(x2,y2){mathematical equation}
 \end{verbatim}
 
-It draws a vector from the point (x1,y1) to the next possible point in the near
-of (x2,y2) and puts the mathematical equation to an adequate point at the end of the 
-vector enclosed by \$-signs. 
+It draws a vector from the point (x1,y1) to (x2,y2) and puts the mathematical 
+equation to an adequate point at the end of the vector enclosed by \$-signs. 
 
 Or their is also a named interface macro 
 
@@ -325,7 +359,7 @@ produces this
   \connection(11,2)(13,2){(2,10)}
 \end{schema}
 
-or
+,
 
 \begin{verbatim}
 \begin{schema}(20,5)
@@ -347,21 +381,40 @@ produces
   \conn(arbeitetin,Team){(2,10)}
 \end{schema}
 
+and 
 
-\section{ToDo}
+\begin{verbatim}
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
+\end{verbatim}
 
-\subsection{Short term development}
+produces
 
-\begin{itemize}
-\item test the package for bugs and for problems whith other packages
-\end{itemize}
-
-\subsection{Long term development}
-
-\begin{itemize}
-\item improve the drawing for entities and relations (make them as wide as
-  needed to display the name inside the object)
-\item improve connection drawing and make it configurable
-\end{itemize}
+\begin{schema}(15,10)
+  \entity(1,4){Person}
+  \aattr[ol]{Person}{Name}
+  \aattr[or]{Person}{\key{PNr}}
+  \relation(13,7){Professor}
+  \relation(13,4){WiMi}
+  \relation(13,1){Student}
+  \cluster(7,4){Mitarbeiter}
+  \aattr[ol]{Mitarbeiter}{\key{mnr}}
+  \conn(Mitarbeiter,Person){}
+  \conn(Professor,Mitarbeiter){}
+  \conn(WiMi,Mitarbeiter){}
+  \conn(Student,Mitarbeiter){}
+\end{schema}
 
 \end{document}
