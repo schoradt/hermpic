@@ -21,7 +21,15 @@
 
 \maketitle
 
-\section{General usage}
+\section{General remarks}
+
+The {\tt herm-pic} package, helps you to draw Higher Entity Relationship Diagramms.
+This diagramms are the visualisation of HER schemas, an extended database modeling 
+concept. For more information to this see the internet presenation of the
+database and information system chair of the BTU Cottbus (Germany)
+at http://dbis.informatik.tu-cottbus.de/.
+
+\section{Usage}
 
 To use the package you only have to insert the line
 
@@ -30,7 +38,8 @@ To use the package you only have to insert the line
 \end{verbatim}
 
 into the header part of your document. There are no known problems with other
-packages or classes. If you find something in this manner, mail to the package author.
+packages or classes. If you find something in this manner, mail to the package 
+author.
 
 The package defines a length for the unit length in the schema environments, it was called
 \verb|\hermunit|. So you can use pictures and schemas with different unit length in your 
@@ -42,7 +51,7 @@ The standard for \verb|\hermunit| is 0.5cm for one unit.
 
 \section{The schema environment}
 
-In the here described package I defined the {\tt schema} environment.
+In the {\tt herm-pic} package I defined the {\tt schema} environment.
 This environment is the standard way to use the schema elements, but you 
 can also use the schema elements in an ordinary picture environment.
 
@@ -228,5 +237,25 @@ produces this
   \connection(7,2)(5,2){(0,3)}
   \connection(11,2)(13,2){(2,10)}
 \end{schema}
+
+\section{ToDo}
+
+\subsection{Short term development}
+
+\begin{itemize}
+\item develop an easier user interface, whith name lookup for entities and
+  relations ( comes in version 0.6 )
+\item test the package for bugs and for problems whith other packages
+\end{itemize}
+
+\subsection{Long term development}
+
+\begin{itemize}
+\item improve the drawing for entities and relations (make them as wide as
+  needed to display the name inside the object)
+\item improve attribute placement
+\item improve connection drawing and make it configurable
+\item implement an object placement algorithm for authomatic diagramm design
+\end{itemize}
 
 \end{document}
