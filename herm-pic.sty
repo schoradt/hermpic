@@ -4,8 +4,8 @@
 \def\HPRev $#1 #2 ${#2}
 
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\HPRev $Revision: 1.17.2.5 $}
-\def\HERMpicDate{\HPDate $Date: 2003-10-15 16:22:51 $ }
+\def\HERMpicRev{\HPRev $Revision: 1.17.2.6 $}
+\def\HERMpicDate{\HPDate $Date: 2003-11-05 21:26:49 $ }
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
@@ -416,7 +416,7 @@
 % \conn(oname1,oname2){label}
 %
 \newcount\herm@tsx \newcount\herm@tsy \newcount\herm@tex \newcount\herm@tey%
-\newcount\herm@tdx \newcount\herm@tdy%
+\newcount\herm@tdx \newcount\herm@tdy \newcount\herm@corrected \newcount\herm@null%
 \def\conn(#1,#2)#3{%
   \ifherm@verbatim%
     \typeout{Connection between \string#1 and \string#2 ...}%
@@ -424,26 +424,14 @@
   \newif\ifherm@conerra \herm@conerratrue%
   \newif\ifherm@conerrb \herm@conerrbtrue%
   \expandafter\if\csname hermobj@#1 \endcsname 1%
-    \ifherm@verbatim%
-      \typeout{   \string#1 found}%
-    \fi%
     \herm@conerrafalse%
     \herm@tsx=\csname hermobjx@#1 \endcsname%
     \herm@tsy=\csname hermobjy@#1 \endcsname%
-    \ifherm@verbatim%
-      \typeout{      with \the\herm@tsx, \the\herm@tsy}%
-    \fi%
   \fi%
   \expandafter\if\csname hermobj@#2 \endcsname 1%
-    \ifherm@verbatim%
-      \typeout{   \string#2 found}%
-    \fi%
     \herm@conerrbfalse%
     \herm@tex=\csname hermobjx@#2 \endcsname%
     \herm@tey=\csname hermobjy@#2 \endcsname%
-    \ifherm@verbatim%
-      \typeout{      with \the\herm@tex, \the\herm@tey}%
-    \fi%
   \fi%
   \ifherm@conerra%
     \PackageError {herm-pic}{Undefined object #1 in addvanced connection}{See herm-pic Documentaion.}%
@@ -451,7 +439,7 @@
   \ifherm@conerrb%
     \PackageError {herm-pic}{Undefined object #2 in addvanced connection}{See herm-pic Documentaion.}%
   \fi%
-  % comute middle of objects
+  % compute middle of objects
   \advance\herm@tsx by 2 \advance\herm@tex by 2%
   \advance\herm@tsy by 1 \advance\herm@tey by 1%
   % compute differences
@@ -466,31 +454,93 @@
   \herm@ex=\herm@tex%
   \herm@ey=\herm@tey%
   % correct start points
+  \gdef\herm@corrected{0}%
+  % x - Correction
   \ifherm@verbatim%
-    \typeout{Correct starting points by (\the\herm@tdx, \the\herm@tdy)}%
+    \typeout{X correction (dx=\the\herm@tdx, sx=\the\herm@tsx, ex=\the\herm@tex)}%
   \fi%
-  \ifnum\herm@tdx > \herm@tdy%
-    \ifherm@verbatim%
-      \typeout{Use x correction}%
-    \fi%
+  \ifnum\herm@tdx > 6%
     \ifnum\herm@tsx < \herm@tex%
       \advance\herm@sx by 2 \advance \herm@ex by -2%
     \fi%
     \ifnum\herm@tsx > \herm@tex%
       \advance\herm@sx by -2 \advance \herm@ex by 2%
     \fi%
-  \else%
-    \ifherm@verbatim%
-      \typeout{Use y correction}%
+    \gdef\herm@corrected{1}%
+  \fi%
+  % y - Correction
+  \ifherm@verbatim%
+    \typeout{Y correction (dy=\the\herm@tdy, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
+  \fi%
+  \ifnum\herm@tdy > 4%
+    \expandafter\if\csname hermrel@#1 \endcsname 1%
+      \if\herm@corrected 0%
+        \ifnum\herm@tsy < \herm@tey%
+          \advance\herm@sy by 1%
+        \fi%
+        \ifnum\herm@tsy > \herm@tey%
+          \advance\herm@sy by -1%
+        \fi%
+      \fi%
+    \else%
+      \ifnum\herm@tsy < \herm@tey%
+        \advance\herm@sy by 1%
+      \fi%
+      \ifnum\herm@tsy > \herm@tey%
+        \advance\herm@sy by -1%
+      \fi%
     \fi%
-    \ifnum\herm@tsy < \herm@tey%
-      \advance\herm@sy by 1 \advance \herm@ey by -1%
+    \expandafter\if\csname hermrel@#2 \endcsname 1%
+      \ifnum\herm@corrected 0%
+        \ifnum\herm@tsy<\herm@tey%
+          \advance\herm@ey by -1%
+        \fi%
+        \ifnum\herm@tsy>\herm@tey%
+          \advance\herm@ey by 1%
+        \fi%
+      \fi%
+    \else%
+      \ifnum\herm@tsy < \herm@tey%
+        \advance\herm@ey by -1%
+      \fi%
+      \ifnum\herm@tsy > \herm@tey%
+        \advance\herm@ey by 1%
+      \fi%
     \fi%
-    \ifnum\herm@tsy > \herm@tey%
-      \advance\herm@sy by -1 \advance \herm@ey by 1%
-    \fi%
+    \gdef\herm@corrected{1}%
+   \fi%
+   \ifherm@verbatim%
+     \typeout{post (dx=\the\herm@tdx, dy=\the\herm@tdy, sx=\the\herm@tsx, ex=\the\herm@tex, sy=\the\herm@tsy, ey=\the\herm@tey, corrected=\herm@corrected)}%
+   \fi%
+   \if\herm@corrected 0%
+     \typeout{Use correction}%
+     \ifnum\herm@tdx > \herm@tdy%
+       \ifherm@verbatim%
+         \typeout{Use x correction}%
+       \fi%
+       \ifnum\herm@tsx < \herm@tex%
+         \advance\herm@sx by 2 \advance \herm@ex by -2%
+       \fi%
+       \ifnum\herm@tsx > \herm@tex%
+         \advance\herm@sx by -2 \advance \herm@ex by 2%
+       \fi%
+     \fi%
+     \ifnum\herm@tdx < \herm@tdy%
+       \ifherm@verbatim%
+         \typeout{Use y correction}%
+       \fi%
+       \ifnum\herm@tsy < \herm@tey%
+         \advance\herm@sy by 1 \advance \herm@ey by -1%
+       \fi%
+       \ifnum\herm@tsy > \herm@tey%
+         \advance\herm@sy by -1 \advance \herm@ey by 1%
+       \fi%
+     \fi%
   \fi%
   % draw connection
+  \ifherm@verbatim%
+    \typeout{  Drawing with (\the\herm@sx,\the\herm@sy)(\the\herm@ex,\the\herm@ey)}%
+  \fi%
   \connection(\herm@sx,\herm@sy)(\herm@ex,\herm@ey){#3}%
 }%
 %
