@@ -3,14 +3,14 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-02-10 15:33:11 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-02-10 16:30:23 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
 \RequirePackage{texdraw}
 
-\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.11 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.12 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
@@ -125,137 +125,42 @@
 % ---  Connection  ---
 
 % Draws an arrow from the start to the endpoint and places the label
-% an a 'good' place.
+% to a 'good' place.
 
 % \connection(x1,y1)(x2,y2){label}
-
-\def\connection(#1,#2)(#3,#4)#5{%
+%   \connection(x1,y1)(x2,y2){label}
+\def\conn(#1,#2)(#3,#4)#5{%
+  \move(#1 #2)
+  \arrowheadtype t:V
+  \avec(#3 #4)
   \newcount\sx \newcount\sy \newcount\ex \newcount\ey%
   \sx=#1%
   \sy=#2%
   \ex=#3%
   \ey=#4%
-  % try to compute \vector parameter
+  % try to compute placing options
   \newcount\dx \newcount\dy \dx=\ex \dy=\ey%
   \newcount\nsx \newcount\nsy \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
   \advance\dx by \nsx \advance\dy by \nsy%
-  \newcount\newx \newcount\newy%
-  \ifnum\dy = 0 \ifnum\dx > 0 \newx=1 \else \newx=-1 \fi \newy=0%
+  % place description
+  %\showthe\dx \showthe\dy
+  \ifnum\dx > 0 %
+    \ifnum\dy > 0 %
+      \rmove(-0.5 -0.2)
+      \textref h:R v:T \htext{$#5$} %
+    \else
+      \rmove(-0.5 0.2)
+      \textref h:R v:B \htext{$#5$} %
+    \fi
   \else%
-    \newcount\dxdy \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
-    \ifnum\dx > 0%
-      \ifnum\dy > 0%
-        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
-          \ifnum\dxdy < 29 \newx=1 \newy=4 \else%
-            \ifnum\dxdy < 41 \newx=1 \newy=3 \else%
-              \ifnum\dxdy < 58 \newx=1 \newy=2 \else%
-                \ifnum\dxdy < 71 \newx=2 \newy=3 \else%
-                  \ifnum\dxdy < 87 \newx=3 \newy=4 \else%
-                    \ifnum\dxdy < 116 \newx=1 \newy=1 \else%
-                      \ifnum\dxdy < 141 \newx=4 \newy=3 \else%
-                        \ifnum\dxdy < 175 \newx=3 \newy=2 \else%
-                          \ifnum\dxdy < 250 \newx=2 \newy=1 \else%
-                            \ifnum\dxdy < 350 \newx=3 \newy=1 \else%
-                              \ifnum\dxdy < 1000 \newx=4 \newy=1 \else \newx=1 \newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \else%
-        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
-          \ifnum\dxdy < 29 \newx=1 \newy=-4 \else%
-            \ifnum\dxdy < 41 \newx=1 \newy=-3 \else%
-              \ifnum\dxdy < 58 \newx=1 \newy=-2 \else%
-                \ifnum\dxdy < 71 \newx=2 \newy=-3 \else%
-                  \ifnum\dxdy < 87 \newx=3 \newy=-4 \else%
-                    \ifnum\dxdy < 116 \newx=1 \newy=-1 \else%
-                      \ifnum\dxdy < 141 \newx=4 \newy=-3 \else%
-                        \ifnum\dxdy < 175 \newx=3 \newy=-2 \else%
-                          \ifnum\dxdy < 250 \newx=2 \newy=-1 \else%
-                            \ifnum\dxdy < 350 \newx=3 \newy=-1 \else%
-                              \ifnum\dxdy < 1000 \newx=4 \newy=-1 \else \newx=-1 \newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \fi%
-    \else%
-      \ifnum\dy > 0%
-        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
-          \ifnum\dxdy < 29 \newx=-1 \newy=4 \else%
-            \ifnum\dxdy < 41 \newx=-1 \newy=3 \else%
-              \ifnum\dxdy < 58 \newx=-1 \newy=2 \else%
-                \ifnum\dxdy < 71 \newx=-2 \newy=3 \else%
-                  \ifnum\dxdy < 87 \newx=-3 \newy=4 \else%
-                    \ifnum\dxdy < 116 \newx=-1 \newy=1 \else%
-                      \ifnum\dxdy < 141 \newx=-4 \newy=3 \else%
-                        \ifnum\dxdy < 175 \newx=-3 \newy=2 \else%
-                          \ifnum\dxdy < 250 \newx=-2 \newy=1 \else%
-                            \ifnum\dxdy < 350 \newx=-3 \newy=1 \else%
-                              \ifnum\dxdy < 1000 \newx=-4 \newy=1 \else \newx=1 \newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \else%
-        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
-          \ifnum\dxdy < 29 \newx=-1 \newy=-4 \else%
-            \ifnum\dxdy < 41 \newx=-1 \newy=-3 \else%
-              \ifnum\dxdy < 58 \newx=-1 \newy=-2 \else%
-                \ifnum\dxdy < 71 \newx=-2 \newy=-3 \else%
-                  \ifnum\dxdy < 87 \newx=-3 \newy=-4 \else%
-                    \ifnum\dxdy < 116 \newx=-1 \newy=-1 \else%
-                      \ifnum\dxdy < 141 \newx=-4 \newy=-3 \else%
-                        \ifnum\dxdy < 175 \newx=-3 \newy=-2 \else%
-                          \ifnum\dxdy < 250 \newx=-2 \newy=-1 \else%
-                            \ifnum\dxdy < 350 \newx=-3 \newy=-1 \else%
-                              \ifnum\dxdy < 1000 \newx=-4 \newy=-1 \else \newx=-1 \newy=0 \fi%
-                            \fi%
-                          \fi%
-                        \fi%
-                      \fi%
-                    \fi%
-                  \fi%
-                \fi%
-              \fi%
-            \fi%
-          \fi%
-        \fi
-      \fi%
-    \fi%
+    \ifnum\dy > 0 %
+      \rmove(0.5 -0.2)
+      \textref h:L v:T \htext{$#5$} %
+    \else
+      \rmove(0.5 0.2)
+      \textref h:L v:B \htext{$#5$} %
+    \fi
   \fi%
-  \newcount\length \length=\dx%
-  \ifnum\newx = 0 \length=\dy \fi%
-  \ifnum\length < 0 \multiply\length by -1 \fi%
-  \put(\sx,\sy){\vector(\newx,\newy){\length}}%
-  % cardinality placement
-  \dx=\ex \dy=\ey \advance \dx by -1 \advance \dy by -1%
-  \ifnum\newx > 0%
-    \ifnum\newy > 0 \put(\ex,\ey){\makebox(-1,1)[tr]{$ #5 $}} \else \put(\dx,\dy){\makebox(1,1)[br]{$ #5 $}} \fi%
-  \else%
-    \ifnum\newy > 0 \put(\ex,\ey){\makebox(1,1)[tl]{$ #5 $}} \else \put(\ex,\dy){\makebox(1,1)[bl]{$ #5 $}} \fi%
-  \fi%
-}
+}%
 
 % ---   END OF MODULE   ---
