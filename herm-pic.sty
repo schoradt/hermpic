@@ -3,43 +3,37 @@
 \def\HPAuthor $#1 #2${#2}
 \def\HPRev $#1 #2 ${#2}
 
-\def\HERMpicId{\HPDate $Date: 2003-02-10 17:36:37 $ higher entity relationship diagramms }
+\def\HERMpicId{\HPDate $Date: 2003-04-14 20:51:10 $ higher entity relationship diagramms }
 
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
 
-\RequirePackage{texdraw}
-
-\input txdtools
-
-\typeout{HERM-Pic <v0.4.1>(\HPRev $Revision: 1.13 $) \HERMpicId by \HPAuthor $Author: sven $ }
+\typeout{HERM-Pic <v0.4>(\HPRev $Revision: 1.14 $) \HERMpicId by \HPAuthor $Author: sven $ }
 
 % This package provide some graphical elements to draw 
 % HER Modells.
 
-% \hermunit removed because whith the texdraw package there is no usage of it
+% ---  package wide definitions  ---
 
-% hermunit sets the percent thet the unit will be to 1cm 
-%    -> if onr unit is 0.5cm the hermunit must be 50
-\newcount\hpunit
-\hpunit=50
+\global\newdimen{\hermunit}
 
-\def\sethermunit#1{\hpunit=#1}
-
-\def\hermunit{\hpunit}
+\newdimen{\hermtempul}
+% ---  set \hermunit to standard value  ---
+\setlength{\hermunit}{.5cm}
+ 
 % ---  schema environment  ---
 
 % \begin{schema}(x,y)
-\def\schema{%
-  \realdiv{\hermunit}{100} \hus
-  \begin{texdraw}
-    
-    \drawdim{cm} \setunitscale \hus
+\def\schema(#1,#2){%
+  \setlength{\hermtempul}{\unitlength}
+  \setlength{\unitlength}{\hermunit}
+  \begin{picture}(#1,#2)
 }%
 
 % \end{schema}
 \def\endschema{
-  \end{texdraw}
+  \end{picture}
+  \setlength{\unitlength}{\hermtempul}
 }
 % ---  Entity  ---
 
@@ -47,14 +41,13 @@
 
 % Hoehe: 2 LE Breite: 4 LE
 \def\entity(#1,#2)#3{%
-  \move(#1 #2)
-  \bsegment
-  \rlvec(4 0)%
-  \rlvec(0 2)%
-  \rlvec(-4 0)%
-  \rlvec(0 -2)%
-  \textref h:C v:C \htext(2 1){#3}
-  \esegment
+  \put(#1,#2){%
+    \put(0,0){\line(1,0){4}}%
+    \put(4,0){\line(0,1){2}}%
+    \put(4,2){\line(-1,0){4}}%
+    \put(0,0){\line(0,1){2}}%
+    \put(0,0){\makebox(4,2){#3}}%
+  }%
 }%
 
 % ---  Relation  ---
@@ -63,15 +56,13 @@
 
 % Hoehe 2LE Breite 4LE
 \def\relation(#1,#2)#3{%
-  \move(#1 #2)
-  \bsegment
-  \move(0 1)
-  \lvec(2 2)
-  \lvec(4 1)
-  \lvec(2 0)
-  \lvec(0 1)
-  \textref h:C v:C \htext(2 1){#3}
-  \esegment
+  \put(#1,#2){%
+    \put(2,2){\line(-2,-1){2}}%
+    \put(2,2){\line(2,-1){2}}%
+    \put(2,0){\line(2,1){2}}%
+    \put(2,0){\line(-2,1){2}}%
+    \put(0,0){\makebox(4,2){#3}}%
+  }%
 }%
 
 % ---  Cluster  ---
@@ -84,15 +75,11 @@
 %
 % a circle width a plus in it
 \def\cluster(#1,#2){%
-  \move(#1 #2)%
-  \bsegment
-  \move(1 1)%
-  \lcir r:1
-  \move(1 0.3)%
-  \lvec(1 1.7)%
-  \move(0.3 1)%
-  \lvec(1.7 1)%
-  \esegment
+  \put(#1,#2){%
+    \put(1,1){\circle{2}}%
+    \put(1,.3){\line(0,1){1.4}}%
+    \put(.3,1){\line(1,0){1.4}}%
+  }%
 }%
 
 % ---  Attributes  ---
@@ -104,13 +91,13 @@
 % object.
 \def\attr(#1,#2)[#3]#4{%
   \def\pos{#3} \def\r{r} \def\l{l} \def\o{o} \def\u{u}%
-  \ifx\pos\r \move(#1 #2) \bsegment \lvec(0.5 0) \textref h:L v:C \htext{$#4$} \esegment%
+  \ifx\pos\r \put(#1,#2){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#4$}}}%
   \else
-    \ifx\pos\l \move(#1 #2) \bsegment \lvec(-0.5 0) \textref h:R v:C \htext{$#4$} \esegment%
+    \ifx\pos\l \put(#1,#2){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#4$}}}%
     \else
-      \ifx\pos\o \move(#1 #2) \bsegment \lvec(0 0.5) \textref h:C v:B \htext{$#4$} \esegment%
+      \ifx\pos\o \put(#1,#2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#4$}}}%
       \else
-        \ifx\pos\u \move(#1 #2) \bsegment \lvec(0 -0.5) \textref h:C v:T \htext{$#4$} \esegment%
+        \ifx\pos\u \put(#1,#2){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#4$}}}%
         \else
         \PackageWarning{herm-pic}{%
           Undefind attribute positioning parameter #1 \MessageBreak have to come from r,l,o,u (r as default).
@@ -134,42 +121,145 @@
 % ---  Connection  ---
 
 % Draws an arrow from the start to the endpoint and places the label
-% to a 'good' place.
+% an a 'good' place.
 
 % \connection(x1,y1)(x2,y2){label}
-%   \connection(x1,y1)(x2,y2){label}
-\def\conn(#1,#2)(#3,#4)#5{%
-  \move(#1 #2)
-  \arrowheadtype t:V
-  \avec(#3 #4)
+
+\def\connection(#1,#2)(#3,#4)#5{%
   \newcount\sx \newcount\sy \newcount\ex \newcount\ey%
   \sx=#1%
   \sy=#2%
   \ex=#3%
   \ey=#4%
-  % try to compute placing options
+  % try to compute \vector parameter
   \newcount\dx \newcount\dy \dx=\ex \dy=\ey%
   \newcount\nsx \newcount\nsy \nsx=\sx \multiply\nsx by -1 \nsy=\sy \multiply\nsy by -1%
   \advance\dx by \nsx \advance\dy by \nsy%
-  % place description
-  %\showthe\dx \showthe\dy
-  \ifnum\dx > 0 %
-    \ifnum\dy > 0 %
-      \rmove(-0.5 -0.2)
-      \textref h:R v:T \htext{$#5$} %
-    \else
-      \rmove(-0.5 0.2)
-      \textref h:R v:B \htext{$#5$} %
-    \fi
+  \newcount\newx \newcount\newy%
+  \ifnum\dy = 0 \ifnum\dx > 0 \newx=1 \else \newx=-1 \fi \newy=0%
   \else%
-    \ifnum\dy > 0 %
-      \rmove(0.5 -0.2)
-      \textref h:L v:T \htext{$#5$} %
-    \else
-      \rmove(0.5 0.2)
-      \textref h:L v:B \htext{$#5$} %
-    \fi
+    \newcount\dxdy \dxdy=\dx \multiply\dxdy by 100 \divide\dxdy by \dy \ifnum\dxdy < 0 \multiply\dxdy by -1 \fi%
+    \ifnum\dx > 0%
+      \ifnum\dy > 0%
+        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
+          \ifnum\dxdy < 29 \newx=1 \newy=4 \else%
+            \ifnum\dxdy < 41 \newx=1 \newy=3 \else%
+              \ifnum\dxdy < 58 \newx=1 \newy=2 \else%
+                \ifnum\dxdy < 71 \newx=2 \newy=3 \else%
+                  \ifnum\dxdy < 87 \newx=3 \newy=4 \else%
+                    \ifnum\dxdy < 116 \newx=1 \newy=1 \else%
+                      \ifnum\dxdy < 141 \newx=4 \newy=3 \else%
+                        \ifnum\dxdy < 175 \newx=3 \newy=2 \else%
+                          \ifnum\dxdy < 250 \newx=2 \newy=1 \else%
+                            \ifnum\dxdy < 350 \newx=3 \newy=1 \else%
+                              \ifnum\dxdy < 1000 \newx=4 \newy=1 \else \newx=1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
+          \ifnum\dxdy < 29 \newx=1 \newy=-4 \else%
+            \ifnum\dxdy < 41 \newx=1 \newy=-3 \else%
+              \ifnum\dxdy < 58 \newx=1 \newy=-2 \else%
+                \ifnum\dxdy < 71 \newx=2 \newy=-3 \else%
+                  \ifnum\dxdy < 87 \newx=3 \newy=-4 \else%
+                    \ifnum\dxdy < 116 \newx=1 \newy=-1 \else%
+                      \ifnum\dxdy < 141 \newx=4 \newy=-3 \else%
+                        \ifnum\dxdy < 175 \newx=3 \newy=-2 \else%
+                          \ifnum\dxdy < 250 \newx=2 \newy=-1 \else%
+                            \ifnum\dxdy < 350 \newx=3 \newy=-1 \else%
+                              \ifnum\dxdy < 1000 \newx=4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \else%
+      \ifnum\dy > 0%
+        \ifnum\dxdy < 12 \newx=0 \newy=1 \else%
+          \ifnum\dxdy < 29 \newx=-1 \newy=4 \else%
+            \ifnum\dxdy < 41 \newx=-1 \newy=3 \else%
+              \ifnum\dxdy < 58 \newx=-1 \newy=2 \else%
+                \ifnum\dxdy < 71 \newx=-2 \newy=3 \else%
+                  \ifnum\dxdy < 87 \newx=-3 \newy=4 \else%
+                    \ifnum\dxdy < 116 \newx=-1 \newy=1 \else%
+                      \ifnum\dxdy < 141 \newx=-4 \newy=3 \else%
+                        \ifnum\dxdy < 175 \newx=-3 \newy=2 \else%
+                          \ifnum\dxdy < 250 \newx=-2 \newy=1 \else%
+                            \ifnum\dxdy < 350 \newx=-3 \newy=1 \else%
+                              \ifnum\dxdy < 1000 \newx=-4 \newy=1 \else \newx=1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \else%
+        \ifnum\dxdy < 12 \newx=0 \newy=-1 \else%
+          \ifnum\dxdy < 29 \newx=-1 \newy=-4 \else%
+            \ifnum\dxdy < 41 \newx=-1 \newy=-3 \else%
+              \ifnum\dxdy < 58 \newx=-1 \newy=-2 \else%
+                \ifnum\dxdy < 71 \newx=-2 \newy=-3 \else%
+                  \ifnum\dxdy < 87 \newx=-3 \newy=-4 \else%
+                    \ifnum\dxdy < 116 \newx=-1 \newy=-1 \else%
+                      \ifnum\dxdy < 141 \newx=-4 \newy=-3 \else%
+                        \ifnum\dxdy < 175 \newx=-3 \newy=-2 \else%
+                          \ifnum\dxdy < 250 \newx=-2 \newy=-1 \else%
+                            \ifnum\dxdy < 350 \newx=-3 \newy=-1 \else%
+                              \ifnum\dxdy < 1000 \newx=-4 \newy=-1 \else \newx=-1 \newy=0 \fi%
+                            \fi%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi
+      \fi%
+    \fi%
   \fi%
+  \newcount\length \length=\dx%
+  \ifnum\newx = 0 \length=\dy \fi%
+  \ifnum\length < 0 \multiply\length by -1 \fi%
+  \put(\sx,\sy){\vector(\newx,\newy){\length}}%
+  \put(\ex,\ey){%
+    \ifnum\dx > 0 %
+      \ifnum\dy > 0 %
+        \put(-.5,-.2){\makebox(0,0)[tr]{$ #5 $}}%
+      \else%
+        \put(-0.5,.2){\makebox(0,0)[br]{$ #5 $}}%
+      \fi%
+    \else%
+      \ifnum\dy > 0 %
+        \put(.5,-.2){\makebox(0,0)[tl]{$ #5 $}}%
+      \else%
+        \put(.5,.2){\makebox(0,0)[bl]{$ #5 $}}%
+      \fi%
+    \fi%
+  }%
 }%
 
 % ---   END OF MODULE   ---
