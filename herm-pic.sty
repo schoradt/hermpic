@@ -11,8 +11,8 @@
 % external revision display macros
 %
 \def\HERMpicId{\HERMpicDate higher entity relationship diagramms }
-\def\HERMpicRev{\herm@revision $Revision: 1.17.2.6.2.2 $}
-\def\HERMpicDate{\herm@date $Date: 2003-11-10 22:24:37 $ }
+\def\HERMpicRev{\herm@revision $Revision: 1.17.2.6.2.3 $}
+\def\HERMpicDate{\herm@date $Date: 2003-11-12 17:48:36 $ }
 %
 \NeedsTeXFormat{LaTeX2e}
 \ProvidesPackage{herm-pic}[\HERMpicId]
@@ -49,8 +49,6 @@
 \newdimen{\herm@tempul}
 % ---  set \hermunit to standard value  ---
 \setlength{\hermunit}{.5cm} 
-%font for arcs
-\font\tenln  =line10
 % ---  schema environment  ---
 %
 % \begin{schema}(x,y)
@@ -123,12 +121,28 @@
 % height = 2
 %
 % a circle width a plus in it
-\def\cluster(#1,#2){%
+\def\cluster(#1,#2)#3{%
   \put(#1,#2){%
-    \put(1,1){\circle{2}}%
+    \put(1,1){
+      \qbezier(-1,0)(-1,.4)(-.7,.7)%
+      \qbezier(-.7,.7)(-.4,1)(0,1)%
+      \qbezier(0,1)(.4,1)(.7,.7)%
+      \qbezier(.7,.7)(1,.4)(1,0)%
+      \qbezier(1,0)(1,-.4)(.7,-.7)%
+      \qbezier(.7,-.7)(.4,-1)(0,-1)%
+      \qbezier(0,-1)(-.4,-1)(-.7,-.7)%
+      \qbezier(-.7,-.7)(-1,-.4)(-1,0)%
+    }%
     \put(1,.3){\line(0,1){1.4}}%
     \put(.3,1){\line(1,0){1.4}}%
+    \put(2,2.5){\makebox(1,1){#3}}%
   }%
+  \ifherm@names%
+    \global\expandafter\def\csname hermobjx@#3 \endcsname{#1}%
+    \global\expandafter\def\csname hermobjy@#3 \endcsname{#2}%
+    \global\expandafter\def\csname hermobj@#3 \endcsname{1}%
+    \global\expandafter\def\csname hermcluster@#3 \endcsname{1}%
+  \fi%
 }%
 %
 % ---  Attributes  ---
@@ -254,6 +268,50 @@
                       \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(4,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
                       \else
                         \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(2,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
+                        \else
+                          \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                          \else
+                            \PackageWarning{herm-pic}{%
+                              Undefind attribute positioning parameter #1 
+                              \MessageBreak have to come from or, om, ol, ur, um, ul, ro, rm, ru, lo, lm, lu (or as default).
+                              \MessageBreak Using default [or].
+                            }%
+                            \aattr[or]{#2}{#3}%
+                          \fi%
+                        \fi%
+                      \fi%
+                    \fi%
+                  \fi%
+                \fi%
+              \fi%
+            \fi%
+          \fi%
+        \fi%
+      \fi%
+    \fi%
+  \fi%
+  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+    \ifx\herm@inpos\herm@ol \put(\herm@tsx,\herm@tsy){\put(.3,1.7){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[rb]{$#3$}}}}%
+    \else
+      \ifx\herm@inpos\herm@or \put(\herm@tsx,\herm@tsy){\put(1.7,1.7){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[lb]{$#3$}}}}%
+      \else
+        \ifx\herm@inpos\herm@ro \put(\herm@tsx,\herm@tsy){\put(1.7,1.7){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+        \else
+          \ifx\herm@inpos\herm@ru \put(\herm@tsx,\herm@tsy){\put(1.7,.3){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+          \else
+            \ifx\herm@inpos\herm@ur \put(\herm@tsx,\herm@tsy){\put(1.7,.3){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[lt]{$#3$}}}}%
+            \else
+              \ifx\herm@inpos\herm@ul \put(\herm@tsx,\herm@tsy){\put(.3,.3){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[rt]{$#3$}}}}%
+              \else
+                \ifx\herm@inpos\herm@lu \put(\herm@tsx,\herm@tsy){\put(.3,.3){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                \else
+                  \ifx\herm@inpos\herm@lo \put(\herm@tsx,\herm@tsy){\put(.3,1.7){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
+                  \else
+                    \ifx\herm@inpos\herm@om \put(\herm@tsx,\herm@tsy){\put(1,2){\put(0,0){\line(0,1){.5}} \put(0,0.6){\makebox(0,0)[b]{$#3$}}}}%
+                    \else
+                      \ifx\herm@inpos\herm@rm \put(\herm@tsx,\herm@tsy){\put(2,1){\put(0,0){\line(1,0){.5}} \put(0.6,0){\makebox(0,0)[l]{$#3$}}}}%
+                      \else
+                        \ifx\herm@inpos\herm@um \put(\herm@tsx,\herm@tsy){\put(1,0){\put(0,0){\line(0,-1){.5}} \put(0,-.6){\makebox(0,0)[t]{$#3$}}}}%
                         \else
                           \ifx\herm@inpos\herm@lm \put(\herm@tsx,\herm@tsy){\put(0,1){\put(0,0){\line(-1,0){.5}} \put(-.6,0){\makebox(0,0)[r]{$#3$}}}}%
                           \else
@@ -437,9 +495,6 @@
       \fi
     \fi
   \fi
-  \herm@dx=\herm@ex \herm@dy=\herm@ey%
-  \herm@nsx=\herm@sx \multiply\herm@nsx by -1 \herm@nsy=\herm@sy \multiply\herm@nsy by -1%
-  \advance\herm@dx by \herm@nsx \advance\herm@dy by \herm@nsy%
   \put(\herm@ex,\herm@ey){%
     \ifnum\herm@dx > 0 %
       \ifnum\herm@dy > 0 %
@@ -489,7 +544,16 @@
     \PackageError {herm-pic}{Undefined object #2 in addvanced connection}{See herm-pic Documentaion.}%
   \fi%
   % compute middle of objects
-  \advance\herm@tsx by 2 \advance\herm@tex by 2%
+  \expandafter\if\csname hermcluster@#1 \endcsname 1%
+    \advance\herm@tsx by 1%
+  \else%
+    \advance\herm@tsx by 2%
+  \fi%
+  \expandafter\if\csname hermcluster@#2 \endcsname 1%
+    \advance\herm@tex by 1%
+  \else%
+    \advance\herm@tex by 2%
+  \fi%
   \advance\herm@tsy by 1 \advance\herm@tey by 1%
   % compute differences
   \herm@tdx=\herm@tex \herm@tdy=\herm@tey%
@@ -510,10 +574,28 @@
   \fi%
   \ifnum\herm@tdx > 6%
     \ifnum\herm@tsx < \herm@tex%
-      \advance\herm@sx by 2 \advance \herm@ex by -2%
+      \expandafter\if\csname hermcluster@#1 \endcsname 1%
+        \advance\herm@sx by 1%
+      \else%
+        \advance\herm@sx by 2%
+      \fi%
+      \expandafter\if\csname hermcluster@#2 \endcsname 1%
+        \advance\herm@ex by -1%
+      \else%
+        \advance\herm@ex by -2%
+      \fi%
     \fi%
     \ifnum\herm@tsx > \herm@tex%
-      \advance\herm@sx by -2 \advance \herm@ex by 2%
+      \expandafter\if\csname hermcluster@#1 \endcsname 1%
+        \advance\herm@sx by -1%
+      \else%
+        \advance\herm@sx by -2%
+      \fi%
+      \expandafter\if\csname hermcluster@#2 \endcsname 1%
+        \advance\herm@ex by 1%
+      \else%
+        \advance\herm@ex by 2%
+      \fi%
     \fi%
     \gdef\herm@corrected{1}%
   \fi%
@@ -568,10 +650,28 @@
          \typeout{Use x correction}%
        \fi%
        \ifnum\herm@tsx < \herm@tex%
-         \advance\herm@sx by 2 \advance \herm@ex by -2%
+         \expandafter\if\csname hermcluster@#1 \endcsname 1%
+            \advance\herm@sx by 1%
+         \else%
+           \advance\herm@sx by 2%
+         \fi%
+         \expandafter\if\csname hermcluster@#2 \endcsname 1%
+           \advance\herm@ex by -1%
+         \else%
+           \advance\herm@ex by -2%
+         \fi%
        \fi%
        \ifnum\herm@tsx > \herm@tex%
-         \advance\herm@sx by -2 \advance \herm@ex by 2%
+         \expandafter\if\csname hermcluster@#1 \endcsname 1%
+           \advance\herm@sx by -1%
+         \else%
+           \advance\herm@sx by -2%
+         \fi%
+         \expandafter\if\csname hermcluster@#2 \endcsname 1%
+           \advance\herm@ex by 1%
+         \else%
+           \advance\herm@ex by 2%
+         \fi%
        \fi%
      \fi%
      \ifnum\herm@tdx < \herm@tdy%
