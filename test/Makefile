@@ -30,7 +30,7 @@ all: ../herm-pic.sty $(TESTSPS)
 %.ps:	%.dvi
 	${DVIPS} -o $@ $<
 
-%.dvi:	%.tex herm-pic.sty herm-rev.sty herm-pic-impl.sty herm-pic-old.sty
+%.dvi:	%.tex herm-pic.sty herm-rev.sty herm-pic-impl.sty herm-pic-erd.sty
 	@${ECHO} -n "   Making test for "
 	@${ECHO} $<
 	@TEXINPUTS=:..;${LATEX} $<
@@ -47,7 +47,7 @@ herm-pic-impl.sty: ../herm-pic-impl.sty
 	@${ECHO} "Making test link to module ..."
 	@${LINK} $< $@
 
-herm-pic-old.sty: ../herm-pic-old.sty
+herm-pic-erd.sty: ../herm-pic-erd.sty
 	@${ECHO} "Making test link to module ..."
 	@${LINK} $< $@
 
