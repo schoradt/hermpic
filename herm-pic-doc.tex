@@ -24,7 +24,7 @@
 \section{General remarks}
 
 The {\tt herm-pic} package, helps you to draw Higher Entity Relationship Diagramms.
-This diagramms are the visualisation of HER schemas, an extended database modeling 
+This diagramms are the visualisation of HER schemas, a database modeling 
 concept. For more information to this see the original paper at 
 http://citeseer.nj.nec.com/thalheim91foundation.html.
 
@@ -46,14 +46,21 @@ author.
 
 \subsection{Package options}
 
+For compatibility for lower versions (up to 0.6.1) there is the option
+rev-0-6. This option lets load the last offical released version of the 
+hermpic package of the 0.6 version tree. I think it will be removed in 
+the first release candidate of the nexti minor release step (version 0.8).
+
+So port your schemas :-) 
+
 The package accepts the options {\tt verbatim}, {\tt center} and {\tt box}.
 
 The verbatim option let the package output some processiong information to the
-log file.
+log file, for debugging purposes.
 
-The center option lets the package center the schemas.
+The center option lets the package center the schemas on the page.
 
-The box option lets the package draw a box around the schemas.
+The box option lets the package draw a box around the schemas (not implemented yet).
 
 \section{The schema environment}
 
