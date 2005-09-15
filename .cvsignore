@@ -1,1 +1,3 @@
 material old_resources .dist *.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *.pdf
+.project
+.texlipse
