@@ -13,9 +13,10 @@
 
 \pagestyle{headings}
 
-\author{Sven Schoradt \\ (Sven.Schoradt@informatik.tu-cottbus.de)}
+\author{Sven Schoradt \\ (sven@dex.de)}
 
-\title{herm-pic - Graphical extension package for LaTeX2e to produce HER-Diagramms\\The Entity-Relationship Diagramm mode}
+\title{herm-pic - Graphical extension package for LaTeX2e to produce 
+       HER-Diagramms\\The Entity-Relationship Diagramm mode}
 
 \begin{document}
 
@@ -28,14 +29,17 @@ For a wider view on HermPic see the HermPic documentation.
 \section{The schema elements}
 
 All of the macros from the normal herm-pic you find also in the ERD mode.
-Some, especialy \verb|\cluster| are not known in ERD diagramms. In the ERD mode there are also some special macros that you not find outside this mode.
+Some, especialy \verb|\cluster| are not known in ERD diagramms. In the 
+ERD mode there are also some special macros that you not find outside this mode.
 
-So herm-pic schemas are compatible to the ERD mode, but ERD diagramms work not in the normal herm-pic environment.
+So herm-pic schemas are compatible to the ERD mode, but ERD diagramms work not 
+in the normal herm-pic environment.
 
 On entities and relations there are no changes, but there are some new 
 object types.
 
-That are weak entity and weak relation types, that work like the coresponding strong types with the macros \verb|\wentity| and \verb|\wrelation|.
+That are weak entity and weak relation types, that work like the coresponding 
+strong types with the macros \verb|\wentity| and \verb|\wrelation|.
 
 \begin{verbatim}
 \begin{schema}(20,14)
@@ -64,9 +68,6 @@ produces
   \conn(R,E3){(n,m)}
   \conn(R,E4){(1,1)}
 \end{schema}
-
-The connection between these types is drawn as a thick line instead of a 
-double line in the standard.
 
 And there is also the is-a type. 
 
@@ -164,10 +165,11 @@ and
 Special attribute types are the multivalued attribute ( \verb|\multivaluedattr|),
 the optional attribute (\verb|\optattr|) and derived attributes (\verb|\derivedattr|).
 
-There are also structured attributes called \verb|\complexattr|. The name of a complex attribute
-should not consist of special letters.
+There are also structured attributes called \verb|\complexattr|. 
+The name of a complex attribute should not consist of special letters.
 
-A structured attribute can consit of normal attributes, multivalued attributes and derived attributes.
+A structured attribute can consit of normal attributes, multivalued attributes 
+and derived attributes.
 
 They was used like simple attributes but there is no star or plus version available.
 
@@ -293,12 +295,12 @@ To implement ER specialising you can use the macros
   \sconn(oname1,oname2)
 \end{verbatim}
 
-The \verb|\dspecial| macro represents an disjunct specialisation, the \verb|\ospecial| macro 
-an overlapping specialisation. The star versions represents the total versions of the 
-specialisation.
+The \verb|\dspecial| macro represents an disjunct specialisation, the 
+\verb|\ospecial| macro an overlapping specialisation. The star versions 
+represents the total versions of the specialisation.
 
-The \verb|\sconn| macro represents the specilisation between two objects. The objects must give in the 
-order subtype, supertype.
+The \verb|\sconn| macro represents the specilisation between two objects. 
+The objects must give in the order subtype, supertype.
 
 This works like this:
 
