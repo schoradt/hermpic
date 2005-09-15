@@ -1,1 +1,11 @@
-*.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *.pdf
+*.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *.pdf *.sty
+herm-pic.sty
+herm-pic-erd.sty
+herm-pic-impl.sty
+herm-rev.sty
+test_0_7_2.aux
+test_0_7_2.ps
+test_0_7.aux
+test_0_7.ps
+test_1_0_1.aux
+test_1_0_1.ps

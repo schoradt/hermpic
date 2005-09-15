@@ -1,0 +1,262 @@
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+%\tracingmacros=2
+%\tracingcommands=1
+%\tracingonline=1
+
+%\usepackage[verbatim,center]{herm-pic}
+\usepackage[verbatim,center,box,erd]{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\begin{document}
+
+\section{Attributes}
+
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \relation[relation](5,13){Relation}
+  \attr[ol]{entity}{\key{a1}}
+  \attr[om]{entity}{\key{a2}}
+  \attr[or]{entity}{\key{a3}}
+  \attr[ro]{entity}{\key{a4}}
+  \attr[rm]{entity}{\key{a5}}
+  \attr[ru]{entity}{\key{a6}}
+  \attr[ur]{entity}{a7}
+  \attr[um]{entity}{a8}
+  \attr[ul]{entity}{a9}
+  \attr[lu]{entity}{a10}
+  \attr[lm]{entity}{a11}
+  \attr[lo]{entity}{a12}
+  \attr[ol]{relation}{a1}
+  \attr[om]{relation}{a2}
+  \attr[or]{relation}{a3}
+  \attr[ro]{relation}{a4}
+  \attr[rm]{relation}{a5}
+  \attr[ru]{relation}{a6}
+  \attr[ur]{relation}{a7}
+  \attr[um]{relation}{a8}
+  \attr[ul]{relation}{a9}
+  \attr[lu]{relation}{a10}
+  \attr[lm]{relation}{a11}
+  \attr[lo]{relation}{a12}
+\end{schema}
+
+
+\section{Connection examples}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \relation(8,6){R}
+  \connection(R,E1){(5,1000)}
+  \connection(R,E2){(1,n)}
+  \connection(R,E3){(n,m)}
+  \connection(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(8,11){E2}
+  \entity(15,11){E3}
+  \entity(15,6){E4}
+  \entity(15,1){E5}
+  \entity(8,1){E6}
+  \entity(1,1){E7}
+  \entity(1,6){E8}
+  \relation(8,6){R}
+  \connection(R,E1){}
+  \connection(R,E2){}
+  \connection(R,E3){}
+  \connection(R,E4){}
+  \connection(R,E5){}
+  \connection(R,E6){}
+  \connection(R,E7){}
+  \connection(R,E8){}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \relation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(20,14)
+  \entity(1,11){E1}
+  \entity(8,11){E2}
+  \entity(15,11){E3}
+  \entity(15,6){E4}
+  \entity(15,1){E5}
+  \entity(8,1){E6}
+  \entity(1,1){E7}
+  \entity(1,6){E8}
+  \relation(8,6){R}
+  \conn(R,E1){}
+  \conn(R,E2){}
+  \conn(R,E3){}
+  \conn(R,E4){}
+  \conn(R,E5){}
+  \conn(R,E6){}
+  \conn(R,E7){}
+  \conn(R,E8){}
+\end{schema}
+
+\section{ERD extensions}
+
+\begin{schema}(20,14)
+  \entity(1,11){Unter1}
+  \entity(15,11){Unter2}
+  \isa(8,6){isa1}
+  \entity(8,1){Ober}
+  \conn(Unter1,isa1){}
+  \conn(Unter2,isa1){}
+  \conn(isa1,Ober){}
+\end{schema}
+
+\begin{schema}(20,14)
+  \wentity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \wrelation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+  \complexattr[or]{entity}{cattr1}
+\end{schema}
+
+\subsection{complex attributes}
+
+\begin{schema}(14,35)
+  \entity[entity](5,28){Entity}
+  \relation[relation](5,18){Relation}
+  \complexattr[ol]{entity}{ca1}
+  \complexattr[om]{entity}{ca2}
+  \complexattr[or]{entity}{ca3}
+  \complexattr[ro]{entity}{ca4}
+  \complexattr[rm]{entity}{ca5}
+  \complexattr[ru]{entity}{ca6}
+  \complexattr[ur]{entity}{ca7}
+  \complexattr[um]{entity}{ca8}
+  \complexattr[ul]{entity}{ca9}
+  \complexattr[lu]{entity}{ca10}
+  \complexattr[lm]{entity}{ca11}
+  \complexattr[lo]{entity}{ca12}
+  \complexattr[ol]{relation}{c1a1}
+  \complexattr[om]{relation}{c1a2}
+  \complexattr[or]{relation}{c1a3}
+  \complexattr[ro]{relation}{c1a4}
+  \complexattr[rm]{relation}{c1a5}
+  \complexattr[ru]{relation}{c1a6}
+  \complexattr[ur]{relation}{c1a7}
+  \complexattr[um]{relation}{c1a8}
+  \complexattr[ul]{relation}{c1a9}
+  \complexattr[lu]{relation}{c1a10}
+  \complexattr[lm]{relation}{c1a11}
+  \complexattr[lo]{relation}{c1a12}
+  \entity[entity2](5,13){Entity}
+  \complexattr[um]{entity2}{cluster2}
+  \attr[ro]{cluster2}{a8}
+  \derivedattr[ru]{cluster2}{a9}
+  \multivaluedattr[lo]{cluster2}{a10}
+  \complexattr[um]{cluster2}{c2a8}
+  \attr[um]{c2a8}{attrr}
+\end{schema}
+
+\subsection{specialising}
+
+\begin{schema}(14,30)
+  \entity[entity](5,27){Entity}
+  \dspecial(6,23){test1}
+  \connection(entity,test1){}
+  \entity[entity2](1,19){Entity}
+  \entity[entity3](9,19){Entity}
+  \sconn(entity2,test1)
+  \sconn(entity3,test1)
+  \entity[entity4](5,16){Entity}
+  \ospecial*(6,12){test2}
+  \connection(entity4,test2){}
+  \entity[entity5](1,8){Entity}
+  \entity[entity6](9,8){Entity}
+  \sconn(entity5,test2)
+  \sconn(entity6,test2)
+\end{schema}
+
+
+
+\section{Larger example schema}
+
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,15)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+
+\end{document}

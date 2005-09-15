@@ -1,0 +1,481 @@
+%% herm-pic-erd-doc.tex
+%% Copyright 2003-2005 S. Schoradt
+%
+% This work may be distributed and/or modified under the
+% conditions of the LaTeX Project Public License, either version 1.3
+% of this license or (at your option) any later version.
+% The latest version of this license is in
+%   http://www.latex-project.org/lppl.txt
+% and version 1.3 or later is part of all distributions of LaTeX
+% version 2003/12/01 or later.
+%
+% This work has the LPPL maintenance status "maintained".
+% 
+% This Current Maintainer of this work is S. Schoradt <sven@dex.de>
+%
+% This work consists of the files listed in Manifest.txt.
+%
+\documentclass[a4paper,11pt]{article}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{5pt plus 2pt minus 1pt}
+\frenchspacing
+\sloppy
+
+\setlength{\unitlength}{.3cm}
+
+\usepackage[erd]{herm-pic}
+
+\setlength{\hermunit}{.6cm}
+
+\pagestyle{headings}
+
+\author{Sven Schoradt \\ (sven@dex.de)}
+
+\title{herm-pic - Graphical extension package for LaTeX2e to produce 
+       HER-Diagramms\\The Entity-Relationship Diagramm mode}
+
+\begin{document}
+
+\maketitle
+
+\section{General remarks}
+
+For a wider view on HermPic see the HermPic documentation.
+
+\section{The schema elements}
+
+All of the macros from the normal herm-pic you find also in the ERD mode.
+Some, especialy \verb|\cluster| are not known in ERD diagramms. In the 
+ERD mode there are also some special macros that you not find outside this mode.
+
+So herm-pic schemas are compatible to the ERD mode, but ERD diagramms work not 
+in the normal herm-pic environment.
+
+On entities and relations there are no changes, but there are some new 
+object types.
+
+That are weak entity and weak relation types, that work like the coresponding 
+strong types with the macros \verb|\wentity| and \verb|\wrelation|.
+
+\begin{verbatim}
+\begin{schema}(20,14)
+  \wentity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \wrelation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,14)
+  \wentity(1,11){E1}
+  \entity(15,11){E2}
+  \entity(15,1){E3}
+  \entity(1,1){E4}
+  \wrelation(8,6){R}
+  \conn(R,E1){(5,1000)}
+  \conn(R,E2){(1,n)}
+  \conn(R,E3){(n,m)}
+  \conn(R,E4){(1,1)}
+\end{schema}
+
+And there is also the is-a type. 
+
+\subsection{Is A}
+
+To use the is-a concept in your schema, you can use the \verb|\isa| macro.
+The syntax is as followed:
+
+\begin{verbatim}
+\isa(x,y){name}
+\end{verbatim}
+
+This draws an is-a sign with the height of 2 and a width of 4 units.
+The name is only for internal use and have to be unique.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(16,4)
+\isa(6,1){isa1}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(16,4)
+\isa(6,1){isa1}
+\end{schema}
+
+\subsection{Attributes}
+
+Attribute are drawn as an oval with the name in it conected with the object.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr[lm]{Person}{left}
+\attr[om]{Person}{over}
+\attr[rm]{Person}{right}
+\attr[um]{Person}{under}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(10,6)
+\entity(4,2){Person}
+\attr[lm]{Person}{left}
+\attr[om]{Person}{over}
+\attr[rm]{Person}{right}
+\attr[um]{Person}{under}
+\end{schema}
+
+and
+
+\begin{schema}(10,4)
+\entity(1,1){Person}
+\attr[rm]{Person}{\key{key}}
+\end{schema}
+
+
+\begin{schema}(14,20)
+  \entity[Person](5,13){person}
+  \relation[arbeitet](5,3){works}
+  \attr[ol]{Person}{ol}
+  \attr[om]{Person}{om}
+  \attr[or]{Person}{or}
+  \attr[ro]{Person}{ro}
+  \attr[rm]{Person}{rm}
+  \attr[ru]{Person}{ru}
+  \attr[ur]{Person}{ur}
+  \attr[um]{Person}{um}
+  \attr[ul]{Person}{ul}
+  \attr[lu]{Person}{lu}
+  \attr[lm]{Person}{lm}
+  \attr[lo]{Person}{lo}
+  \attr[ol]{arbeitet}{ol}
+  \attr[om]{arbeitet}{om}
+  \attr[or]{arbeitet}{or}
+  \attr[ro]{arbeitet}{ro}
+  \attr[rm]{arbeitet}{rm}
+  \attr[ru]{arbeitet}{ru}
+  \attr[ur]{arbeitet}{ur}
+  \attr[um]{arbeitet}{um}
+  \attr[ul]{arbeitet}{ul}
+  \attr[lu]{arbeitet}{lu}
+  \attr[lm]{arbeitet}{lm}
+  \attr[lo]{arbeitet}{lo}
+\end{schema}
+
+\subsection{Special attribute types}
+
+Special attribute types are the multivalued attribute ( \verb|\multivaluedattr|),
+the optional attribute (\verb|\optattr|) and derived attributes (\verb|\derivedattr|).
+
+There are also structured attributes called \verb|\complexattr|. 
+The name of a complex attribute should not consist of special letters.
+
+A structured attribute can consit of normal attributes, multivalued attributes 
+and derived attributes.
+
+They was used like simple attributes but there is no star or plus version available.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(14,30)
+  \entity[entity](5,23){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+  \complexattr[um]{entity}{cattr}
+  \attr[ro]{cattr}{a8}
+  \derivedattr[ru]{cattr}{a9}
+  \multivaluedattr[lo]{cattr}{a10}
+  \complexattr[um]{cattr}{cattr2}
+  \attr[um]{cattr2}{attrr}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(14,14)
+  \entity[entity](5,8){Entity}
+  \attr[lm]{entity}{a11}
+  \multivaluedattr[lo]{entity}{a12}
+  \optattr[ol]{entity}{a1}
+  \derivedattr[om]{entity}{a2}
+  \complexattr[um]{entity}{cattr}
+  \attr[ro]{cattr}{a8}
+  \derivedattr[ru]{cattr}{a9}
+  \multivaluedattr[lo]{cattr}{a10}
+  \complexattr[um]{cattr}{cattr2}
+  \attr[um]{cattr2}{attrr}
+\end{schema}
+
+\section{Connections between schema elements}
+
+Connections are drawn without arrows in ER diagramms. Only if you use a 
+connection to or from an is-a type, ther will be drawn arrows.
+
+\paragraph{Example:}
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation[arbeitetin](7,1){arbeitet\_in}
+  \connection(arbeitetin,Person){(0,3)}
+  \connection(arbeitetin,Team1){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation[arbeitetin](7,1){arbeitet\_in}
+  \connection(arbeitetin,Person){(0,3)}
+  \connection(arbeitetin,Team){(2,10)}
+\end{schema}
+
+and 
+
+\begin{verbatim}
+\begin{schema}(20,5)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation*(7,1){arbeitet\_in}
+  \connection*(7,2)(5,2){(0,3)}
+  \connection*(11,2)(13,2){(2,10)}
+\end{schema}
+\end{verbatim}
+
+produces this
+
+\begin{schema}(20,4)
+  \entity(1,1){Person}
+  \entity(13,1){Team}
+  \relation*(7,1){arbeitet\_in}
+  \connection*(7,2)(5,2){(0,3)}
+  \connection*(11,2)(13,2){(2,10)}
+\end{schema}
+
+and
+
+\begin{verbatim}
+\begin{schema}(20,14)
+  \entity(1,11){Unter1}
+  \entity(15,11){Unter2}
+  \isa(8,6){isa1}
+  \entity(8,1){Ober}
+  \conn(Unter1,isa1){}
+  \conn(Unter2,isa1){}
+  \conn(isa1,Ober){}
+\end{schema}
+\end{verbatim}
+
+produces
+
+\begin{schema}(20,14)
+  \entity(1,1){subtype1}
+  \entity(15,1){subtype2}
+  \isa(8,6){isa1}
+  \entity(8,11){type}
+  \conn(subtype1,isa1){}
+  \conn(subtype2,isa1){}
+  \conn(isa1,type){}
+\end{schema}
+
+\section{Specialising}
+
+To implement ER specialising you can use the macros
+
+\begin{verbatim}
+  \dspecial(x,y){iname}
+  \dspecial*(x,y){iname}
+  \ospecial(x,y){iname}
+  \ospecial*(x,y){iname}
+ 
+  \sconn(oname1,oname2)
+\end{verbatim}
+
+The \verb|\dspecial| macro represents an disjunct specialisation, the 
+\verb|\ospecial| macro an overlapping specialisation. The star versions 
+represents the total versions of the specialisation.
+
+The \verb|\sconn| macro represents the specilisation between two objects. 
+The objects must give in the order subtype, supertype.
+
+This works like this:
+
+\begin{verbatim}
+\begin{schema}(14,30)
+  \entity[entity7](5,26){Entity}
+  \entity[entity8](1,22){Entity}
+  \entity[entity9](9,22){Entity}
+  \sconn(entity8,entity7)
+  \sconn(entity9,entity7)
+  \entity[entity](5,27){Entity}
+  \dspecial(6,23){test1}
+  \connection(entity,test1){}
+  \entity[entity2](1,19){Entity}
+  \entity[entity3](9,19){Entity}
+  \sconn(entity2,test1)
+  \sconn(entity3,test1)
+  \entity[entity4](5,16){Entity}
+  \ospecial*(6,12){test2}
+  \connection(entity4,test2){}
+  \entity[entity5](1,8){Entity}
+  \entity[entity6](9,8){Entity}
+  \sconn(entity5,test2)
+  \sconn(entity6,test2)
+\end{schema}
+\end{verbatim}
+
+\begin{schema}(14,28)
+  \entity[entity7](5,26){Entity}
+  \entity[entity8](1,22){Entity}
+  \entity[entity9](9,22){Entity}
+  \sconn(entity8,entity7)
+  \sconn(entity9,entity7)
+  \entity[entity](5,19){Entity}
+  \dspecial(6,15){test1}
+  \connection(entity,test1){}
+  \entity[entity2](1,11){Entity}
+  \entity[entity3](9,11){Entity}
+  \sconn(entity2,test1)
+  \sconn(entity3,test1)
+  \entity[entity4](5,8){Entity}
+  \ospecial*(6,4){test2}
+  \connection(entity4,test2){}
+  \entity[entity5](1,0){Entity}
+  \entity[entity6](9,0){Entity}
+  \sconn(entity5,test2)
+  \sconn(entity6,test2)
+\end{schema}
+
+\section{A more or less complex example}
+
+This more or less complex example shows you the usage of all the macros together.
+
+\begin{verbatim}
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,17)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+\end{verbatim}
+
+produces the schema
+
+\setlength{\hermunit}{.5cm}
+\begin{schema}(30,17)
+\entity(15,8){Dokument}
+\attr[lo]{Dokument}{titel}
+\attr[ro]{Dokument}{gueltig\_ab}
+\attr[lu]{Dokument}{datei}
+\attr[ru]{Dokument}{gueltig\_bis}
+%
+\entity(6,12){Satzung}
+\attr[om]{Satzung}{\key{snummer}}
+%
+\entity(24,12){Kategorie}
+\attr[rm]{Kategorie}{\key{kname}}
+%
+\entity(0,4){Amt}
+\attr[rm]{Amt}{\key{aname}}
+%
+\entity(15,0){Wort}
+\attr[ro]{Wort}{\key{wort}}
+\attr[ru]{Wort}{soundex}
+%
+\relation(18,12){in}
+\conn(in,Dokument){}
+\conn(in,Kategorie){}
+%
+\relation(12,12){zu}
+\conn(zu,Dokument){(1,1)}
+\conn(zu,Satzung){}
+%
+\relation(24,8){unter}
+\conn*(24,9)(24,12){}
+\conn*(28,9)(28,12){}
+%
+\relation(0,0){uebergeordnet}
+\conn*(0,1)(0,4){(0,1)}
+\conn*(4,1)(4,4){}
+%
+\relation(0,12){verantwortlich}
+\conn(verantwortlich,Satzung){(1,1)}
+\conn(verantwortlich,Amt){}
+%
+\relation(12,4){Schlagwort}
+\conn(Schlagwort,Dokument){}
+\conn(Schlagwort,Wort){}
+%
+\relation(18,4){Inhalt}
+\attr[rm]{Inhalt}{anzahl}
+\conn(Inhalt,Dokument){}
+\conn(Inhalt,Wort){}
+\end{schema}
+
+
+\end{document}
