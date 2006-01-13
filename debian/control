@@ -8,8 +8,11 @@ Standards-Version: 3.5.2
 Package: hermpic
 Architecture: all
 Depends: tetex-extra
-Description: LaTeX class for drawing HERM diagramms.
- HERM-Pic is a LaTeX class for drawing HERM diagramms.
- It offers a comfortable way to draw HERM diagramms, with less
- limitations to the processibility of the consisting tex document.
-
+Description: LaTeX class for drawing ER and HER diagramms.
+ HERM-Pic is a LaTeX class for drawing entity-relationship and
+ higher entity relationship diagramms.
+ It supports the main ER diagramm syntax given by Heuer/Saake and
+ also the main part of the HER diagramm syntax given by Bernhard 
+ Thalheim. The schema drawing macros are a extension of the standard
+ LaTeX picture environment, so the diagramms are easiely extendable
+ by standard latex picture macros.

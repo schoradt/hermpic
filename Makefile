@@ -32,7 +32,7 @@ HOME_INSTALL_PATH = $(DESTDIR)$(HOME)/texmf/tex/latex
 SYS_DOC_PATH = $(DESTDIR)/usr/share/doc/hermpic
 HOME_DOC_PATH = $(DESTDIR)$(HOME)/doc
 
-all:
+all: doc test
 
 doc: psdoc pdfdoc
 

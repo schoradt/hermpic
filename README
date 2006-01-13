@@ -25,6 +25,8 @@ Then you should run mktexlsr.
 Usage
 =====
 
-See the documentation herm-pic-doc.ps or herm-pic-doc.pdf.
+See the documentation herm-pic-doc.ps or herm-pic-doc.pdf for the main part with
+higher entity relationship diagramms and herm-pic-erd-doc.pdf or herm-pic-erd-doc.ps 
+for the entity relationship mode.
 
 

@@ -1,5 +1,5 @@
 %% herm-pic-doc.tex
-%% Copyright 2003-2005 S. Schoradt
+%% Copyright 2003-2006 S. Schoradt
 %
 % This work may be distributed and/or modified under the
 % conditions of the LaTeX Project Public License, either version 1.3
@@ -42,7 +42,8 @@
 
 The {\tt herm-pic} package, helps you to draw Higher Entity Relationship Diagramms.
 This diagramms are the visualisation of HER schemas, a database modeling 
-concept. For more information to this see the original paper at 
+concept that extends the standard entity relationsship modelling. 
+For more information to this see the original paper at 
 http://citeseer.nj.nec.com/thalheim91foundation.html.
 
 \section{Package information}
@@ -80,10 +81,11 @@ The package accepts the options {\tt verbatim}, {\tt center}, {\tt box} and {\tt
 \begin{description}
 \item[verbatim] prints some processing information to the log file, its mainly 
   usable for debugging purposes
-\item[center] center the scema verticaly on the page
+\item[center] center the schema verticaly on the page
 \item[box] draw a box with the exact dimensions of the schema around the schema, so you
   can see if some elements will be drawn outside the schema boarders
-\item[erd] draws Entity-Relationship Diagramms instead of HERM Diagramms, see for more information the HermPic ER Diagramm documentation
+\item[erd] draws entity-relationship diagramms instead of HER diagramms, 
+for more information see the HERM-Pic ER diagramm documentation
 \end{description}
 
 \section{The schema environment}
@@ -118,9 +120,9 @@ provides an interface with to point placing and with unlimited names.
 For the nonstar version you can give a valid internal name as an optional 
 parameter.
 
-The names of object, that are used for internal things should not consist any
+The names of objects, that are used for internal things should not consist any
 active tex stuff, that means no macros, no escaped chars (like the undersgore)
-and the on. To garantee that there are no limits to the printed object names 
+and so on. To garantee that there are no limits to the printed object names 
 you can give optional an internal name without these things.
 
 \subsection{Entities}
@@ -155,7 +157,8 @@ The internal name should only consits of characters and numbers.
 The entity symbol will be a rectangle with the width of 4 and the height of 2 
 units.
 
-\paragraph{Example:}
+\subsubsection*{Example:}
+
 \begin{verbatim}
 \begin{schema}(17,4)
 \entity(1,1){Person}
@@ -197,7 +200,7 @@ where {\tt (x,y)} are the coordinates of the left edge. The {\tt text} will be d
 the name of the relationship. There are the same restrictions to the name 
 how they are descriped for entitys.
 
-\paragraph{Example:}
+\subsubsection*{Example:}
 
 \begin{verbatim}
 \begin{schema}(17,4)
@@ -240,7 +243,7 @@ This draws the cluster item, thats a circle with the radius 2 whith a
 plus in it, on the position {\tt (x,y)} and places the name right over 
 the cluster.
 
-\paragraph{Example:}
+\subsubsection*{Example:}
 
 \begin{verbatim}
 \begin{schema}(16,4)
@@ -260,11 +263,11 @@ produces this
 \cluster*(13,1){Cluster\_3}
 \end{schema}
 
-To slect the position where the cluster name is displayed, you can use the 
+To select the position where the cluster name is displayed, you can use the 
 \verb|\cnamepos| macro. The possible values are the same like at the attribute 
 possitioning (see there).
 
-\paragraph{Example:}
+\subsubsection*{Example:}
 
 \begin{verbatim}
 \begin{schema}(16,4)
@@ -355,7 +358,7 @@ Figure \ref{fig:attr_pos} shows the positionings.
 in the star version you can set the docking position with the (x,y) coordinates
 and the alignment to the object with the pos attribute (l,r,o,u).
 
-\paragraph{Example:}
+\subsubsection*{Example:}
 
 \begin{verbatim}
 \begin{schema}(10,6)
@@ -417,7 +420,7 @@ equation to an adequate point at the end of the vector.
 
 For the lazy guys there is a short name for theis macro, named \verb|\conn|. 
 
-\paragraph{Example:}
+\subsection*{Example:}
 
 \begin{verbatim}
 \begin{schema}(20,5)
@@ -607,5 +610,12 @@ produces the schema
 \conn(Inhalt,Wort){}
 \end{schema}
 
+\section{Thanks}
+
+I will thank Bernhard Thalheim, for the base development of the her macros, that inspire me 
+to this work and help me in the first steps.
+
+Further i will thank Thomas Feyer for his comments to documentation and interface and Thomas
+Kobiena for extensive testing and some help on bugfixing and debian package building. 
 
 \end{document}
