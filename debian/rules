@@ -2,7 +2,7 @@
 # rules file for the hermpic package
 
 # Uncomment this to turn on verbose mode. 
-export DH_VERBOSE=2
+# export DH_VERBOSE=2
 
 # This is the debhelper compatibility version to use.
 export DH_COMPAT=4

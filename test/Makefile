@@ -6,16 +6,13 @@
 #############################################################
 
 # Config Variable for tools used
-ECHO = echo
-REMOVE = rm -f
-LINK = ln -s
+ECHO     = echo
+REMOVE   = rm -f
+LINK     = ln -s
 
-INSTALL = install
-
-LATEX = latex
-DVIPS = dvips
-
-SHELL = /bin/sh
+LATEX    = latex
+DVIPS    = dvips
+PDFLATEX = pdflatex
 
 #############################################################
 
@@ -23,33 +20,27 @@ TESTS = $(wildcard test_*.tex)
 
 TESTSPS = $(patsubst %.tex, %.ps, $(TESTS))
 
+PREREQ = herm-pic.sty herm-rev.sty herm-pic-impl.sty herm-pic-erd.sty
+
 #############################################################
 
-all: ../herm-pic.sty $(TESTSPS)
+all: $(PREREQ) $(TESTSPS)
 
 %.ps:	%.dvi
 	${DVIPS} -o $@ $<
 
-%.dvi:	%.tex herm-pic.sty herm-rev.sty herm-pic-impl.sty herm-pic-erd.sty
-	@${ECHO} -n "   Making test for "
+%.dvi:	%.tex 
+	@${ECHO} -n "Making test for "
 	@${ECHO} $<
 	@TEXINPUTS=:..;${LATEX} $<
 
-herm-pic.sty: ../herm-pic.sty
-	@${ECHO} "Making test link to module ..."
+%.sty: ../%.sty
+	@${ECHO} -n "Making test link to module "
+	@${ECHO} $@
 	@${LINK} $< $@
 
-herm-rev.sty: ../herm-rev.sty
-	@${ECHO} "Making test link to module ..."
-	@${LINK} $< $@
-
-herm-pic-impl.sty: ../herm-pic-impl.sty
-	@${ECHO} "Making test link to module ..."
-	@${LINK} $< $@
-
-herm-pic-erd.sty: ../herm-pic-erd.sty
-	@${ECHO} "Making test link to module ..."
-	@${LINK} $< $@
+%.pdf:	%.tex
+	${PDFLATEX} $<
 
 doc_clean: FORCE
 	@${REMOVE} *.aux *.log *.toc *.bbl *.blg *~
