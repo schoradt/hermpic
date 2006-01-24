@@ -1,8 +1,9 @@
 hermpic (1.0.1) stable; urgency=low
 
   * fix some documentation issuses
+  * make examples more readable
 
- -- Sven Schoradt <sven@dex.de>  Fri, 13 Jan 2006 09:46:45 +0100
+ -- Sven Schoradt <sven@dex.de>  Thu, 24 Jan 2006 17:14:45 +0100
 
 hermpic (1.0.0) stable; urgency=low
 

@@ -33,6 +33,8 @@ This file holds some examples for the ER diagramm mode of the herm-pic latex pac
 
 \section{Attributes}
 
+Here you see the way how attributes are visualized.
+
 \begin{schema}(14,30)
   \entity[entity](5,23){Entity}
   \relation[relation](5,13){Relation}
@@ -62,8 +64,9 @@ This file holds some examples for the ER diagramm mode of the herm-pic latex pac
   \attr[lo]{relation}{a12}
 \end{schema}
 
-
 \section{Connection examples}
+
+The way connections are made.
 
 \begin{schema}(20,14)
   \entity(1,11){E1}
@@ -131,14 +134,16 @@ This file holds some examples for the ER diagramm mode of the herm-pic latex pac
 
 \section{ERD extensions}
 
+Some extensions that are made for the erd stuff.
+
 \begin{schema}(20,14)
-  \entity(1,11){Unter1}
-  \entity(15,11){Unter2}
+  \entity(1,11){under1}
+  \entity(15,11){under2}
   \isa(8,6){isa1}
-  \entity(8,1){Ober}
-  \conn(Unter1,isa1){}
-  \conn(Unter2,isa1){}
-  \conn(isa1,Ober){}
+  \entity(8,1){over}
+  \conn(under1,isa1){}
+  \conn(under2,isa1){}
+  \conn(isa1,over){}
 \end{schema}
 
 \begin{schema}(20,14)
@@ -225,53 +230,53 @@ This file holds some examples for the ER diagramm mode of the herm-pic latex pac
 
 \setlength{\hermunit}{.5cm}
 \begin{schema}(30,15)
-\entity(15,8){Dokument}
-\attr[lo]{Dokument}{titel}
-\attr[ro]{Dokument}{gueltig\_ab}
-\attr[lu]{Dokument}{datei}
-\attr[ru]{Dokument}{gueltig\_bis}
+\entity(15,8){document}
+\attr[lo]{document}{title}
+\attr[ro]{document}{valid\_from}
+\attr[lu]{document}{file}
+\attr[ru]{document}{valid\_untill}
 %
-\entity(6,12){Satzung}
-\attr[om]{Satzung}{\key{snummer}}
+\entity(6,12){rule}
+\attr[om]{rule}{\key{id}}
 %
-\entity(24,12){Kategorie}
-\attr[rm]{Kategorie}{\key{kname}}
+\entity(24,12){categorie}
+\attr[rm]{categorie}{\key{name}}
 %
-\entity(0,4){Amt}
-\attr[rm]{Amt}{\key{aname}}
+\entity(0,4){organisation}
+\attr[rm]{organisation}{\key{name}}
 %
-\entity(15,0){Wort}
-\attr[ro]{Wort}{\key{wort}}
-\attr[ru]{Wort}{soundex}
+\entity(15,0){word}
+\attr[ro]{word}{\key{word}}
+\attr[ru]{word}{soundex}
 %
 \relation(18,12){in}
-\conn(in,Dokument){}
-\conn(in,Kategorie){}
+\connection(in,document){}
+\connection(in,categorie){}
 %
-\relation(12,12){zu}
-\conn(zu,Dokument){(1,1)}
-\conn(zu,Satzung){}
+\relation(12,12){to}
+\connection(to,document){(1,1)}
+\connection(to,rule){}
 %
-\relation(24,8){unter}
-\conn*(24,9)(24,12){}
-\conn*(28,9)(28,12){}
+\relation(24,8){sub}
+\connection*(24,9)(24,12){}
+\connection*(28,9)(28,12){}
 %
-\relation(0,0){uebergeordnet}
-\conn*(0,1)(0,4){(0,1)}
-\conn*(4,1)(4,4){}
+\relation(0,0){superior}
+\connection*(0,1)(0,4){(0,1)}
+\connection*(4,1)(4,4){}
 %
-\relation(0,12){verantwortlich}
-\conn(verantwortlich,Satzung){(1,1)}
-\conn(verantwortlich,Amt){}
+\relation(0,12){responsible}
+\connection(responsible,rule){(1,1)}
+\connection(responsible,organisation){}
 %
-\relation(12,4){Schlagwort}
-\conn(Schlagwort,Dokument){}
-\conn(Schlagwort,Wort){}
+\relation(12,4){catchword}
+\connection(catchword,document){}
+\connection(catchword,word){}
 %
-\relation(18,4){Inhalt}
-\attr[rm]{Inhalt}{anzahl}
-\conn(Inhalt,Dokument){}
-\conn(Inhalt,Wort){}
+\relation(18,4){content}
+\attr[rm]{content}{count}
+\connection(content,document){}
+\connection(content,word){}
 \end{schema}
 
 \end{document}

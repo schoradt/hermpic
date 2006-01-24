@@ -16,7 +16,17 @@
 
 \begin{document}
 
+\section{Introduction}
+
+This file is a test case and also an example file for all features of
+the {\tt herm-pic} LaTeX package that are added befor version 0.7.0.
+
+You use the {\tt herm-pic} Package in Version \HPlongrevision{} from the \HPdate.
+
 \section{Objects}
+
+Here you see the main objects, provided by herm-pic. This are entities, relations
+and clusters.
 
 \setlength{\unitlength}{.6cm}
 \begin{schema}(16,14)
@@ -32,6 +42,8 @@
 \end{schema}
 
 \section{Attributes}
+
+In this section you see, how attributes can be connected to objects.
 
 \begin{schema}(20,8)
   \entity[entity](2,3){Entity}
@@ -77,6 +89,8 @@
 
 \section{Connection examples}
 
+And here you can see how objects will be connected.
+
 \begin{schema}(20,14)
   \entity(1,11){E1}
   \entity(15,11){E2}
@@ -111,21 +125,23 @@
 
 \section{Cluster example}
 
+Now also the main use case for clusters.
+
 \begin{schema}(18,10)
-  \entity(1,4){Person}
-  \attr[ol]{Person}{Name}
-  \attr[or]{Person}{\key{PNr}}
-  \relation(13,7){Professor}
-  \relation(13,4){WiMi}
-  \relation(13,1){Student}
+  \entity(1,4){person}
+  \attr[ol]{person}{name}
+  \attr[or]{person}{\key{ssn}}
+  \relation(13,7){professor}
+  \relation(13,4){assistant}
+  \relation(13,1){student}
   \cnamepos{um}
-  \cluster(7,4){Mitarbeiter}
+  \cluster(7,4){X}
   \cnamepos{or}
-  \attr[ol]{Mitarbeiter}{\key{mnr}}
-  \connection(Mitarbeiter,Person){}
-  \connection(Professor,Mitarbeiter){}
-  \connection(WiMi,Mitarbeiter){}
-  \connection(Student,Mitarbeiter){}
+  \attr[ol]{X}{\key{mnr}}
+  \connection(X,person){}
+  \connection(professor,X){}
+  \connection(assistant,X){}
+  \connection(student,X){}
 \end{schema}
 
 \begin{schema}(22,10)
@@ -144,55 +160,60 @@
   \attr[lo]{cluster}{a12}
 \end{schema}
 
+\section{A larger example}
+
+And now a larger example. This will be in every example to check that 
+no errors are build in between version cahnge.
+
 \setlength{\hermunit}{.5cm}
 \begin{schema}(30,15)
-\entity(15,8){Dokument}
-\attr[lo]{Dokument}{titel}
-\attr[ro]{Dokument}{gueltig\_ab}
-\attr[lu]{Dokument}{datei}
-\attr[ru]{Dokument}{gueltig\_bis}
+\entity(15,8){document}
+\attr[lo]{document}{title}
+\attr[ro]{document}{valid\_from}
+\attr[lu]{document}{file}
+\attr[ru]{document}{valid\_untill}
 %
-\entity(6,12){Satzung}
-\attr[om]{Satzung}{\key{snummer}}
+\entity(6,12){rule}
+\attr[om]{rule}{\key{id}}
 %
-\entity(24,12){Kategorie}
-\attr[rm]{Kategorie}{\key{kname}}
+\entity(24,12){categorie}
+\attr[rm]{categorie}{\key{name}}
 %
-\entity(0,4){Amt}
-\attr[rm]{Amt}{\key{aname}}
+\entity(0,4){organisation}
+\attr[rm]{organisation}{\key{name}}
 %
-\entity(15,0){Wort}
-\attr[ro]{Wort}{\key{wort}}
-\attr[ru]{Wort}{soundex}
+\entity(15,0){word}
+\attr[ro]{word}{\key{word}}
+\attr[ru]{word}{soundex}
 %
 \relation(18,12){in}
-\connection(in,Dokument){}
-\connection(in,Kategorie){}
+\connection(in,document){}
+\connection(in,categorie){}
 %
-\relation(12,12){zu}
-\connection(zu,Dokument){(1,1)}
-\connection(zu,Satzung){}
+\relation(12,12){to}
+\connection(to,document){(1,1)}
+\connection(to,rule){}
 %
-\relation(24,8){unter}
+\relation(24,8){sub}
 \connection*(24,9)(24,12){}
 \connection*(28,9)(28,12){}
 %
-\relation(0,0){uebergeordnet}
+\relation(0,0){superior}
 \connection*(0,1)(0,4){(0,1)}
 \connection*(4,1)(4,4){}
 %
-\relation(0,12){verantwortlich}
-\connection(verantwortlich,Satzung){(1,1)}
-\connection(verantwortlich,Amt){}
+\relation(0,12){responsible}
+\connection(responsible,rule){(1,1)}
+\connection(responsible,organisation){}
 %
-\relation(12,4){Schlagwort}
-\connection(Schlagwort,Dokument){}
-\connection(Schlagwort,Wort){}
+\relation(12,4){catchword}
+\connection(catchword,document){}
+\connection(catchword,word){}
 %
-\relation(18,4){Inhalt}
-\attr[rm]{Inhalt}{anzahl}
-\connection(Inhalt,Dokument){}
-\connection(Inhalt,Wort){}
+\relation(18,4){content}
+\attr[rm]{content}{count}
+\connection(content,document){}
+\connection(content,word){}
 \end{schema}
 
 \subsection{Cluster name positioning}
