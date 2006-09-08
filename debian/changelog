@@ -1,3 +1,9 @@
+hermpic (1.0.2) stable; urgency=low
+
+  * fix debian package dependencies to support also texlive
+
+ -- Sven Schoradt <sven@dex.de>  Fri, 08 Sep 2006 12:41:48 +0200
+
 hermpic (1.0.1) stable; urgency=low
 
   * fix some documentation issuses
