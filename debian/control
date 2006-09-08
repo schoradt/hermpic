@@ -7,7 +7,7 @@ Standards-Version: 3.5.2
 
 Package: hermpic
 Architecture: all
-Depends: tetex-extra
+Depends: tetex-base | texlive-base
 Description: LaTeX class for drawing ER and HER diagramms.
  HERM-Pic is a LaTeX class for drawing entity-relationship and
  higher entity relationship diagramms.
