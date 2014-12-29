@@ -4,5 +4,7 @@ material old_resources .dist *.tgz *.tar.gz *.swp *.log *.dvi *.ps *.aux *.ps* *
 *.aux
 *.pdf
 *.ps
+*.log
 .externalToolBuilders
 .cdtproject
+test/*.sty
